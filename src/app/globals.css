@@ -1,0 +1,360 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Breakpoints
+
+   The design ships exactly two media queries: 900px (tablet) and 600px (phone),
+   both max-width. They are declared as custom variants rather than remapped onto
+   Tailwind's min-width sm/md/lg so every rule ports one-for-one from the source.
+   --------------------------------------------------------------------------- */
+@custom-variant laptop (@media (max-width: 1180px));
+@custom-variant tablet (@media (max-width: 900px));
+@custom-variant phone (@media (max-width: 600px));
+@custom-variant motion-ok (@media (prefers-reduced-motion: no-preference));
+
+@theme {
+  /* --- Surfaces ---------------------------------------------------------- */
+  --color-ink: #0c0c0d; /* page background, and text on red buttons */
+  --color-ink-deep: #090909; /* footer */
+  --color-ink-lightbox: #09090a; /* lightbox backdrop */
+  --color-surface: #111113; /* alternating sections */
+  --color-surface-card: #101013; /* service card, era card, review card */
+  --color-surface-panel: #121215; /* spec summary, booking gradient end */
+  --color-surface-media: #141418; /* image and video wells */
+  --color-surface-raised: #1a1a1f; /* booking panel gradient start */
+
+  /* --- Brand ------------------------------------------------------------- */
+  --color-bone: #f4f3f3;
+  --color-red: #e01b24;
+  --color-red-bright: #ff4a52;
+  --color-red-soft: #ff8a90;
+  --color-green: #3fcb6e;
+
+  /* --- Text alphas on bone ----------------------------------------------- */
+  --color-bone-86: rgb(244 243 243 / 0.86);
+  --color-bone-80: rgb(244 243 243 / 0.8);
+  --color-bone-76: rgb(244 243 243 / 0.76);
+  --color-bone-75: rgb(244 243 243 / 0.75);
+  --color-bone-74: rgb(244 243 243 / 0.74);
+  --color-bone-72: rgb(244 243 243 / 0.72);
+  --color-bone-70: rgb(244 243 243 / 0.7);
+  --color-bone-68: rgb(244 243 243 / 0.68);
+  --color-bone-66: rgb(244 243 243 / 0.66);
+  --color-bone-64: rgb(244 243 243 / 0.64);
+  --color-bone-62: rgb(244 243 243 / 0.62);
+  --color-bone-60: rgb(244 243 243 / 0.6);
+  --color-bone-58: rgb(244 243 243 / 0.58);
+  --color-bone-55: rgb(244 243 243 / 0.55);
+  --color-bone-50: rgb(244 243 243 / 0.5);
+  --color-bone-45: rgb(244 243 243 / 0.45);
+  --color-bone-42: rgb(244 243 243 / 0.42);
+  --color-bone-40: rgb(244 243 243 / 0.4);
+  --color-bone-38: rgb(244 243 243 / 0.38);
+  --color-bone-35: rgb(244 243 243 / 0.35);
+  --color-bone-32: rgb(244 243 243 / 0.32);
+
+  /* --- Hairlines on white ------------------------------------------------ */
+  --color-line-7: rgb(255 255 255 / 0.07);
+  --color-line-8: rgb(255 255 255 / 0.08);
+  --color-line-9: rgb(255 255 255 / 0.09);
+  --color-line-10: rgb(255 255 255 / 0.1);
+  --color-line-12: rgb(255 255 255 / 0.12);
+  --color-line-14: rgb(255 255 255 / 0.14);
+  --color-line-16: rgb(255 255 255 / 0.16);
+  --color-line-18: rgb(255 255 255 / 0.18);
+  --color-line-20: rgb(255 255 255 / 0.2);
+  --color-line-22: rgb(255 255 255 / 0.22);
+
+  /* --- Ink scrims --------------------------------------------------------
+     Translucent ink for the header, the badges, the lightbox chrome and the
+     mobile bar. Tokens rather than ink/[.82], so the output stays plain rgba
+     instead of Tailwind's oklab() conversion. */
+  --color-ink-35: rgb(12 12 13 / 0.35);
+  --color-ink-72: rgb(12 12 13 / 0.72);
+  --color-ink-78: rgb(12 12 13 / 0.78);
+  --color-ink-80: rgb(12 12 13 / 0.8);
+  --color-ink-82: rgb(12 12 13 / 0.82);
+  --color-ink-94: rgb(12 12 13 / 0.94);
+  --color-ink-95: rgb(12 12 13 / 0.95);
+
+  /* --- White washes ------------------------------------------------------
+     Declared as tokens rather than written as bg-white/3, because Tailwind
+     converts a slash-opacity on a named colour into oklab(), and the design's
+     values are plain rgba. */
+  --color-white-3: rgb(255 255 255 / 0.03);
+  --color-white-5: rgb(255 255 255 / 0.05);
+
+  /* --- Red washes -------------------------------------------------------- */
+  --color-red-05: rgb(224 27 36 / 0.05);
+  --color-red-10: rgb(224 27 36 / 0.1);
+  --color-red-12: rgb(224 27 36 / 0.12);
+  --color-red-20: rgb(224 27 36 / 0.2);
+  --color-red-34: rgb(224 27 36 / 0.34);
+  --color-red-50: rgb(224 27 36 / 0.5);
+  --color-red-60: rgb(224 27 36 / 0.6);
+
+  /* --- Type -------------------------------------------------------------- */
+  --font-display: var(--font-anton), sans-serif;
+  --font-sans: var(--font-archivo), system-ui, sans-serif;
+
+  /* Deliberately NOT var(--font-jetbrains-mono), which expands to
+     "JetBrains Mono", "JetBrains Mono Fallback". That metric-matched fallback
+     face also claims every character the Latin subset omits — including the
+     arrows this design uses (→ ← ↗ ▶ ✕) — and renders them far wider than the
+     design does: 20.19px against 8.25px for → at 15px. Naming the face directly
+     and falling through to the generic family reproduces the design exactly.
+     The @font-face next/font emits is keyed on this same family name, so the
+     font is still self-hosted and preloaded.
+     (next/font's `adjustFontFallback` option no longer has any effect in
+     Next 16, which is why this is handled here.) */
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* --- Motion ------------------------------------------------------------ */
+  /* The design's signature easing. Every transition over 300ms uses it. */
+  --ease-mad: cubic-bezier(0.22, 0.7, 0.2, 1);
+
+  /* --- Layout ------------------------------------------------------------ */
+  --spacing-gutter: 22px;
+  --container-site: 1280px;
+
+  /* --- Keyframes --------------------------------------------------------- */
+  --animate-madup: madup 0.6s ease both;
+  --animate-madfade: madfade 0.25s ease both;
+  --animate-madpulse: madpulse 1.8s ease-in-out infinite;
+  --animate-madmarq: madmarq 48s linear infinite;
+  --animate-madmenu: madmenu 0.22s var(--ease-mad) both;
+
+  @keyframes madup {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes madmenu {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes madfade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes madpulse {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.35;
+      transform: scale(0.7);
+    }
+  }
+  @keyframes madmarq {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Sticky header is 66px tall; keep anchored sections clear of it. */
+    scroll-padding-top: 74px;
+
+    /* Below 900px the header carries the scrolling nav strip as a second row. */
+    @media (max-width: 900px) {
+      scroll-padding-top: 116px;
+    }
+
+    /* The design sets no line-height, so everything that does not declare one
+       inherits the browser default. Tailwind's preflight would impose 1.5 here,
+       which grows the footer, the chips and every un-styled run of text by a few
+       pixels each. Copy is given explicit leading where the design has it. */
+    line-height: normal;
+  }
+
+  /* Headings render at Anton's true weight.
+
+     DELIBERATE DEPARTURE FROM THE ORIGINAL DESIGN, at the client's request.
+     Anton ships a single weight (400). The original leaves headings at the
+     browser's default bold, so the browser synthesises one by thickening every
+     stroke — which closes up the counters in B, R, D and O and is hard to read
+     at the hero's 124px. `font-synthesis-weight: none` turns that off, so the
+     headings show the letterforms Anton was actually drawn with.
+
+     There is no middle setting: with only a 400 face available, any weight from
+     600 up synthesises the same bold, and anything below renders as 400. To go
+     back to matching the original exactly, delete this rule. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 400;
+    font-synthesis-weight: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-ink);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a {
+    color: var(--color-red-bright);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--color-red-soft);
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font-family: var(--font-sans);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-bone-32);
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  /* The design has no focus styling of its own beyond the gallery tiles. This is
+     a visible, on-brand ring for every other interactive element — required for
+     keyboard accessibility, and it does not alter the resting appearance. */
+  :focus-visible {
+    outline: 2px solid var(--color-red-bright);
+    outline-offset: 2px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Effects that do not express cleanly as utilities
+   --------------------------------------------------------------------------- */
+@layer components {
+  /* Media hover: the image scales inside its crop. Lives here because it is a
+     parent-hover transform on a child <img> with two different scale values. */
+  .mad-svc-media img,
+  .mad-tile img {
+    transition:
+      transform 0.7s var(--ease-mad),
+      opacity 0.4s ease;
+  }
+
+  .mad-svc-media:hover img {
+    transform: scale(1.04);
+    opacity: 1 !important;
+  }
+
+  .mad-tile:hover img {
+    transform: scale(1.05);
+  }
+
+  .mad-svc-media:focus-visible,
+  .mad-tile:focus-visible {
+    outline: 2px solid var(--color-red-bright);
+    outline-offset: -2px;
+  }
+
+  /* Horizontal scrollers: the filter rail hides its scrollbar, the lightbox
+     filmstrip keeps a thin one. */
+  .mad-scroll-none {
+    scrollbar-width: none;
+  }
+
+  .mad-scroll-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mad-scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-line-22) transparent;
+  }
+
+  /* Reveal on scroll.
+
+     The hidden state is keyed off [data-reveal-pending], which only the observer
+     applies. That ordering is deliberate: if JavaScript fails to run, nothing is
+     ever hidden and the whole page renders normally. The stagger is set inline
+     as a transition-delay, matching the design's (index % 6) * 70ms cadence. */
+  [data-reveal] {
+    transition:
+      opacity 0.7s var(--ease-mad),
+      transform 0.7s var(--ease-mad);
+  }
+
+  [data-reveal][data-reveal-pending] {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+
+   The source disables the marquee and the image transitions. Everything added
+   since — the reveal, the hero fade, the FAQ height animation — is disabled too,
+   and the reveal is forced to its finished state so no content is left hidden.
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .mad-marquee {
+    animation: none !important;
+  }
+
+  .mad-svc-media img,
+  .mad-tile img {
+    transition: none !important;
+  }
+
+  [data-reveal],
+  [data-reveal][data-reveal-pending] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
