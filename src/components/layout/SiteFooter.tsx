@@ -1,9 +1,14 @@
 import Image from "next/image";
-import Link from "next/link";
 import { LOCATIONS, SITE } from "@/data/site";
 import { SERVICES } from "@/data/services";
-import { PRODUCTS } from "@/data/products";
-import { APPOINTMENT_URL, PRODUCTS_URL, SERVICES_URL } from "@/data/links";
+import { FEATURED_PRODUCTS } from "@/data/products";
+import {
+  APPOINTMENT_URL,
+  PRODUCTS_URL,
+  PRIVACY_URL,
+  TERMS_URL,
+  serviceQuoteHref,
+} from "@/data/links";
 import { Container } from "@/components/ui/Container";
 import { whatsappHref } from "@/lib/whatsapp";
 
@@ -61,9 +66,7 @@ export function SiteFooter() {
             {SERVICES.map((service) => (
               <a
                 key={service.slug}
-                href={SERVICES_URL}
-                target="_blank"
-                rel="noopener"
+                href={serviceQuoteHref(service)}
                 className="text-bone-68 hover:text-red-bright text-[13.5px] transition-colors duration-200"
               >
                 {service.title}
@@ -73,19 +76,15 @@ export function SiteFooter() {
 
           <a
             href={PRODUCTS_URL}
-            target="_blank"
-            rel="noopener"
             className={`${COLUMN_TITLE} hover:text-red-bright mt-[26px] block transition-colors duration-200`}
           >
             Products
           </a>
           <div className="flex flex-col gap-[9px]">
-            {PRODUCTS.map((product) => (
+            {FEATURED_PRODUCTS.map((product) => (
               <a
-                key={product.name}
+                key={product.id}
                 href={PRODUCTS_URL}
-                target="_blank"
-                rel="noopener"
                 className="text-bone-68 hover:text-red-bright text-[13.5px] transition-colors duration-200"
               >
                 {product.name}
@@ -124,8 +123,6 @@ export function SiteFooter() {
           </a>
           <a
             href={APPOINTMENT_URL}
-            target="_blank"
-            rel="noopener"
             className="bg-red text-ink hover:bg-red-bright mt-[22px] block p-[14px] text-center text-[14px] font-bold transition-colors duration-200"
           >
             Make Appointment
@@ -135,12 +132,12 @@ export function SiteFooter() {
 
       <Container className="border-line-8 text-bone-38 flex flex-wrap gap-[14px] border-t pt-[18px] pb-24 text-[12px]">
         <span>© {new Date().getFullYear()} MAD Custom</span>
-        <Link href="/terms" className="text-bone-50 hover:text-bone">
+        <a href={TERMS_URL} className="text-bone-50 hover:text-bone">
           Terms &amp; Conditions
-        </Link>
-        <Link href="/privacy" className="text-bone-50 hover:text-bone">
+        </a>
+        <a href={PRIVACY_URL} className="text-bone-50 hover:text-bone">
           Privacy Policy
-        </Link>
+        </a>
       </Container>
     </footer>
   );

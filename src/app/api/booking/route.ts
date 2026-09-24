@@ -2,7 +2,7 @@
  * POST /api/booking — receives a build sheet.
  *
  * Validates with the same zod schema the form uses, drops honeypot hits, then
- * hands off to the delivery adapter in lib/email.ts.
+ * hands off to the delivery adapters in lib/email.ts and lib/ghl.ts.
  *
  * A delivery failure is NOT an error response. The slot is still considered
  * held; the response carries `delivered: false` and the UI shows the customer
@@ -12,6 +12,7 @@
 import { NextResponse } from "next/server";
 import { bookingSchema } from "@/lib/booking-schema";
 import { deliverBooking } from "@/lib/email";
+import { forwardBookingToGhl } from "@/lib/ghl";
 
 export const runtime = "nodejs";
 /** Never cached — every request runs. */
@@ -82,7 +83,11 @@ export async function POST(request: Request) {
     );
   }
 
-  const result = await deliverBooking(booking);
+  // Email and the GHL CRM in parallel. Either one landing counts as delivered.
+  const [email, crm] = await Promise.all([
+    deliverBooking(booking),
+    forwardBookingToGhl(booking),
+  ]);
 
-  return NextResponse.json({ ok: true, delivered: result.delivered });
+  return NextResponse.json({ ok: true, delivered: email.delivered || crm.delivered });
 }

@@ -1,0 +1,365 @@
+<!-- ============================================================
+     MAD CUSTOM · 1:1 CONSULTATION BOOKING HERO (standalone section)
+     Scoped to #mad-1on1-q2w7 — nothing leaks into other GHL sections.
+     Container queries (not viewport) so it sizes off the block's real
+     width, which is what GHL's builder columns and mobile preview need.
+
+     LINKS
+       CTA scrolls to the calendar embed on this page: #calendar-MpXkK0jZUE
+       Secondary CTA  : https://go.madcustomcars.com/services-page
+       Terms          : https://go.madcustomcars.com/terms-condition-page
+       Privacy        : https://go.madcustomcars.com/privacy-policy-page
+       Logo           : https://madcustomcars.com/
+     ============================================================ -->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ---------- SCOPE + TOKENS ---------- */
+#mad-1on1-q2w7{
+  /* palette lifted from madcustomcars.com */
+  --ink:#08090A;
+  --red:#E10600;
+  --red-hi:#FF2D20;
+  --red-dim:rgba(225,6,0,.14);
+  --line-2:rgba(255,255,255,.16);
+  --text:#F4F6F7;
+  --chrome:#C9CFD6;
+  --display:'Oxanium',system-ui,sans-serif;
+  --body:'Manrope',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+
+  container-type:inline-size;
+  container-name:mad1on1;
+
+  display:block;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background:var(--ink);
+  color:var(--text);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+
+  /* fills the viewport on phones, never taller than the screen */
+  min-height:88svh;
+  display:flex;
+  align-items:center;
+  padding:3rem 0;
+}
+#mad-1on1-q2w7 *,
+#mad-1on1-q2w7 *::before,
+#mad-1on1-q2w7 *::after{box-sizing:border-box;}
+#mad-1on1-q2w7 img{max-width:100%;height:auto;display:block;}
+#mad-1on1-q2w7 a{color:inherit;text-decoration:none;}
+#mad-1on1-q2w7 h1{
+  font-family:var(--display);font-weight:800;line-height:1.03;
+  letter-spacing:-.035em;margin:0;text-transform:uppercase;
+}
+#mad-1on1-q2w7 p{margin:0;}
+#mad-1on1-q2w7 ul{margin:0;padding:0;list-style:none;}
+#mad-1on1-q2w7 :focus-visible{outline:2px solid var(--red-hi);outline-offset:3px;border-radius:4px;}
+#mad-1on1-q2w7 ::selection{background:var(--red);color:#fff;}
+
+#mad-1on1-q2w7 .mdc-wrap{
+  width:100%;max-width:1200px;margin:0 auto;padding:0 1.2rem;
+  position:relative;z-index:2;
+}
+
+/* ---------- VIDEO BACKGROUND ---------- */
+#mad-1on1-q2w7 .mdc-video{position:absolute;inset:0;z-index:0;overflow:hidden;background:var(--ink);}
+#mad-1on1-q2w7 .mdc-video video{
+  width:100%;height:100%;object-fit:cover;
+  /* source clip is bright — pull it down so type stays readable */
+  filter:brightness(.62) contrast(1.06) saturate(1.1);
+}
+/* layered scrim: heavy on the left behind the type, lighter on the right,
+   plus a fade into whatever section sits below */
+#mad-1on1-q2w7 .mdc-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;}
+#mad-1on1-q2w7 .mdc-scrim::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(to right,
+    rgba(8,9,10,.94) 0%,
+    rgba(8,9,10,.86) 34%,
+    rgba(8,9,10,.58) 68%,
+    rgba(8,9,10,.44) 100%);
+}
+#mad-1on1-q2w7 .mdc-scrim::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom,
+      rgba(8,9,10,.70) 0%,
+      transparent 28%,
+      transparent 62%,
+      rgba(8,9,10,.96) 100%),
+    radial-gradient(88% 68% at 20% 46%, rgba(225,6,0,.20), transparent 62%);
+}
+
+/* ---------- LOGO ---------- */
+#mad-1on1-q2w7 .mdc-logo{display:inline-flex;align-items:center;min-height:44px;margin-bottom:1.4rem;}
+#mad-1on1-q2w7 .mdc-logo img{height:34px;width:auto;}
+
+/* ---------- STATUS PILL ---------- */
+#mad-1on1-q2w7 .mdc-badge{
+  display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1.1rem;
+  padding:.42rem .85rem;border-radius:999px;
+  border:1px solid var(--line-2);background:rgba(8,9,10,.55);
+  backdrop-filter:blur(8px);
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--chrome);
+}
+#mad-1on1-q2w7 .mdc-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--red);flex:none;
+  box-shadow:0 0 0 0 rgba(225,6,0,.7);animation:mdcPulse 2.2s infinite;
+}
+@keyframes mdcPulse{70%{box-shadow:0 0 0 9px rgba(225,6,0,0)}100%{box-shadow:0 0 0 0 rgba(225,6,0,0)}}
+
+/* ---------- HEADLINE ---------- */
+/* 10.6cqi keeps the longest word inside a 360px block without clipping */
+#mad-1on1-q2w7 .mdc-h1{
+  font-size:clamp(2.05rem,10.6cqi,5.2rem);
+  text-shadow:0 4px 30px rgba(0,0,0,.8),0 1px 3px rgba(0,0,0,.6);
+}
+/* Solid white fill with a pulsing red glow. A gradient clipped to text goes
+   transparent as it animates, which lets the video through and kills
+   legibility — the glow gives motion without ever reducing contrast. */
+#mad-1on1-q2w7 .mdc-h1 em{
+  font-style:normal;color:#fff;display:inline-block;
+  animation:mdcGlow 6.5s ease-in-out infinite;
+}
+@keyframes mdcGlow{
+  0%,100%{text-shadow:0 4px 30px rgba(0,0,0,.85),0 2px 4px rgba(0,0,0,.6),0 0 24px rgba(225,6,0,.30);}
+  50%    {text-shadow:0 4px 30px rgba(0,0,0,.85),0 2px 4px rgba(0,0,0,.6),0 0 54px rgba(225,6,0,.66);}
+}
+#mad-1on1-q2w7 .mdc-sub{
+  color:#DCE1E5;font-size:clamp(1rem,2.8cqi,1.22rem);font-weight:500;line-height:1.55;
+  max-width:54ch;margin-top:1.15rem;
+  text-shadow:0 2px 16px rgba(0,0,0,.92),0 1px 3px rgba(0,0,0,.7);
+}
+
+/* ---------- BUTTONS ---------- */
+#mad-1on1-q2w7 .mdc-btns{
+  display:flex;flex-direction:column;align-items:flex-start;
+  gap:.7rem;margin-top:1.85rem;
+}
+#mad-1on1-q2w7 .mdc-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  min-height:52px;padding:0 1.5rem;border-radius:999px;border:0;cursor:pointer;
+  font-family:var(--body);font-size:.98rem;font-weight:700;letter-spacing:.01em;
+  background:var(--red);color:#fff;position:relative;overflow:hidden;
+  box-shadow:0 8px 28px rgba(225,6,0,.34);
+  transition:transform .22s cubic-bezier(.2,.7,.3,1),box-shadow .22s,background .22s;
+}
+#mad-1on1-q2w7 .mdc-btn:hover{transform:translateY(-2px);box-shadow:0 14px 38px rgba(225,6,0,.5);}
+#mad-1on1-q2w7 .mdc-btn:active{transform:translateY(0) scale(.985);}
+/* sheen sweep across the primary CTA */
+#mad-1on1-q2w7 .mdc-btn::after{
+  content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.42),transparent);
+  animation:mdcSheen 4.5s ease-in-out infinite;
+}
+@keyframes mdcSheen{0%,72%{left:-120%}88%,100%{left:130%}}
+/* ghost button needs more body over video than over flat black */
+#mad-1on1-q2w7 .mdc-btn-ghost{
+  background:rgba(8,9,10,.5);color:var(--text);
+  border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(10px);box-shadow:none;
+}
+#mad-1on1-q2w7 .mdc-btn-ghost::after{display:none;}
+#mad-1on1-q2w7 .mdc-btn-ghost:hover{background:var(--red-dim);border-color:var(--red);box-shadow:none;}
+
+/* ---------- FINE PRINT ----------
+   Sits directly under the CTA so the qualifier travels with the offer
+   instead of being buried in the footer. */
+#mad-1on1-q2w7 .mdc-fine{
+  margin-top:.95rem;max-width:52ch;
+  font-family:var(--mono);font-size:.66rem;line-height:1.65;
+  letter-spacing:.03em;color:#9BA3AA;
+  text-shadow:0 2px 10px rgba(0,0,0,.85);
+}
+#mad-1on1-q2w7 .mdc-fine a{text-decoration:underline;text-underline-offset:2px;color:#BFC6CC;}
+#mad-1on1-q2w7 .mdc-fine a:hover{color:var(--red-hi);}
+
+/* ---------- TRUST ROW ---------- */
+#mad-1on1-q2w7 .mdc-proof{
+  display:flex;flex-wrap:wrap;gap:1.1rem 1.8rem;
+  margin-top:2.2rem;padding-top:1.55rem;
+  border-top:1px solid rgba(255,255,255,.22);
+}
+#mad-1on1-q2w7 .mdc-proof li{min-width:94px;}
+#mad-1on1-q2w7 .mdc-proof b{
+  display:block;font-family:var(--display);font-size:1.55rem;font-weight:800;
+  line-height:1;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.75);
+}
+#mad-1on1-q2w7 .mdc-proof span{
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
+  text-transform:uppercase;color:#C5CCD2;text-shadow:0 2px 10px rgba(0,0,0,.8);
+}
+
+/* ---------- ENTRANCE ---------- */
+#mad-1on1-q2w7 .mdc-rise{
+  opacity:0;transform:translateY(18px);
+  animation:mdcRise .8s cubic-bezier(.2,.7,.3,1) forwards;
+}
+#mad-1on1-q2w7 .mdc-d1{animation-delay:.05s}
+#mad-1on1-q2w7 .mdc-d2{animation-delay:.15s}
+#mad-1on1-q2w7 .mdc-d3{animation-delay:.25s}
+#mad-1on1-q2w7 .mdc-d4{animation-delay:.35s}
+#mad-1on1-q2w7 .mdc-d5{animation-delay:.45s}
+@keyframes mdcRise{to{opacity:1;transform:none;}}
+
+/* ============================================================
+   CONTAINER QUERIES — sized off the BLOCK's real width, not the
+   viewport, so GHL builder columns and mobile preview behave.
+   ============================================================ */
+
+/* --- large phone / small tablet --- */
+@container mad1on1 (min-width:600px){
+  #mad-1on1-q2w7{padding:4rem 0;min-height:90svh;}
+  #mad-1on1-q2w7 .mdc-wrap{padding:0 2rem;}
+  #mad-1on1-q2w7 .mdc-btns{flex-direction:row;}
+  #mad-1on1-q2w7 .mdc-logo img{height:38px;}
+}
+
+/* --- tablet / small laptop --- */
+@container mad1on1 (min-width:900px){
+  #mad-1on1-q2w7{padding:5rem 0;}
+  #mad-1on1-q2w7 .mdc-proof b{font-size:1.8rem;}
+  #mad-1on1-q2w7 .mdc-sub{margin-top:1.3rem;}
+}
+
+/* --- desktop --- */
+@container mad1on1 (min-width:1180px){
+  #mad-1on1-q2w7{min-height:92svh;}
+  #mad-1on1-q2w7 .mdc-logo img{height:42px;}
+}
+
+/* Fallback for any GHL build that strips container-query support */
+@supports not (container-type:inline-size){
+  @media (min-width:600px){
+    #mad-1on1-q2w7 .mdc-btns{flex-direction:row;}
+    #mad-1on1-q2w7 .mdc-wrap{padding:0 2rem;}
+  }
+}
+
+/* ---------- REDUCED MOTION ---------- */
+@media (prefers-reduced-motion:reduce){
+  #mad-1on1-q2w7 *,#mad-1on1-q2w7 *::before,#mad-1on1-q2w7 *::after{
+    animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+  #mad-1on1-q2w7 .mdc-rise{opacity:1;transform:none;}
+}
+</style>
+
+<div id="mad-1on1-q2w7">
+
+  <!-- SECTION: VIDEO BACKGROUND -->
+  <div class="mdc-video" aria-hidden="true">
+    <video id="mdcVideo" autoplay muted loop playsinline preload="auto"
+           poster="https://i0.wp.com/madcustomcars.com/wp-content/uploads/2026/03/DSC4277-scaled.jpeg">
+      <source src="https://reactheme.com/products/wordpress/autodetail/wp-content/uploads/2025/07/1.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="mdc-scrim" aria-hidden="true"></div>
+
+  <div class="mdc-wrap">
+
+    <!-- SECTION: LOGO -->
+    <a class="mdc-logo mdc-rise mdc-d1" href="https://madcustomcars.com/" aria-label="MAD Custom home">
+      <img src="https://i0.wp.com/madcustomcars.com/wp-content/uploads/2025/07/Mesa-de-trabajo-2.png"
+           alt="MAD Custom" width="200" height="34" fetchpriority="high">
+    </a>
+
+    <!-- SECTION: LOCATION PILL -->
+    <div class="mdc-rise mdc-d2">
+      <span class="mdc-badge"><span class="mdc-dot"></span> 1:1 Consultation &nbsp;/&nbsp; Orlando FL &nbsp;/&nbsp; Puerto Rico</span>
+    </div>
+
+    <!-- SECTION: HEADLINE -->
+    <h1 class="mdc-h1 mdc-rise mdc-d2"><em>Let's Talk Build</em></h1>
+    <p class="mdc-sub mdc-rise mdc-d3">
+      One full hour, one on one. Bring the vehicle, the vision, and the questions — we'll walk
+      through what's possible, what it takes, and what it costs. You leave with a real plan,
+      not a guess.
+    </p>
+
+    <!-- SECTION: CTA BUTTONS -->
+    <div class="mdc-btns mdc-rise mdc-d4">
+      <a class="mdc-btn" href="#calendar-MpXkK0jZUE">Book Your Consultation</a>
+      <a class="mdc-btn mdc-btn-ghost" href="https://go.madcustomcars.com/services-page">Get a Quote Instead</a>
+    </div>
+
+    <!-- SECTION: FINE PRINT -->
+    <p class="mdc-fine mdc-rise mdc-d4">
+      Consultations are free and carry no obligation. Pick any open slot below — you'll get a
+      confirmation and reminders by email.
+      <a href="https://go.madcustomcars.com/terms-condition-page">Terms &amp; Conditions</a>
+    </p>
+
+    <!-- SECTION: TRUST ROW -->
+    <ul class="mdc-proof mdc-rise mdc-d5">
+      <li><b>1 Hr</b><span>Dedicated Session</span></li>
+      <li><b>Free</b><span>No Obligation</span></li>
+      <li><b>2</b><span>Locations</span></li>
+      <li><b>Mon&ndash;Fri</b><span>8am to 6pm ET</span></li>
+    </ul>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById('mad-1on1-q2w7');
+  if(!root) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* hero video: honour reduced motion, stop decoding while off screen */
+  var vid = document.getElementById('mdcVideo');
+  if(vid){
+    if(reduce){
+      vid.removeAttribute('autoplay');
+      vid.pause();                 /* poster frame stays visible */
+    } else {
+      /* iOS needs these as properties too, not just attributes */
+      vid.muted = true; vid.defaultMuted = true; vid.playsInline = true;
+      vid.setAttribute('muted',''); vid.setAttribute('webkit-playsinline','');
+      var tries = 0;
+      var play = function(){
+        var p = vid.play();
+        if(p && p.catch) p.catch(function(){ if(++tries < 5) setTimeout(play, 700); });
+      };
+      play();
+      ['loadeddata','canplay'].forEach(function(ev){ vid.addEventListener(ev, play); });
+      ['touchstart','click','scroll'].forEach(function(ev){
+        document.addEventListener(ev, play, {once:true, passive:true});
+      });
+      if('IntersectionObserver' in window){
+        new IntersectionObserver(function(es){
+          es.forEach(function(e){
+            if(e.isIntersecting){ play(); } else { vid.pause(); }
+          });
+        },{threshold:.05}).observe(vid);
+      }
+    }
+  }
+
+  /* Smooth scroll to the calendar element on the same page.
+     GHL element IDs can start with a digit or contain characters that make
+     querySelector('#id') throw, so getElementById is used instead — it takes
+     the raw id and never parses it as a selector. */
+  root.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(ev){
+      var id = a.getAttribute('href').slice(1);
+      if(!id) return;
+      var t = document.getElementById(id);
+      if(t){
+        ev.preventDefault();
+        t.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'});
+      }
+      /* no match: let the browser handle it, in case it resolves later */
+    });
+  });
+})();
+</script>

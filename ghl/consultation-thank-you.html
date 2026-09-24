@@ -1,0 +1,447 @@
+<!-- ============================================================
+     MAD CUSTOM · 1:1 CONSULTATION THANK YOU / BOOKING CONFIRMED
+     Scoped to #mad-tyc-m4x8 — nothing leaks into other GHL sections, and
+     it will not collide with the financing thank-you (#mad-tyf-k2r7),
+     the consultation hero (#mad-1on1-q2w7) or the footer (#mad-foot-b7q4).
+     Container queries (not viewport) so it sizes off the block's real
+     width, which is what GHL's builder columns and mobile preview need.
+     ============================================================ -->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ---------- SCOPE + TOKENS ---------- */
+#mad-tyc-m4x8{
+  /* palette lifted from madcustomcars.com */
+  --ink:#08090A;
+  --line:rgba(255,255,255,.09);
+  --line-2:rgba(255,255,255,.16);
+  --red:#E10600;
+  --red-hi:#FF2D20;
+  --red-dim:rgba(225,6,0,.14);
+  --text:#F4F6F7;
+  --chrome:#C9CFD6;
+  --display:'Oxanium',system-ui,sans-serif;
+  --body:'Manrope',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+
+  container-type:inline-size;
+  container-name:madtyc;
+
+  display:block;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background:var(--ink);
+  color:var(--text);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+#mad-tyc-m4x8 *,
+#mad-tyc-m4x8 *::before,
+#mad-tyc-m4x8 *::after{box-sizing:border-box;}
+#mad-tyc-m4x8 img{max-width:100%;height:auto;display:block;}
+#mad-tyc-m4x8 a{color:inherit;text-decoration:none;}
+#mad-tyc-m4x8 h1{
+  font-family:var(--display);font-weight:800;line-height:1.04;
+  letter-spacing:-.025em;margin:0;
+}
+#mad-tyc-m4x8 p{margin:0;}
+#mad-tyc-m4x8 ul{margin:0;padding:0;list-style:none;}
+#mad-tyc-m4x8 :focus-visible{outline:2px solid var(--red-hi);outline-offset:3px;border-radius:4px;}
+#mad-tyc-m4x8 ::selection{background:var(--red);color:#fff;}
+
+#mad-tyc-m4x8 .mtc-wrap{
+  width:100%;max-width:1100px;margin:0 auto;padding:0 1.2rem;
+  position:relative;z-index:2;
+}
+
+/* ---------- VIDEO BACKGROUND (confirmation block only) ---------- */
+#mad-tyc-m4x8 .mtc-hero{
+  position:relative;overflow:hidden;isolation:isolate;
+  padding:3.6rem 0 3.8rem;text-align:center;
+}
+#mad-tyc-m4x8 .mtc-video{position:absolute;inset:0;z-index:0;overflow:hidden;background:var(--ink);}
+#mad-tyc-m4x8 .mtc-video video{
+  width:100%;height:100%;object-fit:cover;
+  /* source clip is bright — pull it down hard here, this block is type-heavy */
+  filter:brightness(.42) contrast(1.06) saturate(1.05);
+}
+#mad-tyc-m4x8 .mtc-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;}
+#mad-tyc-m4x8 .mtc-scrim::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(to bottom,
+    rgba(8,9,10,.88) 0%,
+    rgba(8,9,10,.76) 40%,
+    rgba(8,9,10,.92) 80%,
+    var(--ink) 100%);
+}
+#mad-tyc-m4x8 .mtc-scrim::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(70% 60% at 50% 40%, rgba(225,6,0,.20), transparent 66%);
+}
+
+/* ---------- CHECK MARK ---------- */
+#mad-tyc-m4x8 .mtc-check{
+  width:78px;height:78px;border-radius:50%;margin:0 auto 1.4rem;
+  display:grid;place-items:center;
+  border:2px solid var(--red);
+  background:linear-gradient(180deg,rgba(225,6,0,.20),rgba(225,6,0,.06)),#0B0F11;
+  color:var(--red-hi);position:relative;
+}
+#mad-tyc-m4x8 .mtc-check svg{width:34px;height:34px;display:block;}
+/* stroke draws itself in on load */
+#mad-tyc-m4x8 .mtc-check path{
+  stroke-dasharray:36;stroke-dashoffset:36;
+  animation:mtcDraw .7s cubic-bezier(.2,.7,.3,1) .25s forwards;
+}
+@keyframes mtcDraw{to{stroke-dashoffset:0;}}
+/* expanding ring */
+#mad-tyc-m4x8 .mtc-check::after{
+  content:"";position:absolute;inset:-2px;border-radius:50%;
+  border:2px solid var(--red);opacity:0;pointer-events:none;
+  animation:mtcPing 3.4s cubic-bezier(.2,.6,.3,1) infinite;
+}
+@keyframes mtcPing{
+  0%  {transform:scale(1);   opacity:.6;}
+  65% {transform:scale(1.5); opacity:0;}
+  100%{transform:scale(1.5); opacity:0;}
+}
+
+/* ---------- CONFIRMATION COPY ---------- */
+#mad-tyc-m4x8 .mtc-badge{
+  display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1rem;
+  padding:.42rem .85rem;border-radius:999px;
+  border:1px solid var(--line-2);background:rgba(8,9,10,.55);
+  backdrop-filter:blur(8px);
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--chrome);
+}
+#mad-tyc-m4x8 .mtc-h1{
+  font-size:clamp(1.95rem,8.4cqi,4rem);text-transform:uppercase;
+  letter-spacing:-.035em;
+  text-shadow:0 4px 30px rgba(0,0,0,.8),0 1px 3px rgba(0,0,0,.6);
+}
+#mad-tyc-m4x8 .mtc-h1 em{font-style:normal;color:var(--red-hi);}
+#mad-tyc-m4x8 .mtc-sub{
+  color:#DCE1E5;font-size:clamp(.98rem,2.7cqi,1.16rem);font-weight:500;
+  max-width:52ch;margin:1.1rem auto 0;
+  text-shadow:0 2px 16px rgba(0,0,0,.9);
+}
+
+/* booked-slot pill — only shown when GHL passes the time in the URL */
+#mad-tyc-m4x8 .mtc-slot{
+  display:none;align-items:center;justify-content:center;gap:.55rem;
+  margin:1.4rem auto 0;padding:.7rem 1.15rem;border-radius:999px;
+  border:1px solid rgba(225,6,0,.42);background:rgba(225,6,0,.12);
+  font-family:var(--mono);font-size:.76rem;letter-spacing:.06em;color:#fff;
+  max-width:max-content;
+}
+#mad-tyc-m4x8 .mtc-slot.mtc-on{display:inline-flex;}
+#mad-tyc-m4x8 .mtc-slot svg{width:15px;height:15px;flex:none;}
+
+/* ---------- PREP LIST ---------- */
+#mad-tyc-m4x8 .mtc-prep{
+  margin:1.9rem auto 0;max-width:44ch;text-align:left;
+  display:grid;gap:.7rem;
+}
+#mad-tyc-m4x8 .mtc-prep li{
+  display:flex;align-items:flex-start;gap:.65rem;
+  font-size:clamp(.9rem,2.5cqi,1rem);color:#DCE1E5;
+  text-shadow:0 2px 14px rgba(0,0,0,.9);
+}
+#mad-tyc-m4x8 .mtc-prep svg{
+  width:17px;height:17px;flex:none;margin-top:.22rem;color:var(--red-hi);
+}
+
+/* ---------- CONTACT STRIP ---------- */
+#mad-tyc-m4x8 .mtc-strip{
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:rgba(255,255,255,.02);padding:2.2rem 0;position:relative;z-index:2;
+}
+#mad-tyc-m4x8 .mtc-info{display:grid;grid-template-columns:1fr;gap:1.6rem;}
+#mad-tyc-m4x8 .mtc-info h4{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;font-weight:500;
+  text-transform:uppercase;color:var(--red-hi);margin:0 0 .7rem;
+}
+#mad-tyc-m4x8 .mtc-info p,
+#mad-tyc-m4x8 .mtc-info a{color:#FFF;font-size:.93rem;}
+#mad-tyc-m4x8 .mtc-info a:hover{color:var(--red-hi);}
+#mad-tyc-m4x8 .mtc-info li a{display:inline-flex;align-items:center;min-height:44px;}
+
+/* ---------- FINE PRINT ---------- */
+#mad-tyc-m4x8 .mtc-fine{padding:1.6rem 0 2.2rem;position:relative;z-index:2;}
+#mad-tyc-m4x8 .mtc-fine p{
+  font-family:var(--mono);font-size:.66rem;line-height:1.7;letter-spacing:.03em;
+  color:#9BA3AA;max-width:78ch;
+}
+#mad-tyc-m4x8 .mtc-fine a{text-decoration:underline;text-underline-offset:2px;color:#BFC6CC;}
+#mad-tyc-m4x8 .mtc-fine a:hover{color:var(--red-hi);}
+
+/* ---------- BUTTONS ---------- */
+#mad-tyc-m4x8 .mtc-btns{
+  display:flex;flex-direction:column;align-items:center;
+  gap:.7rem;margin-top:1.8rem;
+}
+#mad-tyc-m4x8 .mtc-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  min-height:52px;padding:0 1.5rem;border-radius:999px;border:0;cursor:pointer;
+  font-family:var(--body);font-size:.98rem;font-weight:700;
+  background:var(--red);color:#fff;position:relative;overflow:hidden;
+  box-shadow:0 8px 28px rgba(225,6,0,.34);
+  transition:transform .22s cubic-bezier(.2,.7,.3,1),box-shadow .22s;
+}
+#mad-tyc-m4x8 .mtc-btn:hover{transform:translateY(-2px);box-shadow:0 14px 38px rgba(225,6,0,.5);color:#fff;}
+#mad-tyc-m4x8 .mtc-btn:active{transform:translateY(0) scale(.985);}
+#mad-tyc-m4x8 .mtc-btn-ghost{
+  background:rgba(8,9,10,.5);color:var(--text);
+  border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(10px);box-shadow:none;
+}
+#mad-tyc-m4x8 .mtc-btn-ghost:hover{background:var(--red-dim);border-color:var(--red);box-shadow:none;color:#fff;}
+
+/* ---------- ENTRANCE ---------- */
+#mad-tyc-m4x8 .mtc-rise{
+  opacity:0;transform:translateY(18px);
+  animation:mtcRise .8s cubic-bezier(.2,.7,.3,1) forwards;
+}
+#mad-tyc-m4x8 .mtc-d1{animation-delay:.05s}
+#mad-tyc-m4x8 .mtc-d2{animation-delay:.15s}
+#mad-tyc-m4x8 .mtc-d3{animation-delay:.25s}
+#mad-tyc-m4x8 .mtc-d4{animation-delay:.35s}
+#mad-tyc-m4x8 .mtc-d5{animation-delay:.45s}
+@keyframes mtcRise{to{opacity:1;transform:none;}}
+
+#mad-tyc-m4x8 .mtc-rv{
+  opacity:0;transform:translateY(20px);
+  transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.3,1);
+}
+#mad-tyc-m4x8 .mtc-rv.mtc-in{opacity:1;transform:none;}
+
+/* ============================================================
+   CONTAINER QUERIES — sized off the BLOCK's real width, not the
+   viewport, so GHL builder columns and mobile preview behave.
+   ============================================================ */
+
+/* --- large phone / small tablet --- */
+@container madtyc (min-width:600px){
+  #mad-tyc-m4x8 .mtc-wrap{padding:0 2rem;}
+  #mad-tyc-m4x8 .mtc-hero{padding:4.6rem 0 4.8rem;}
+  #mad-tyc-m4x8 .mtc-btns{flex-direction:row;justify-content:center;}
+  #mad-tyc-m4x8 .mtc-info{grid-template-columns:repeat(2,1fr);gap:2rem;}
+  #mad-tyc-m4x8 .mtc-check{width:88px;height:88px;}
+  #mad-tyc-m4x8 .mtc-check svg{width:38px;height:38px;}
+}
+
+/* --- tablet / small laptop --- */
+@container madtyc (min-width:900px){
+  #mad-tyc-m4x8 .mtc-hero{padding:5.6rem 0 5.8rem;}
+  #mad-tyc-m4x8 .mtc-info{grid-template-columns:repeat(4,1fr);}
+}
+
+/* Fallback for any GHL build that strips container-query support */
+@supports not (container-type:inline-size){
+  @media (min-width:600px){
+    #mad-tyc-m4x8 .mtc-wrap{padding:0 2rem;}
+    #mad-tyc-m4x8 .mtc-btns{flex-direction:row;justify-content:center;}
+    #mad-tyc-m4x8 .mtc-info{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (min-width:900px){
+    #mad-tyc-m4x8 .mtc-info{grid-template-columns:repeat(4,1fr);}
+  }
+}
+
+/* ---------- REDUCED MOTION ---------- */
+@media (prefers-reduced-motion:reduce){
+  #mad-tyc-m4x8 *,#mad-tyc-m4x8 *::before,#mad-tyc-m4x8 *::after{
+    animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+  #mad-tyc-m4x8 .mtc-rise,#mad-tyc-m4x8 .mtc-rv{opacity:1;transform:none;}
+  #mad-tyc-m4x8 .mtc-check path{stroke-dashoffset:0;}
+}
+</style>
+
+<div id="mad-tyc-m4x8">
+
+  <!-- SECTION: CONFIRMATION HERO -->
+  <section class="mtc-hero">
+    <div class="mtc-video" aria-hidden="true">
+      <video id="mtcVideo" autoplay muted loop playsinline preload="auto"
+             poster="https://i0.wp.com/madcustomcars.com/wp-content/uploads/2026/03/DSC4277-scaled.jpeg">
+        <source src="https://reactheme.com/products/wordpress/autodetail/wp-content/uploads/2025/07/1.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="mtc-scrim" aria-hidden="true"></div>
+
+    <div class="mtc-wrap">
+
+      <!-- SECTION: CHECK MARK -->
+      <div class="mtc-check mtc-rise mtc-d1" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4.5 12.5l5 5 10-11"/>
+        </svg>
+      </div>
+
+      <!-- SECTION: HEADLINE -->
+      <div class="mtc-rise mtc-d2">
+        <span class="mtc-badge">Consultation confirmed</span>
+      </div>
+      <h1 class="mtc-h1 mtc-rise mtc-d2">You're <em>Booked In</em></h1>
+      <p class="mtc-sub mtc-rise mtc-d3">
+        Your 1:1 consultation is locked in. A confirmation is on its way to your inbox, and you'll
+        get reminders before we meet. That's a full hour set aside for your build — come with the
+        details and we'll come with straight answers.
+      </p>
+
+      <!-- SECTION: BOOKED SLOT (auto-filled from the URL when GHL passes it) -->
+      <div class="mtc-slot mtc-rise mtc-d3" id="mtcSlot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="4.5" width="18" height="16" rx="3"/>
+          <path d="M3 9.5h18M8 2.5v4M16 2.5v4"/>
+        </svg>
+        <span id="mtcSlotText"></span>
+      </div>
+
+      <!-- SECTION: WHAT TO BRING -->
+      <ul class="mtc-prep mtc-rise mtc-d4">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          <span>Your vehicle's year, make, model and trim</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          <span>Reference photos or builds you like</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          <span>Any budget range or timeline you're working with</span>
+        </li>
+      </ul>
+
+      <!-- SECTION: CTA BUTTON -->
+      <div class="mtc-btns mtc-rise mtc-d5">
+        <a class="mtc-btn" href="https://book.madcustomcars.com/">Explore Our Services</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION: CONTACT STRIP -->
+  <section class="mtc-strip">
+    <div class="mtc-wrap">
+      <div class="mtc-info">
+        <div class="mtc-rv">
+          <h4>Florida</h4>
+          <ul>
+            <li><a href="tel:+16893674674">+1 689-367-4674</a></li>
+            <li><p>19 N Westmoreland Dr<br>Orlando, FL 32805</p></li>
+          </ul>
+        </div>
+        <div class="mtc-rv">
+          <h4>Puerto Rico</h4>
+          <ul>
+            <li><a href="tel:+17878465115">(787) 846-5115</a></li>
+            <li><a href="mailto:madcustomfl@outlook.com">madcustomfl@outlook.com</a></li>
+          </ul>
+        </div>
+        <div class="mtc-rv">
+          <h4>Booking hours</h4>
+          <p>Monday to Friday<br>8:00am &ndash; 5:00pm ET</p>
+        </div>
+        <div class="mtc-rv">
+          <h4>Need to reschedule?</h4>
+          <p>Use the link in your confirmation email, or call the shop and we'll move it for you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: FINE PRINT -->
+  <section class="mtc-fine">
+    <div class="mtc-wrap">
+      <p>
+        Consultations are free and carry no obligation. Pricing discussed on the call is an
+        estimate based on the information you provide and may change once we inspect the vehicle
+        in person.
+        <a href="https://bookmadcustom.com/terms-and-condition">Terms &amp; Conditions</a> &nbsp;&middot;&nbsp;
+        <a href="https://bookmadcustom.com/privacy-policy">Privacy Policy</a>
+      </p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById('mad-tyc-m4x8');
+  if(!root) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* background video: honour reduced motion, pause while off screen */
+  var vid = document.getElementById('mtcVideo');
+  if(vid){
+    if(reduce){
+      vid.removeAttribute('autoplay');
+      vid.pause();                 /* poster frame stays visible */
+    } else {
+      var p = vid.play();
+      if(p && p.catch) p.catch(function(){ /* poster covers it */ });
+      if('IntersectionObserver' in window){
+        new IntersectionObserver(function(es){
+          es.forEach(function(e){
+            if(e.isIntersecting){ var q = vid.play(); if(q && q.catch) q.catch(function(){}); }
+            else { vid.pause(); }
+          });
+        },{threshold:.05}).observe(vid);
+      }
+    }
+  }
+
+  /* Booked-slot pill.
+     GHL's calendar redirect appends the booked time to the thank-you URL.
+     The parameter name has changed across widget versions, so several are
+     checked. If none is present the pill simply stays hidden — the page
+     never shows a broken or empty date. */
+  try{
+    var qs = new URLSearchParams(window.location.search);
+    var raw = qs.get('event_start_time') || qs.get('start_time') ||
+              qs.get('startTime') || qs.get('selected_slot') || '';
+    if(raw){
+      var d = new Date(decodeURIComponent(raw));
+      if(!isNaN(d.getTime())){
+        var opts = {weekday:'long', month:'long', day:'numeric',
+                    hour:'numeric', minute:'2-digit'};
+        var tz = qs.get('timezone') || qs.get('event_timezone');
+        if(tz){ opts.timeZone = tz; opts.timeZoneName = 'short'; }
+        var txt = new Intl.DateTimeFormat(undefined, opts).format(d);
+        document.getElementById('mtcSlotText').textContent = txt;
+        document.getElementById('mtcSlot').classList.add('mtc-on');
+      }
+    }
+  }catch(e){ /* pill stays hidden */ }
+
+  /* scroll reveal with stagger */
+  var items = root.querySelectorAll('.mtc-rv');
+  if('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e,i){
+        if(e.isIntersecting){
+          var el = e.target;
+          setTimeout(function(){ el.classList.add('mtc-in'); }, (i % 5) * 80);
+          io.unobserve(el);
+        }
+      });
+    },{rootMargin:'0px 0px -8% 0px',threshold:.08});
+    items.forEach(function(el){ io.observe(el); });
+  } else {
+    items.forEach(function(el){ el.classList.add('mtc-in'); });
+  }
+})();
+</script>

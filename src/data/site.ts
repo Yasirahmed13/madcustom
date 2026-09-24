@@ -107,6 +107,20 @@ export const SITE = {
   foundingYear: 1973,
   email: "madcustomfl@outlook.com",
 
+  /** The registered company, as the legal pages name it. */
+  legalEntity: "MAD CUSTOMS FLORIDA CORPORATION",
+
+  /**
+   * The line the text-message programme runs on, as the Terms and Privacy
+   * pages give it for STOP/HELP requests.
+   *
+   * TODO(confirm): this number came from the GHL legal pages and matches
+   * neither shop line. It is probably the GHL/Twilio messaging number — if so,
+   * it is correct here and nowhere else.
+   */
+  messagingPhoneDisplay: "+1 (689) 367 4674",
+  messagingPhoneE164: "+16893674674",
+
   /** The number in the header, the mobile bar and every "Call" button. */
   primaryPhoneDisplay: "+1 (407) 286 4426",
   primaryPhoneE164: "+14072864426",

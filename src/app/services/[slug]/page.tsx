@@ -15,7 +15,7 @@ import { CtaBand } from "@/components/sections/CtaBand";
 import { ServiceGallery } from "@/components/work/ServiceGallery";
 import { breadcrumbSchema, faqSchema, serviceSchema } from "@/lib/jsonld";
 import { pageMetadata } from "@/lib/seo";
-import { SERVICES_URL } from "@/data/links";
+import { serviceQuoteHref } from "@/data/links";
 import { whatsappServiceHref } from "@/lib/whatsapp";
 
 /**
@@ -131,12 +131,10 @@ export default async function ServicePage({
 
             <div className="phone:flex-col phone:items-stretch mt-[30px] flex flex-wrap gap-3">
               <a
-                href={SERVICES_URL}
-                target="_blank"
-                rel="noopener"
+                href={serviceQuoteHref(service)}
                 className="bg-red text-ink hover:bg-red-bright phone:justify-center flex items-center gap-2.5 px-7 py-[17px] text-[15px] font-bold tracking-[.02em] transition-colors duration-200"
               >
-                Book {service.shortLabel} <span className="font-mono">→</span>
+                Get a {service.shortLabel} Quote <span className="font-mono">→</span>
               </a>
               <a
                 href={whatsappServiceHref(service.title)}

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SITE, TEL_HREF } from "@/data/site";
-import { APPOINTMENT_URL, isExternalHref } from "@/data/links";
+import { APPOINTMENT_URL, isExternalHref, linkTarget } from "@/data/links";
 import { MobileMenu } from "./MobileMenu";
 import { MobileNav } from "./MobileNav";
 import { ServicesMegaMenu } from "./ServicesMegaMenu";
@@ -72,8 +72,7 @@ export function SiteHeader({
               <a
                 key={item.label}
                 href={item.href}
-                target="_blank"
-                rel="noopener"
+                {...linkTarget(item.href)}
                 className={className}
               >
                 {item.label}
@@ -97,8 +96,6 @@ export function SiteHeader({
           </a>
           <a
             href={APPOINTMENT_URL}
-            target="_blank"
-            rel="noopener"
             className="bg-red text-ink hover:bg-red-bright phone:px-3 phone:py-2.5 phone:text-[12px] flex-none px-[18px] py-[11px] text-[13.5px] font-bold tracking-[.03em] whitespace-nowrap transition-colors duration-200"
           >
             Make Appointment

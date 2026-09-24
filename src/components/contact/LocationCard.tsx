@@ -23,10 +23,13 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
 export function LocationCard({
   location,
   index,
+  bookHref = APPOINTMENT_URL,
 }: {
   location: Location;
   /** Zero-based, for the "01 / 02" corner marker. */
   index: number;
+  /** Where "Make Appointment" goes — "#calendar" on a page that has one. */
+  bookHref?: string;
 }) {
   return (
     <article
@@ -83,9 +86,7 @@ export function LocationCard({
 
       <div className="phone:flex-col phone:items-stretch mt-auto flex flex-wrap gap-2.5 pt-[26px]">
         <a
-          href={APPOINTMENT_URL}
-          target="_blank"
-          rel="noopener"
+          href={bookHref}
           className="bg-red text-ink hover:bg-red-bright phone:text-center px-[22px] py-[14px] text-[14px] font-bold transition-colors duration-200"
         >
           Make Appointment

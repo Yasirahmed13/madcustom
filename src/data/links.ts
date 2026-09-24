@@ -1,24 +1,45 @@
 /**
- * Off-site destinations.
+ * Funnel destinations.
  *
  * Every service link, every product link and every "Make Appointment" button on
- * the site points at one of these three URLs. They live here so a change to the
+ * the site points at one of these URLs. They live here so a change to the
  * funnel is a one-line edit rather than a sweep through the components.
+ *
+ * The quote form on /quote and the calendars on /book and /consultation are
+ * GoHighLevel's own widgets, embedded, so every submission and booking lands
+ * in the GHL CRM.
  */
+
+import type { Service } from "./services";
 
 /**
- * The GoHighLevel services page. The customer picks the services they want
- * there and submits a single quote request, so all nine services — the mega
- * menu, the footer list, the service card buttons and the CTA on each service
- * page — share this one destination.
+ * The services page. The customer picks the services they want there and
+ * submits a single quote request (step 2: /quote, step 3: /quote/thank-you).
  */
-export const SERVICES_URL = "https://go.madcustomcars.com/services-page";
+export const SERVICES_URL = "/services";
 
 /** The same page, opened at its products section. */
-export const PRODUCTS_URL = `${SERVICES_URL}#ghl-products-p3r8`;
+export const PRODUCTS_URL = `${SERVICES_URL}#shop`;
 
-/** The booking funnel behind every "Make Appointment" button. */
-export const APPOINTMENT_URL = "https://bookmadcustom.com/appointment-mad-page";
+/** The quote form, step 2 of the funnel. */
+export const QUOTE_URL = "/quote";
+
+/** The appointment calendar behind every "Make Appointment" button. */
+export const APPOINTMENT_URL = "/book";
+
+/** The 1:1 consultation calendar. */
+export const CONSULTATION_URL = "/consultation";
+
+export const TERMS_URL = "/terms";
+export const PRIVACY_URL = "/privacy";
+
+/**
+ * The services page with one service already added to the quote, landing on
+ * the service cards.
+ */
+export function serviceQuoteHref(service: Pick<Service, "quoteName">): string {
+  return `${SERVICES_URL}?add=${encodeURIComponent(service.quoteName)}#choose`;
+}
 
 /**
  * TODO(links): no URL was supplied for the blog. It points at the placeholder

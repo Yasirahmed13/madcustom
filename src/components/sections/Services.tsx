@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { SERVICES } from "@/data/services";
-import { SERVICES_URL } from "@/data/links";
+import { serviceQuoteHref } from "@/data/links";
 import { GROUPS, ITEMS, countLabel } from "@/data/work";
 import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -84,13 +84,11 @@ export function Services() {
                       label={`See the work — ${service.title}`}
                     />
                     <a
-                      href={SERVICES_URL}
-                      target="_blank"
-                      rel="noopener"
-                      aria-label={`View details — ${service.title}`}
+                      href={serviceQuoteHref(service)}
+                      aria-label={`Get a quote — ${service.title}`}
                       className="text-bone-50 hover:text-bone text-[12px] tracking-[.1em] uppercase transition-colors duration-200"
                     >
-                      View Details ↗
+                      Get a Quote →
                     </a>
                   </div>
                 </div>

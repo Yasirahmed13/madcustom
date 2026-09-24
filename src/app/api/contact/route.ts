@@ -2,8 +2,8 @@
  * POST /api/contact — receives a message from the contact page.
  *
  * Same shape as /api/booking: validate with the shared zod schema, drop
- * honeypot hits, throttle per IP, then hand off to the delivery adapter in
- * lib/email.ts.
+ * honeypot hits, throttle per IP, then hand off to the delivery adapters in
+ * lib/email.ts and lib/ghl.ts.
  *
  * A delivery failure is NOT an error response. The response carries
  * `delivered: false` and the UI shows the customer the phone number and
@@ -12,6 +12,7 @@
 import { NextResponse } from "next/server";
 import { contactSchema } from "@/lib/contact-schema";
 import { deliverContact } from "@/lib/email";
+import { forwardContactToGhl } from "@/lib/ghl";
 
 export const runtime = "nodejs";
 /** Never cached — every request runs. */
@@ -82,7 +83,11 @@ export async function POST(request: Request) {
     );
   }
 
-  const result = await deliverContact(message);
+  // Email and the GHL CRM in parallel. Either one landing counts as delivered.
+  const [email, crm] = await Promise.all([
+    deliverContact(message),
+    forwardContactToGhl(message),
+  ]);
 
-  return NextResponse.json({ ok: true, delivered: result.delivered });
+  return NextResponse.json({ ok: true, delivered: email.delivered || crm.delivered });
 }

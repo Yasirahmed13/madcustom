@@ -2,8 +2,13 @@
 
 import Image from "next/image";
 import { SERVICES } from "@/data/services";
-import { PRODUCTS } from "@/data/products";
-import { APPOINTMENT_URL, PRODUCTS_URL, SERVICES_URL } from "@/data/links";
+import { FEATURED_PRODUCTS, formatMoney, priceOf, productImage } from "@/data/products";
+import {
+  CONSULTATION_URL,
+  PRODUCTS_URL,
+  SERVICES_URL,
+  serviceQuoteHref,
+} from "@/data/links";
 import { SITE, TEL_HREF } from "@/data/site";
 import { Eyebrow } from "@/components/ui/SectionHeader";
 
@@ -11,14 +16,13 @@ import { Eyebrow } from "@/components/ui/SectionHeader";
  * The contents of the services menu, in both of the shapes it is shown in: the
  * three-column desktop panel and the stacked sheet the mobile nav strip opens.
  *
- * Every service goes to the services page and every product to its products
- * section, so the links are applied here rather than carried on the data.
+ * Each service opens the services page with that service already added to the
+ * quote, and every product opens its products section, so the links are applied
+ * here rather than carried on the data.
  */
 
-/** Opens a link off-site and closes the menu behind it. */
+/** Follows a link and closes the menu behind it. */
 type NavigateProps = { onNavigate: () => void };
-
-const OUT = { target: "_blank", rel: "noopener" } as const;
 
 export function MegaMenuContent({
   stacked = false,
@@ -132,8 +136,7 @@ function ConsultationColumn({
       )}
 
       <a
-        href={APPOINTMENT_URL}
-        {...OUT}
+        href={CONSULTATION_URL}
         onClick={onNavigate}
         className="bg-red text-ink hover:bg-red-bright mt-4 block px-[18px] py-[13px] text-center text-[13.5px] font-bold tracking-[.02em] transition-colors duration-200"
       >
@@ -170,8 +173,7 @@ function ServicesColumn({
         {SERVICES.map((service) => (
           <li key={service.slug} className="border-line-8 border-b last:border-b-0">
             <a
-              href={SERVICES_URL}
-              {...OUT}
+              href={serviceQuoteHref(service)}
               onClick={onNavigate}
               className="group hover:bg-white-3 -mx-2 grid grid-cols-[26px_minmax(0,1fr)_auto] items-center gap-2.5 px-2 py-[11px] transition-colors duration-200"
             >
@@ -198,11 +200,10 @@ function ServicesColumn({
 
       <a
         href={SERVICES_URL}
-        {...OUT}
         onClick={onNavigate}
         className="border-line-14 text-bone-72 hover:border-red hover:text-bone mt-4 block border px-4 py-[11px] text-center text-[12.5px] font-semibold tracking-[.02em] transition-colors duration-200"
       >
-        Get a quote on any combination ↗
+        Get a quote on any combination →
       </a>
     </div>
   );
@@ -222,48 +223,36 @@ function ProductsColumn({
         <h2 className="font-display m-0 text-[26px] leading-none uppercase">Products</h2>
         <a
           href={PRODUCTS_URL}
-          {...OUT}
           onClick={onNavigate}
           className="text-red hover:text-red-soft text-[11px] tracking-[.1em] whitespace-nowrap uppercase transition-colors duration-200"
         >
-          Shop all ↗
+          Shop all →
         </a>
       </div>
 
       <div className={`mt-4 grid grid-cols-3 ${stacked ? "gap-2" : "gap-2.5"}`}>
-        {PRODUCTS.map((product) => (
+        {FEATURED_PRODUCTS.map((product) => (
           <a
-            key={product.name}
+            key={product.id}
             href={PRODUCTS_URL}
-            {...OUT}
             onClick={onNavigate}
             className="group border-line-8 hover:border-red-34 hover:bg-white-3 flex flex-col border p-2.5 transition-colors duration-200"
           >
             <span className="bg-surface-media relative block aspect-square w-full overflow-hidden">
-              {product.image ? (
-                <Image
-                  src={`/products/${product.image}.png`}
-                  alt=""
-                  fill
-                  sizes="150px"
-                  aria-hidden="true"
-                  className="object-contain p-2 transition-transform duration-300 group-hover:scale-105"
-                />
-              ) : (
-                /* Until a photo is dropped in /public/products, a lettered tile
-                   rather than an empty well or a broken image. */
-                <span className="absolute inset-0 grid place-items-center">
-                  <span className="border-line-12 text-bone-32 group-hover:border-red-34 group-hover:text-bone-45 border px-2 py-1 font-mono text-[10px] tracking-[.16em] transition-colors duration-200">
-                    {product.tag}
-                  </span>
-                </span>
-              )}
+              <Image
+                src={productImage(product)}
+                alt=""
+                fill
+                sizes="150px"
+                aria-hidden="true"
+                className="object-contain p-2 transition-transform duration-300 group-hover:scale-105"
+              />
             </span>
             <span className="text-bone-72 group-hover:text-bone mt-2.5 line-clamp-2 text-[12px] leading-[1.35] transition-colors duration-200">
               {product.name}
             </span>
             <span className="text-red-bright mt-auto pt-2 font-mono text-[12.5px]">
-              {product.price}
+              {formatMoney(priceOf(product))}
             </span>
           </a>
         ))}

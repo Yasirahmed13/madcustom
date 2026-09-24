@@ -1,74 +1,161 @@
 import type { Metadata } from "next";
-import { LegalPage, LegalSection } from "@/components/layout/LegalPage";
+import {
+  Callout,
+  EmailLink,
+  Keyword,
+  LegalPage,
+  LegalSection,
+  MessagingPhone,
+} from "@/components/legal/Legal";
+import { PRIVACY_URL } from "@/data/links";
 import { SITE } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  ...pageMetadata({
-    title: "Terms & Conditions",
-    description: `Terms and conditions for ${SITE.name} — automotive customization in Orlando, Florida and Barceloneta, Puerto Rico.`,
-    path: "/terms",
-  }),
-  // A placeholder page should not be indexed. Remove this once the real text is in.
-  robots: { index: false, follow: true },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Terms & Conditions",
+  description: `Terms and conditions for ${SITE.name}'s text messages, enquiry and booking forms — automotive customization in Orlando, Florida and Barceloneta, Puerto Rico.`,
+  path: "/terms",
+});
+
+const TOC = [
+  { id: "s1", title: "Program Description" },
+  { id: "s2", title: "Age Restriction" },
+  { id: "s3", title: "Consent to Receive Messages" },
+  { id: "s4", title: "Opt Out" },
+  { id: "s5", title: "Opt In Again" },
+  { id: "s6", title: "Help and Support" },
+  { id: "s7", title: "Message Frequency and Rates" },
+  { id: "s8", title: "Carrier Disclaimer" },
+  { id: "s9", title: "Privacy" },
+  { id: "s10", title: "Changes to These Terms" },
+] as const;
 
 export default function TermsPage() {
+  const section = (i: number) => ({ id: TOC[i]!.id, num: i + 1, title: TOC[i]!.title });
+
   return (
-    <LegalPage eyebrow="LEGAL / TERMS" title="Terms & Conditions">
-      <LegalSection heading="1. Placeholder — About these terms">
+    <LegalPage
+      eyebrow="Legal / Terms"
+      title="Terms & Conditions"
+      updated="18 September 2026"
+      toc={TOC}
+      intro={
+        <>
+          These terms apply to the text message programme operated by{" "}
+          <strong className="text-bone">{SITE.legalEntity}</strong>, trading as MAD Custom
+          (&ldquo;MAD Custom&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;), and to the
+          enquiry and booking forms on this site. By submitting a form or replying to one
+          of our messages you agree to what is set out below.
+        </>
+      }
+    >
+      <LegalSection {...section(0)}>
         <p>
-          [PLACEHOLDER] Describe who these terms are between, what counts as accepting
-          them, and how customers are told when they change.
+          MAD Custom uses text messages to respond to enquiries about automotive
+          customization work, including wheels and tires, suspension, vinyl wrap, paint
+          protection film, detailing, upholstery, window tint, exhaust and bespoke builds.
+          Messages relate to quotes, appointment times, progress updates on a vehicle in
+          our care, and occasional service reminders.
+        </p>
+        <p>
+          We operate from Florida and Puerto Rico. Messages are sent by us or by a
+          messaging provider acting on our behalf.
         </p>
       </LegalSection>
 
-      <LegalSection heading="2. Placeholder — Quotes and bookings">
+      <LegalSection {...section(1)}>
         <p>
-          [PLACEHOLDER] Set out how long a written quote stands for, what a consultation
-          booking commits either side to, and how to reschedule or cancel. The site
-          currently tells customers that consultations are free and that no deposit is
-          taken to hold a slot — this section should match that.
+          You must be 18 or older to give consent to receive text messages from us. By
+          providing a mobile number you confirm that you are at least 18 and that the
+          number belongs to you or that you are authorised to use it.
         </p>
       </LegalSection>
 
-      <LegalSection heading="3. Placeholder — Payment">
+      <LegalSection {...section(2)}>
         <p>
-          [PLACEHOLDER] Deposits, payment stages, accepted methods, and what happens with
-          parts ordered specifically for a vehicle.
+          When you enter your mobile number on one of our forms and submit it, you are
+          agreeing to receive text messages from MAD Custom about your enquiry or booking.
+        </p>
+        <Callout>
+          <strong>Consent is not a condition of purchase.</strong> You do not have to
+          agree to text messages in order to book work with us or buy anything from us.
+          You can call us instead on <MessagingPhone />.
+        </Callout>
+        <p>
+          We do not sell or rent your mobile number, and we do not share it with anyone
+          for their own marketing.
         </p>
       </LegalSection>
 
-      <LegalSection heading="4. Placeholder — Vehicles in our care">
+      <LegalSection {...section(3)}>
         <p>
-          [PLACEHOLDER] Collection and storage, insurance while a vehicle is at the shop,
-          and how long a completed vehicle can be left before storage charges apply.
+          You can stop the messages at any time. Reply <Keyword>STOP</Keyword> to any text
+          you receive from us. We will send one confirmation message and then stop sending
+          you texts.
+        </p>
+        <p>
+          You can also ask us to remove your number by emailing <EmailLink /> or calling{" "}
+          <MessagingPhone />.
         </p>
       </LegalSection>
 
-      <LegalSection heading="5. Placeholder — Workmanship guarantee">
+      <LegalSection {...section(4)}>
         <p>
-          [PLACEHOLDER] The site states that every installation is backed by a workmanship
-          guarantee plus the manufacturer warranty on films, coatings and wheels. Set out
-          what that covers, for how long, and what voids it.
+          If you change your mind after opting out, reply <Keyword>START</Keyword> to
+          resume messages, or submit a form on this site again, or simply ask us next time
+          you speak to us.
         </p>
       </LegalSection>
 
-      <LegalSection heading="6. Placeholder — Liability">
-        <p>[PLACEHOLDER] Limits of liability, and anything excluded from them by law.</p>
+      <LegalSection {...section(5)}>
+        <p>
+          Reply <Keyword>HELP</Keyword> to any of our messages and you will receive our
+          contact details. You can also reach a person directly:
+        </p>
+        <ul>
+          <li>
+            Phone: <MessagingPhone />
+          </li>
+          <li>
+            Email: <EmailLink />
+          </li>
+        </ul>
       </LegalSection>
 
-      <LegalSection heading="7. Placeholder — Governing law">
+      <LegalSection {...section(6)}>
         <p>
-          [PLACEHOLDER] Which jurisdiction governs, noting that {SITE.name} operates in
-          both Florida and Puerto Rico.
+          Message frequency varies and depends on your enquiry. A quote conversation may
+          involve several messages in a day, while a service reminder may arrive only
+          occasionally.
+        </p>
+        <p>
+          <strong>Message and data rates may apply.</strong> Any charges come from your
+          mobile carrier under your own plan, not from us. Check with your carrier if you
+          are unsure what your plan includes.
         </p>
       </LegalSection>
 
-      <LegalSection heading="8. Contact">
+      <LegalSection {...section(7)}>
         <p>
-          Questions about these terms: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>{" "}
-          or <a href={`tel:${SITE.primaryPhoneE164}`}>{SITE.primaryPhoneDisplay}</a>.
+          Mobile carriers are not liable for delayed or undelivered messages. Delivery
+          depends on your carrier, your device and your signal, none of which we control.
+          If you are expecting a message from us and it has not arrived, please call us.
+        </p>
+      </LegalSection>
+
+      <LegalSection {...section(8)}>
+        <p>
+          Information you give us through a form or a text message is handled as described
+          in our <a href={PRIVACY_URL}>Privacy Policy</a>. In short, we use it to answer
+          your enquiry and carry out the work you ask for, and we do not sell it.
+        </p>
+      </LegalSection>
+
+      <LegalSection {...section(9)}>
+        <p>
+          We may update these terms as our services or the messaging rules change. The
+          date at the top of this page shows when it was last revised. Continuing to use
+          our forms or messaging after a change means you accept the updated terms.
         </p>
       </LegalSection>
     </LegalPage>

@@ -35,6 +35,12 @@ export type Service = {
   coverFile: string;
   /** CSS object-position for the cover crop. */
   coverPosition: string;
+  /**
+   * The name this service goes by in a quote request. It is what lands in the
+   * GHL `selected_services` field, so CRM tags and workflows key off it — keep
+   * it stable once live.
+   */
+  quoteName: string;
 };
 
 export const SERVICES: readonly Service[] = [
@@ -48,6 +54,7 @@ export const SERVICES: readonly Service[] = [
     shortLabel: "Rims & Tires",
     coverFile: "wheels-bmw-x4m-detail",
     coverPosition: "center 70%",
+    quoteName: "Rims & Tires",
   },
   {
     num: "02",
@@ -59,6 +66,7 @@ export const SERVICES: readonly Service[] = [
     shortLabel: "Suspension",
     coverFile: "suspension-bronco-profile",
     coverPosition: "center 62%",
+    quoteName: "Performance Suspension",
   },
   {
     num: "03",
@@ -70,6 +78,7 @@ export const SERVICES: readonly Service[] = [
     shortLabel: "Vinyl Wrap",
     coverFile: "wrap-amg-gt63-olive",
     coverPosition: "center 68%",
+    quoteName: "Premium Vinyl Wrap",
   },
   {
     num: "04",
@@ -81,6 +90,7 @@ export const SERVICES: readonly Service[] = [
     shortLabel: "PPF",
     coverFile: "ppf-corvette-c8",
     coverPosition: "center 62%",
+    quoteName: "Paint Protection Film",
   },
   {
     num: "05",
@@ -92,6 +102,7 @@ export const SERVICES: readonly Service[] = [
     shortLabel: "Detailing",
     coverFile: "detailing-ferrari-f430-rear",
     coverPosition: "center 40%",
+    quoteName: "Luxury Detailing",
   },
   {
     num: "06",
@@ -103,6 +114,7 @@ export const SERVICES: readonly Service[] = [
     shortLabel: "Custom Builds",
     coverFile: "builds-maverick-x3",
     coverPosition: "center 62%",
+    quoteName: "Bespoke Custom Builds",
   },
   {
     num: "07",
@@ -114,6 +126,7 @@ export const SERVICES: readonly Service[] = [
     shortLabel: "Upholstery",
     coverFile: "upholstery-ferrari-headrest",
     coverPosition: "center 45%",
+    quoteName: "Upholstery",
   },
   {
     num: "08",
@@ -125,6 +138,7 @@ export const SERVICES: readonly Service[] = [
     shortLabel: "Window Tint",
     coverFile: "tint-install",
     coverPosition: "center",
+    quoteName: "Window Tint",
   },
   {
     num: "09",
@@ -136,6 +150,7 @@ export const SERVICES: readonly Service[] = [
     shortLabel: "Exhaust",
     coverFile: "exhaust-amg-c63",
     coverPosition: "center 85%",
+    quoteName: "Performance Exhaust",
   },
 ] as const;
 

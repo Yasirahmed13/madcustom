@@ -121,6 +121,59 @@ consistent with the page automatically.
 
 ---
 
+## The quote and booking funnel (GoHighLevel)
+
+| Route                     | What it is                                               |
+| ------------------------- | -------------------------------------------------------- |
+| `/services`               | Pick services + Pro Shop products; the running quote bar |
+| `/quote`                  | Request summary + GHL form `cIDV5AHlkGjzKDlOt6Bn`        |
+| `/quote/thank-you`        | After the form is submitted; empties the saved quote     |
+| `/book`                   | GHL calendar `wV1ahTWwIdq5fKJTF7QB` ("Make Appointment") |
+| `/book/thank-you`         | After an appointment is booked; shows the booked slot    |
+| `/consultation`           | GHL calendar `c95paawxfNvdTBdWfyW0` (1:1 consultation)   |
+| `/consultation/thank-you` | After a consultation is booked                           |
+| `/terms`, `/privacy`      | Legal pages                                              |
+
+These are ordinary pages of this site. The only GoHighLevel parts are the form and the
+two calendars, embedded as GHL widgets (`src/components/ghl/GhlEmbed.tsx`), so contacts,
+custom fields, confirmations, reminders and workflows all run in GHL as before. The
+page's query string is passed into each widget, which carries UTM tags and prefill.
+
+**How the quote travels.** The picks are kept in the browser (`src/lib/quote-store.ts`),
+so they survive a reload. "Request my quote" opens
+`/quote?selected_services=…&order_items=…&order_total=…`, and the form's hidden fields
+read those three keys into the GHL custom fields of the same names. Every service link on
+the site opens `/services?add=<name>#choose`, which lands with that service already picked.
+
+**Where to edit.** Starting prices, card copy and funnel wording: `src/data/quote.ts`.
+The ten products and their prices: `src/data/products.ts` (photos in
+`public/products/<id>.webp`). Calendar ids and booking-page copy: `src/data/calendars.ts`.
+The service names sent to GHL are `quoteName` in `src/data/services.ts` — CRM tags and
+workflows key off them, so keep them stable.
+
+`ghl/` holds the original GHL code blocks for reference only; nothing reads them.
+
+### Settings to change inside GHL
+
+The form and calendars are GHL's own widgets, so the CRM, confirmations, reminders and
+workflows are unchanged. Only the redirects need pointing at this domain:
+
+1. **Quote form** `cIDV5AHlkGjzKDlOt6Bn` → Settings → On submit → redirect to
+   `https://<your-domain>/quote/thank-you`
+2. **Make Appointment calendar** `wV1ahTWwIdq5fKJTF7QB` → Confirmation / Redirect URL →
+   `https://<your-domain>/book/thank-you`
+3. **1:1 Consultation calendar** `c95paawxfNvdTBdWfyW0` → Redirect URL →
+   `https://<your-domain>/consultation/thank-you`
+4. To match the site inside the widgets, give the form and both calendars a dark
+   background, square corners (radius 0) and primary colour `#E01B24` in their GHL style
+   settings. Everything around them is already styled by the site.
+
+The site's own forms (the homepage build sheet and `/contact`) can also feed the CRM: set
+`GHL_BOOKING_WEBHOOK_URL` and `GHL_CONTACT_WEBHOOK_URL` to the URLs of two workflows with
+an **Inbound Webhook** trigger. See `src/lib/ghl.ts` for the fields sent.
+
+---
+
 ## Connecting email
 
 Booking submissions go to `POST /api/booking`, which validates them and hands off to

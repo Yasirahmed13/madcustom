@@ -16,6 +16,23 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "*.fbcdn.net" },
     ],
   },
+  async redirects() {
+    return [
+      // The old GHL page names, in case they were shared or bookmarked.
+      { source: "/services-page", destination: "/services", permanent: true },
+      { source: "/appointment-mad-page", destination: "/book", permanent: true },
+      { source: "/appointment", destination: "/book", permanent: true },
+      {
+        source: "/home-1-on-1-consultation",
+        destination: "/consultation",
+        permanent: true,
+      },
+      { source: "/terms-condition-page", destination: "/terms", permanent: true },
+      { source: "/terms-and-condition", destination: "/terms", permanent: true },
+      { source: "/privacy-policy-page", destination: "/privacy", permanent: true },
+      { source: "/privacy-policy", destination: "/privacy", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

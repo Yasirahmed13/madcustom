@@ -34,8 +34,6 @@ export function MobileActionBar() {
       </a>
       <a
         href={APPOINTMENT_URL}
-        target="_blank"
-        rel="noopener"
         className="bg-red text-ink hover:bg-red-bright phone:px-1.5 phone:py-[15px] phone:text-[13px] flex-[1.4] px-2.5 py-4 text-center text-[13.5px] font-bold transition-colors duration-200"
       >
         Make Appointment

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { SITE } from "@/data/site";
-import { isExternalHref } from "@/data/links";
+import { isExternalHref, linkTarget } from "@/data/links";
 import { MegaMenuContent } from "./MegaMenuContent";
 
 /**
@@ -93,8 +93,7 @@ export function MobileNav() {
               <a
                 key={item.label}
                 href={item.href}
-                target="_blank"
-                rel="noopener"
+                {...linkTarget(item.href)}
                 onClick={close}
                 className={`${chip} ${chipIdle}`}
               >

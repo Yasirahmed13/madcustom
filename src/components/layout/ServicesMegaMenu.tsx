@@ -81,12 +81,10 @@ export function ServicesMegaMenu({ label }: { label: string }) {
       <a
         ref={triggerRef}
         href={SERVICES_URL}
-        target="_blank"
-        rel="noopener"
         aria-expanded={open}
         aria-controls={open ? panelId : undefined}
         onClick={(event) => {
-          // A first click opens the panel rather than leaving the site; a second
+          // A first click opens the panel rather than leaving the page; a second
           // one follows the link.
           if (!open) {
             event.preventDefault();

@@ -1,0 +1,2575 @@
+<!-- ===================================================================
+     MAD CUSTOM — FULL PAGE  (Nav + Hero + Services + Product Carousel + Footer)
+     Scopes: #ghl-nav-n2x6 · #ghl-hero-v7q2 · #ghl-services-m9d4 · #ghl-products-p3r8 · #ghl-footer-f4k8
+     Paste into ONE GHL Custom HTML / Code element.
+     Fully scoped — cannot affect anything else on the page.
+
+     ⚠ VIDEO SOURCE — swap before publishing
+       The hero MP4 is hosted on reactheme.com (a theme demo). It isn't
+       yours to use and can be blocked/deleted anytime. Upload your own
+       footage (H.264, 1920x1080, under ~8 MB) to GHL Media Storage and
+       replace the <source src="..."> in the hero.
+
+     NAVIGATION (#ghl-nav-n2x6)
+       Fixed top bar. Turn OFF GHL's own header/nav on this page so
+       you don't get two menus. "Shop" scrolls to the product carousel.
+
+     PRODUCT CAROUSEL (#ghl-products-p3r8)
+       "Add to cart" puts products in the same quote request as services.
+       The "Request My Quote" button under the carousel uses QUOTE_FORM_URL.
+       Prices live in the ITEMS list in the script — keep them in sync
+       with the PRODUCTS list on the product page.
+
+     QUOTE REQUEST → GHL (3 hidden fields on the Quote form)
+       Services picked + products in the cart go out in ONE link:
+         ?selected_services=...&order_items=...&order_total=...
+       Form hidden fields (Query Key)   →  GHL custom field
+         selected_services               →  {{contact.selected_services}}
+         order_items                     →  {{contact.order_items}}
+         order_total                     →  {{contact.order_total}}
+       MC_URL_STEP2 → your funnel Step 2 page URL (see SETTINGS at the top of the script)
+
+     STILL TO REPLACE (footer):
+       https://go.madcustomcars.com/terms-condition-page      https://go.madcustomcars.com/privacy-policy-page
+     =================================================================== -->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
+
+/* =====================================================================
+   NAVIGATION  (#ghl-nav-n2x6)
+   ===================================================================== */
+#ghl-nav-n2x6 {
+  --mn-red: #E10600;
+  --mn-red-dark: #B00500;
+  --mn-bg: rgba(10,10,10,.92);
+  --mn-line: rgba(255,255,255,.08);
+  --mn-text: #FFFFFF;
+  --mn-body: #C9C2C0;
+
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9000;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .3s ease, box-shadow .3s ease, border-color .3s ease;
+  background: linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,0));
+  border-bottom: 1px solid transparent;
+}
+#ghl-nav-n2x6 *, #ghl-nav-n2x6 *::before, #ghl-nav-n2x6 *::after { box-sizing: border-box; }
+#ghl-nav-n2x6 button { font: inherit; }
+#ghl-nav-n2x6 :focus-visible { outline: 2px solid var(--mn-red); outline-offset: 3px; }
+#ghl-nav-n2x6.is-solid {
+  background: var(--mn-bg);
+  border-bottom-color: var(--mn-line);
+  box-shadow: 0 8px 30px rgba(0,0,0,.45);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+}
+
+#ghl-nav-n2x6 .mn-bar {
+  max-width: 1320px; margin: 0 auto;
+  height: 68px; padding: 0 1rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+}
+#ghl-nav-n2x6 .mn-logo { display: flex; align-items: center; flex: 0 0 auto; }
+#ghl-nav-n2x6 .mn-logo img { height: 62px; width: auto; display: block; margin-left: -14px; }
+
+/* desktop links */
+#ghl-nav-n2x6 .mn-links { display: none; align-items: center; gap: .25rem; margin: 0; padding: 0; list-style: none; }
+#ghl-nav-n2x6 .mn-link {
+  display: inline-flex; align-items: center; gap: 5px;
+  min-height: 44px; padding: 0 .95rem;
+  color: var(--mn-text); text-decoration: none; font-size: .98rem; font-weight: 500;
+  background: none; border: 0; cursor: pointer; border-radius: 8px;
+  transition: color .2s ease;
+}
+#ghl-nav-n2x6 .mn-link:hover,
+#ghl-nav-n2x6 .mn-link.is-current { color: var(--mn-red); }
+#ghl-nav-n2x6 .mn-caret { width: 10px; height: 10px; fill: currentColor; transition: transform .2s ease; }
+
+/* dropdown */
+#ghl-nav-n2x6 .mn-drop { position: relative; }
+#ghl-nav-n2x6 .mn-menu {
+  position: absolute; top: calc(100% + 8px); left: 50%;
+  width: 280px; padding: .5rem;
+  background: #141010; border: 1px solid #2A2222; border-radius: 12px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.55);
+  transform: translate(-50%, 8px); opacity: 0; visibility: hidden;
+  transition: opacity .2s ease, transform .2s ease, visibility .2s;
+}
+#ghl-nav-n2x6 .mn-menu::before { content: ''; position: absolute; left: 0; right: 0; top: -12px; height: 12px; }
+#ghl-nav-n2x6 .mn-drop.is-open .mn-menu { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+#ghl-nav-n2x6 .mn-drop.is-open .mn-caret { transform: rotate(180deg); }
+#ghl-nav-n2x6 .mn-menu-item {
+  display: flex; align-items: center; min-height: 42px; padding: 0 .85rem;
+  color: var(--mn-body); text-decoration: none; font-size: .92rem; border-radius: 8px;
+  transition: background-color .15s ease, color .15s ease;
+}
+#ghl-nav-n2x6 .mn-menu-item:hover { background: rgba(225,6,0,.14); color: #fff; }
+#ghl-nav-n2x6 .mn-menu-all {
+  display: flex; align-items: center; justify-content: center; min-height: 42px; margin-top: .35rem;
+  border-top: 1px solid #2A2222; color: #fff; text-decoration: none; font-size: .88rem; font-weight: 600;
+}
+#ghl-nav-n2x6 .mn-menu-all:hover { color: var(--mn-red); }
+
+/* right side */
+#ghl-nav-n2x6 .mn-right { display: flex; align-items: center; gap: .6rem; }
+#ghl-nav-n2x6 .mn-lang {
+  display: none; padding: 3px;
+  background: rgba(20,16,16,.75); border: 1px solid rgba(255,255,255,.12); border-radius: 999px;
+}
+#ghl-nav-n2x6 .mn-lang-btn {
+  appearance: none; border: 0; background: transparent; cursor: pointer;
+  color: #9B9391; font-family: 'Barlow', sans-serif; font-weight: 700; font-size: .74rem; letter-spacing: 1.2px;
+  min-height: 34px; padding: 0 .85rem; border-radius: 999px;
+  transition: background-color .2s ease, color .2s ease;
+}
+#ghl-nav-n2x6 .mn-lang-btn:hover { color: #fff; }
+#ghl-nav-n2x6 .mn-lang-btn.is-active { background: var(--mn-red); color: #fff; }
+#ghl-nav-n2x6 .mn-cta {
+  display: none; align-items: center; justify-content: center;
+  min-height: 44px; padding: 0 1.2rem; border-radius: 6px;
+  background: var(--mn-red); color: #fff; text-decoration: none; font-weight: 600; font-size: .95rem;
+  transition: background-color .2s ease, transform .12s ease;
+}
+#ghl-nav-n2x6 .mn-cta:hover { background: var(--mn-red-dark); }
+#ghl-nav-n2x6 .mn-cta:active { transform: scale(.97); }
+#ghl-nav-n2x6 .mn-burger {
+  appearance: none; border: 0; background: none; cursor: pointer;
+  width: 46px; height: 46px; margin-right: -8px;
+  display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+}
+#ghl-nav-n2x6 .mn-burger span { display: block; width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: transform .25s ease, opacity .25s ease; }
+#ghl-nav-n2x6 .mn-burger span:last-child { width: 16px; margin-left: 8px; }
+#ghl-nav-n2x6.is-menu .mn-burger span:first-child { transform: translateY(4px) rotate(45deg); }
+#ghl-nav-n2x6.is-menu .mn-burger span:last-child { width: 24px; margin-left: 0; transform: translateY(-4px) rotate(-45deg); }
+
+/* mobile panel */
+#ghl-nav-n2x6 .mn-panel {
+  position: fixed; top: 68px; left: 0; right: 0; bottom: 0;
+  background: #0A0A0A; overflow-y: auto; overscroll-behavior: contain;
+  padding: 1rem 1.25rem calc(1.5rem + env(safe-area-inset-bottom));
+  display: flex; flex-direction: column;
+  opacity: 0; visibility: hidden; transform: translateY(-8px);
+  transition: opacity .25s ease, transform .25s ease, visibility .25s;
+}
+#ghl-nav-n2x6.is-menu { background: #0A0A0A; border-bottom-color: var(--mn-line); }
+#ghl-nav-n2x6.is-menu .mn-panel { opacity: 1; visibility: visible; transform: translateY(0); }
+#ghl-nav-n2x6 .mn-m-link {
+  display: flex; align-items: center; justify-content: space-between; width: 100%;
+  min-height: 58px; padding: 0; border: 0; border-bottom: 1px solid var(--mn-line);
+  background: none; color: #fff; text-decoration: none; cursor: pointer; text-align: left;
+  font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 1.35rem;
+}
+#ghl-nav-n2x6 .mn-m-link:hover { color: var(--mn-red); }
+#ghl-nav-n2x6 .mn-m-link .mn-caret { width: 14px; height: 14px; }
+#ghl-nav-n2x6 .mn-m-sub { display: none; padding: .35rem 0 .75rem; border-bottom: 1px solid var(--mn-line); }
+#ghl-nav-n2x6 .mn-m-sub.is-open { display: block; }
+#ghl-nav-n2x6 .mn-m-sub a {
+  display: flex; align-items: center; min-height: 44px; padding-left: .9rem;
+  color: var(--mn-body); text-decoration: none; font-size: 1rem;
+  border-left: 2px solid #2A2222;
+}
+#ghl-nav-n2x6 .mn-m-sub a:hover { color: #fff; border-left-color: var(--mn-red); }
+#ghl-nav-n2x6 .mn-m-open .mn-caret { transform: rotate(180deg); }
+#ghl-nav-n2x6 .mn-m-foot { margin-top: auto; padding-top: 1.5rem; display: flex; flex-direction: column; gap: .9rem; align-items: stretch; }
+#ghl-nav-n2x6 .mn-m-foot .mn-lang { display: inline-flex; align-self: center; }
+#ghl-nav-n2x6 .mn-m-foot .mn-cta { display: flex; min-height: 54px; font-size: 1.05rem; }
+#ghl-nav-n2x6 .mn-m-call { display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap; }
+#ghl-nav-n2x6 .mn-m-call a { color: var(--mn-body); text-decoration: none; font-size: .9rem; min-height: 40px; display: inline-flex; align-items: center; }
+#ghl-nav-n2x6 .mn-m-call a:hover { color: #fff; }
+
+@media (min-width: 640px) {
+  #ghl-nav-n2x6 .mn-bar { padding: 0 1.75rem; }
+  #ghl-nav-n2x6 .mn-right > .mn-cta { display: inline-flex; }
+}
+@media (min-width: 1100px) {
+  #ghl-nav-n2x6 .mn-bar { height: 80px; padding: 0 2.5rem; }
+  #ghl-nav-n2x6 .mn-logo img { height: 80px; margin-left: -18px; }
+  #ghl-nav-n2x6 .mn-links { display: flex; }
+  #ghl-nav-n2x6 .mn-right > .mn-lang { display: inline-flex; }
+  #ghl-nav-n2x6 .mn-burger, #ghl-nav-n2x6 .mn-panel { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #ghl-nav-n2x6, #ghl-nav-n2x6 * { transition: none !important; }
+}
+
+/* =====================================================================
+   HERO  (#ghl-hero-v7q2)
+   ===================================================================== */
+#ghl-hero-v7q2 {
+  --mh-red: #E10600;
+  --mh-red-dark: #B00500;
+  --mh-bg: #0A0A0A;
+  --mh-text: #FFFFFF;
+  --mh-body: #C9C2C0;
+
+  position: relative;
+  width: 100%;
+  min-height: 92vh;
+  min-height: 92svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--mh-bg);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  color: var(--mh-body);
+  box-sizing: border-box;
+  padding: 6.5rem 1.15rem 3.5rem;
+  -webkit-font-smoothing: antialiased;
+}
+#ghl-hero-v7q2 *,
+#ghl-hero-v7q2 *::before,
+#ghl-hero-v7q2 *::after { box-sizing: border-box; }
+
+#ghl-hero-v7q2 .mh-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+}
+#ghl-hero-v7q2 .mh-poster {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+}
+#ghl-hero-v7q2 .mh-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(to bottom, rgba(10,10,10,.72) 0%, rgba(10,10,10,.55) 45%, rgba(10,10,10,.95) 100%),
+    radial-gradient(90% 65% at 50% 40%, rgba(225,6,0,.16) 0%, rgba(10,10,10,0) 70%);
+}
+#ghl-hero-v7q2 .mh-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,.022) 0px,
+    rgba(255,255,255,.022) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+#ghl-hero-v7q2 .mh-inner {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#ghl-hero-v7q2 .mh-lang {
+  position: absolute;
+  top: 1rem;
+  right: 1.15rem;
+  z-index: 4;
+}
+#ghl-hero-v7q2 .mh-lang-group {
+  display: inline-flex;
+  padding: 3px;
+  background: rgba(20,16,16,.75);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+#ghl-hero-v7q2 .mh-lang-btn {
+  appearance: none; border: 0; background: transparent;
+  color: #9B9391;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700; font-size: .74rem; letter-spacing: 1.3px;
+  padding: 0 1.05rem; min-height: 38px;
+  border-radius: 999px; cursor: pointer;
+  transition: background-color .25s ease, color .25s ease;
+}
+#ghl-hero-v7q2 .mh-lang-btn:hover { color: #fff; }
+#ghl-hero-v7q2 .mh-lang-btn.is-active { background: var(--mh-red); color: #fff; }
+
+#ghl-hero-v7q2 .mh-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: 'Barlow', sans-serif;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(225,6,0,.16);
+  border: 1px solid rgba(225,6,0,.55);
+  padding: 8px 16px;
+  border-radius: 999px;
+  margin-bottom: 1.25rem;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+#ghl-hero-v7q2 .mh-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--mh-red);
+  box-shadow: 0 0 0 0 rgba(225,6,0,.75);
+  animation: mhPulse 2.4s infinite;
+}
+@keyframes mhPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(225,6,0,.65); }
+  70%  { box-shadow: 0 0 0 9px rgba(225,6,0,0); }
+  100% { box-shadow: 0 0 0 0 rgba(225,6,0,0); }
+}
+
+#ghl-hero-v7q2 .mh-title {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.3rem, 9.5vw, 5.2rem);
+  line-height: 1.02;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  color: var(--mh-text);
+  margin: 0 0 1.1rem;
+  text-shadow: 0 4px 30px rgba(0,0,0,.6);
+}
+#ghl-hero-v7q2 .mh-title .mh-accent { color: var(--mh-red); }
+
+#ghl-hero-v7q2 .mh-sub {
+  font-size: clamp(.98rem, 4vw, 1.18rem);
+  line-height: 1.7;
+  color: var(--mh-body);
+  max-width: 620px;
+  margin: 0 auto 2rem;
+  text-shadow: 0 2px 14px rgba(0,0,0,.55);
+}
+
+#ghl-hero-v7q2 .mh-actions {
+  display: flex;
+  flex-direction: column;
+  gap: .85rem;
+  align-items: stretch;
+  max-width: 340px;
+  margin: 0 auto 2.5rem;
+}
+#ghl-hero-v7q2 .mh-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 54px;
+  padding: 0 2rem;
+  border-radius: 999px;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  font-size: .92rem;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .25s ease, transform .15s ease, border-color .25s ease;
+}
+#ghl-hero-v7q2 .mh-btn-primary {
+  background: var(--mh-red);
+  color: #fff;
+  border: 1px solid var(--mh-red);
+  box-shadow: 0 0 28px rgba(225,6,0,.38);
+}
+#ghl-hero-v7q2 .mh-btn-primary:hover { background: var(--mh-red-dark); border-color: var(--mh-red-dark); }
+#ghl-hero-v7q2 .mh-btn-ghost {
+  background: rgba(255,255,255,.07);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.28);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+#ghl-hero-v7q2 .mh-btn-ghost:hover { background: rgba(255,255,255,.14); border-color: #fff; }
+#ghl-hero-v7q2 .mh-btn:active { transform: scale(.97); }
+
+#ghl-hero-v7q2 .mh-strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .6rem 1.4rem;
+}
+#ghl-hero-v7q2 .mh-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Barlow', sans-serif;
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: #D6CFCD;
+}
+#ghl-hero-v7q2 .mh-chip svg { width: 15px; height: 15px; fill: var(--mh-red); flex: 0 0 auto; }
+
+#ghl-hero-v7q2 .mh-cue {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  color: #8A827F;
+  font-family: 'Barlow', sans-serif;
+  font-size: .64rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color .25s ease;
+}
+#ghl-hero-v7q2 .mh-cue:hover { color: #fff; }
+#ghl-hero-v7q2 .mh-cue span.mh-mouse {
+  width: 24px; height: 38px;
+  border: 2px solid currentColor;
+  border-radius: 13px;
+  position: relative;
+}
+#ghl-hero-v7q2 .mh-cue span.mh-mouse::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 7px;
+  width: 3px; height: 7px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: currentColor;
+  animation: mhWheel 1.8s infinite;
+}
+@keyframes mhWheel {
+  0%   { opacity: 0; transform: translateY(0); }
+  35%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(12px); }
+}
+
+/* =====================================================================
+   SERVICES  (#ghl-services-m9d4)
+   ===================================================================== */
+#ghl-services-m9d4 {
+  --mc-red: #E10600;
+  --mc-red-dark: #B00500;
+  --mc-bg: #0A0A0A;
+  --mc-card: #141010;
+  --mc-line: #241414;
+  --mc-text: #FFFFFF;
+  --mc-body: #B8B0AE;
+  --mc-muted: #8A827F;
+
+  background: var(--mc-bg);
+  background-image:
+    radial-gradient(120% 80% at 50% -10%, rgba(225,6,0,0.10) 0%, rgba(10,10,10,0) 60%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  color: var(--mc-body);
+  padding: 3rem 1.15rem 3.5rem;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  scroll-margin-top: 80px;
+  -webkit-font-smoothing: antialiased;
+}
+#ghl-services-m9d4 *,
+#ghl-services-m9d4 *::before,
+#ghl-services-m9d4 *::after { box-sizing: border-box; }
+
+#ghl-services-m9d4 .mc-inner { max-width: 1240px; margin: 0 auto; width: 100%; }
+
+#ghl-services-m9d4 .mc-lang { display: flex; justify-content: center; margin-bottom: 1.75rem; }
+#ghl-services-m9d4 .mc-lang-group {
+  display: inline-flex;
+  padding: 4px;
+  background: var(--mc-card);
+  border: 1px solid var(--mc-line);
+  border-radius: 999px;
+}
+#ghl-services-m9d4 .mc-lang-btn {
+  appearance: none; border: 0; background: transparent;
+  color: var(--mc-muted);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700; font-size: 0.78rem; letter-spacing: 1.4px;
+  padding: 0 1.35rem; min-height: 40px;
+  border-radius: 999px; cursor: pointer;
+  transition: background-color .25s ease, color .25s ease;
+}
+#ghl-services-m9d4 .mc-lang-btn:hover { color: var(--mc-text); }
+#ghl-services-m9d4 .mc-lang-btn.is-active { background: var(--mc-red); color: #fff; }
+
+#ghl-services-m9d4 .mc-head { text-align: center; margin-bottom: 2.5rem; }
+#ghl-services-m9d4 .mc-eyebrow {
+  display: inline-block;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--mc-red);
+  padding: 7px 15px;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+}
+#ghl-services-m9d4 .mc-title {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.9rem, 7vw, 3.25rem);
+  line-height: 1.08;
+  color: var(--mc-text);
+  margin: 0 0 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+}
+#ghl-services-m9d4 .mc-title span { color: var(--mc-red); }
+#ghl-services-m9d4 .mc-sub {
+  font-size: clamp(0.95rem, 3.6vw, 1.08rem);
+  line-height: 1.65;
+  color: var(--mc-body);
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+
+/* ---------- STARTING PRICES ---------- */
+#ghl-services-m9d4 .mc-price {
+  font-family: 'Barlow', sans-serif; font-weight: 800;
+  font-size: 1.05rem; letter-spacing: .3px;
+  color: var(--mc-red); margin: 0 0 .7rem;
+}
+#ghl-services-m9d4 .mc-price.is-quote { color: var(--mc-body); font-weight: 700; font-size: .95rem; }
+#ghl-services-m9d4 .mc-note {
+  font-size: .8rem; line-height: 1.5; color: var(--mc-muted);
+  text-align: center; max-width: 620px; margin: .9rem auto 0;
+}
+#ghl-services-m9d4 .mc-grid { display: grid; grid-template-columns: 1fr; gap: 1.15rem; }
+
+#ghl-services-m9d4 .mc-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--mc-card);
+  border: 1px solid var(--mc-line);
+  border-radius: 16px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .6s ease, transform .6s ease, border-color .3s ease, box-shadow .3s ease;
+}
+#ghl-services-m9d4 .mc-card.is-in { opacity: 1; transform: translateY(0); }
+#ghl-services-m9d4 .mc-card:hover,
+#ghl-services-m9d4 .mc-card:focus-within {
+  border-color: var(--mc-red);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.55), 0 0 0 1px rgba(225,6,0,0.28);
+}
+
+#ghl-services-m9d4 .mc-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background-color: #1C1616;
+  background-image: linear-gradient(140deg, #1F1616 0%, #0F0C0C 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+#ghl-services-m9d4 .mc-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(10,10,10,0) 35%, rgba(20,16,16,0.92) 100%);
+}
+#ghl-services-m9d4 .mc-num {
+  position: absolute;
+  top: 12px; left: 12px;
+  z-index: 2;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  color: #fff;
+  background: rgba(10,10,10,0.72);
+  border: 1px solid rgba(225,6,0,0.55);
+  padding: 5px 11px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+#ghl-services-m9d4 .mc-body {
+  position: relative;
+  padding: 1.4rem 1.35rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+#ghl-services-m9d4 .mc-body::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 1.35rem;
+  width: 42px; height: 3px;
+  background: var(--mc-red);
+  border-radius: 2px;
+  transition: width .3s ease;
+}
+#ghl-services-m9d4 .mc-card:hover .mc-body::before { width: 76px; }
+
+#ghl-services-m9d4 .mc-name {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.15rem, 4.4vw, 1.3rem);
+  line-height: 1.25;
+  color: var(--mc-text);
+  margin: 0 0 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+#ghl-services-m9d4 .mc-desc {
+  font-size: 0.945rem;
+  line-height: 1.6;
+  color: var(--mc-body);
+  margin: 0 0 1.25rem;
+  flex: 1;
+}
+
+#ghl-services-m9d4 .mc-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 1.4rem;
+  border-radius: 999px;
+  background: transparent;
+  border: 1px solid var(--mc-red);
+  color: #fff;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color .25s ease, transform .15s ease;
+}
+#ghl-services-m9d4 .mc-link:hover { background: var(--mc-red); }
+#ghl-services-m9d4 .mc-link:active { transform: scale(0.97); background: var(--mc-red-dark); }
+#ghl-services-m9d4 .mc-link .mc-arrow { transition: transform .25s ease; }
+#ghl-services-m9d4 .mc-card:hover .mc-arrow { transform: translateX(4px); }
+
+#ghl-services-m9d4 .mc-cta {
+  margin-top: 2.25rem;
+  text-align: center;
+  background: var(--mc-card);
+  border: 1px solid var(--mc-line);
+  border-radius: 16px;
+  padding: 2rem 1.35rem;
+}
+#ghl-services-m9d4 .mc-cta-title {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.25rem, 5vw, 1.7rem);
+  color: var(--mc-text);
+  margin: 0 0 0.6rem;
+  text-transform: uppercase;
+}
+#ghl-services-m9d4 .mc-cta-sub {
+  font-size: 0.97rem;
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+  color: var(--mc-body);
+}
+#ghl-services-m9d4 .mc-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 2rem;
+  background: var(--mc-red);
+  color: #fff;
+  border-radius: 999px;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 0 24px rgba(225,6,0,0.32);
+  transition: background-color .25s ease, transform .15s ease;
+}
+#ghl-services-m9d4 .mc-cta-btn:hover { background: var(--mc-red-dark); }
+#ghl-services-m9d4 .mc-cta-btn:active { transform: scale(0.98); }
+
+
+/* ---------- MULTI-SELECT ---------- */
+#ghl-services-m9d4 .mc-pick { width: 100%; cursor: pointer; font: inherit; font-family: 'Barlow', sans-serif; font-weight: 700; font-size: .85rem; letter-spacing: 1px; text-transform: uppercase; }
+#ghl-services-m9d4 .mc-pick-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 1px solid currentColor; font-size: .95rem; line-height: 1;
+  transition: transform .25s ease;
+}
+#ghl-services-m9d4 .mc-card.is-picked { border-color: var(--mc-red); box-shadow: 0 0 0 1px var(--mc-red), 0 14px 40px rgba(225,6,0,.18); }
+#ghl-services-m9d4 .mc-card.is-picked .mc-pick { background: var(--mc-red); }
+#ghl-services-m9d4 .mc-card.is-picked .mc-pick-icon { background: #fff; color: var(--mc-red); border-color: #fff; }
+#ghl-services-m9d4 .mc-card.is-picked .mc-num { background: var(--mc-red); border-color: var(--mc-red); }
+#ghl-services-m9d4 .mc-card.is-picked .mc-media { cursor: pointer; }
+#ghl-services-m9d4 .mc-media { cursor: pointer; }
+
+#ghl-services-m9d4 .mc-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 70;
+  padding: .75rem 1rem calc(.75rem + env(safe-area-inset-bottom));
+  background: rgba(14,11,11,.94);
+  border-top: 1px solid rgba(225,6,0,.45);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 -10px 30px rgba(0,0,0,.5);
+  transform: translateY(110%); visibility: hidden;
+  transition: transform .35s ease, visibility .35s;
+}
+#ghl-services-m9d4 .mc-bar.is-on { transform: translateY(0); visibility: visible; }
+#ghl-services-m9d4 .mc-bar-inner { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: .6rem; }
+#ghl-services-m9d4 .mc-bar-top { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+#ghl-services-m9d4 .mc-bar-count { font-family: 'Barlow', sans-serif; font-weight: 800; font-size: .95rem; text-transform: uppercase; letter-spacing: .8px; color: #fff; }
+#ghl-services-m9d4 .mc-bar-count b { color: var(--mc-red); }
+#ghl-services-m9d4 .mc-bar-clear { appearance: none; border: 0; background: none; color: var(--mc-muted); font-size: .8rem; text-decoration: underline; cursor: pointer; min-height: 36px; padding: 0 .25rem; }
+#ghl-services-m9d4 .mc-bar-clear:hover { color: #fff; }
+#ghl-services-m9d4 .mc-chips { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+#ghl-services-m9d4 .mc-chips::-webkit-scrollbar { display: none; }
+#ghl-services-m9d4 .mc-chip-x {
+  flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px;
+  appearance: none; cursor: pointer;
+  font-size: .76rem; color: #fff; white-space: nowrap;
+  background: var(--mc-card); border: 1px solid var(--mc-line);
+  padding: 6px 10px; border-radius: 999px; min-height: 32px;
+}
+#ghl-services-m9d4 .mc-chip-x:hover { border-color: var(--mc-red); }
+#ghl-services-m9d4 .mc-chip-x span { color: var(--mc-red); font-weight: 700; }
+#ghl-services-m9d4 .mc-bar-go {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 50px; padding: 0 1.6rem; border-radius: 999px;
+  background: var(--mc-red); color: #fff; text-decoration: none;
+  font-family: 'Barlow', sans-serif; font-weight: 800; font-size: .92rem;
+  letter-spacing: 1.1px; text-transform: uppercase;
+  box-shadow: 0 0 24px rgba(225,6,0,.35);
+  transition: background-color .25s ease, transform .15s ease;
+}
+#ghl-services-m9d4 .mc-bar-go:hover { background: var(--mc-red-dark); }
+#ghl-services-m9d4 .mc-bar-go:active { transform: scale(.97); }
+
+#ghl-services-m9d4 .mc-cta-row { display: flex; flex-direction: column; gap: .75rem; align-items: center; }
+#ghl-services-m9d4 .mc-cta-ghost { background: transparent; border: 1px solid rgba(255,255,255,.28); box-shadow: none; }
+#ghl-services-m9d4 .mc-cta-ghost:hover { background: rgba(255,255,255,.1); }
+#ghl-services-m9d4 .mc-cta-ghost[hidden] { display: none; }
+
+#ghl-footer-f4k8 .mf-top.is-lifted { bottom: 150px; }
+
+
+/* =====================================================================
+   PRODUCT CAROUSEL  (#ghl-products-p3r8)
+   ===================================================================== */
+#ghl-products-p3r8 {
+  --mp-red: #E10600;
+  --mp-red-dark: #B00500;
+  --mp-bg: #0D0B0B;
+  --mp-card: #1C1818;
+  --mp-line: #2A2222;
+  --mp-text: #FFFFFF;
+  --mp-body: #B8B0AE;
+  --mp-muted: #8A827F;
+  --mp-star: #F5A623;
+
+  background: var(--mp-bg);
+  border-top: 1px solid var(--mp-line);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  color: var(--mp-body);
+  padding: 3rem 0 3.5rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  scroll-margin-top: 70px;
+  -webkit-font-smoothing: antialiased;
+}
+#ghl-products-p3r8 *, #ghl-products-p3r8 *::before, #ghl-products-p3r8 *::after { box-sizing: border-box; }
+#ghl-products-p3r8 button { font: inherit; }
+#ghl-products-p3r8 :focus-visible { outline: 2px solid var(--mp-red); outline-offset: 2px; }
+#ghl-products-p3r8 .mp-inner { max-width: 1240px; margin: 0 auto; padding: 0 1.15rem; }
+
+/* header */
+#ghl-products-p3r8 .mp-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
+#ghl-products-p3r8 .mp-eyebrow {
+  display: inline-block; font-family: 'Barlow', sans-serif; font-size: .7rem; font-weight: 700;
+  letter-spacing: 2.4px; text-transform: uppercase; color: #fff;
+  background: var(--mp-red); padding: 7px 15px; border-radius: 999px; margin-bottom: .9rem;
+}
+#ghl-products-p3r8 .mp-title {
+  font-family: 'Barlow', sans-serif; font-weight: 800; text-transform: uppercase;
+  font-size: clamp(1.9rem, 7vw, 3.25rem); line-height: 1.05; letter-spacing: -.5px;
+  color: var(--mp-text); margin: 0 0 .5rem;
+}
+#ghl-products-p3r8 .mp-title span { color: var(--mp-red); }
+#ghl-products-p3r8 .mp-sub { font-size: clamp(.95rem, 3.6vw, 1.05rem); line-height: 1.6; max-width: 520px; margin: 0; }
+#ghl-products-p3r8 .mp-nav { display: none; gap: .5rem; flex: 0 0 auto; }
+#ghl-products-p3r8 .mp-arrow {
+  appearance: none; cursor: pointer; width: 48px; height: 48px; border-radius: 50%;
+  background: var(--mp-card); border: 1px solid var(--mp-line); color: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: background-color .2s ease, border-color .2s ease, opacity .2s ease;
+}
+#ghl-products-p3r8 .mp-arrow:hover { background: var(--mp-red); border-color: var(--mp-red); }
+#ghl-products-p3r8 .mp-arrow:disabled { opacity: .35; cursor: default; background: var(--mp-card); border-color: var(--mp-line); }
+#ghl-products-p3r8 .mp-arrow svg { width: 18px; height: 18px; fill: currentColor; }
+
+/* track */
+#ghl-products-p3r8 .mp-track {
+  display: flex; gap: .85rem;
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: none; scroll-behavior: auto;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  padding: 4px 1.15rem 6px;
+  scroll-padding: 0 1.15rem;
+}
+#ghl-products-p3r8 .mp-track::-webkit-scrollbar { display: none; }
+#ghl-products-p3r8 .mp-track.is-drag { scroll-snap-type: none; scroll-behavior: auto; cursor: grabbing; }
+#ghl-products-p3r8 .mp-track.is-drag * { pointer-events: none; }
+
+/* card */
+#ghl-products-p3r8 .mp-card {
+  flex: 0 0 72%; scroll-snap-align: start; min-width: 0;
+  display: flex; flex-direction: column; text-align: center;
+  background: var(--mp-card); border: 1px solid var(--mp-line); border-radius: 14px;
+  padding: .75rem .75rem 1rem;
+  transition: border-color .25s ease;
+}
+#ghl-products-p3r8 .mp-card:hover { border-color: rgba(225,6,0,.55); }
+#ghl-products-p3r8 .mp-media {
+  position: relative; display: block; aspect-ratio: 1 / 1; border-radius: 10px;
+  background: radial-gradient(70% 70% at 50% 45%, #2E2626 0%, #1A1616 70%);
+  padding: 12%; text-decoration: none;
+}
+#ghl-products-p3r8 .mp-media img {
+  width: 100%; height: 100%; object-fit: contain; display: block;
+  filter: drop-shadow(0 10px 16px rgba(0,0,0,.5));
+  transition: transform .35s ease; -webkit-user-drag: none; user-select: none;
+}
+#ghl-products-p3r8 .mp-card:hover .mp-media img { transform: scale(1.05); }
+#ghl-products-p3r8 .mp-sale {
+  position: absolute; top: 8px; left: 8px; width: 44px; height: 44px; border-radius: 50%;
+  background: var(--mp-red); color: #fff; font-size: .74rem; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+}
+#ghl-products-p3r8 .mp-name {
+  font-family: 'Barlow', sans-serif; font-weight: 700; color: var(--mp-text);
+  font-size: 1rem; line-height: 1.3; margin: .85rem .25rem .4rem;
+  min-height: 2.6em;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+#ghl-products-p3r8 .mp-stars { display: flex; justify-content: center; gap: 2px; height: 14px; margin-bottom: .4rem; }
+#ghl-products-p3r8 .mp-stars svg { width: 14px; height: 14px; fill: var(--mp-star); }
+#ghl-products-p3r8 .mp-price { color: #fff; font-size: 1rem; margin: 0 0 .9rem; }
+#ghl-products-p3r8 .mp-qtyrow { margin-top: auto; }
+#ghl-products-p3r8 .mp-price s { color: var(--mp-muted); margin-right: 6px; }
+#ghl-products-p3r8 .mp-price b { font-weight: 600; }
+#ghl-products-p3r8 .mp-add {
+  border: 1px solid transparent; appearance: none; border: 0; cursor: pointer;
+  background: var(--mp-red); color: #fff; border-radius: 8px;
+  min-height: 46px; padding: 0 1rem; font-size: .9rem; font-weight: 500;
+  transition: background-color .2s ease, transform .12s ease;
+}
+#ghl-products-p3r8 .mp-add:hover { background: var(--mp-red-dark); }
+#ghl-products-p3r8 .mp-add:active { transform: scale(.97); }
+#ghl-products-p3r8 .mp-add.is-done { background: #1E8E3E; }
+
+#ghl-products-p3r8 .mp-qtyrow { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin: 0 0 .6rem; }
+#ghl-products-p3r8 .mp-qlabel { font-size: .8rem; color: var(--mp-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+#ghl-products-p3r8 .mp-card.is-in .mp-qlabel { color: #4ADE80; font-weight: 600; }
+#ghl-products-p3r8 .mp-qty {
+  display: inline-flex; align-items: stretch; height: 40px; flex: 0 0 auto;
+  border: 1px solid var(--mp-line); border-radius: 8px; overflow: hidden; background: #141111;
+}
+#ghl-products-p3r8 .mp-card.is-in .mp-qty { border-color: #1E8E3E; }
+#ghl-products-p3r8 .mp-qty button {
+  appearance: none; border: 0; background: none; color: #fff; cursor: pointer;
+  width: 38px; font-size: 1.1rem; line-height: 1;
+  transition: background-color .15s ease;
+}
+#ghl-products-p3r8 .mp-qty button:hover { background: rgba(225,6,0,.2); }
+#ghl-products-p3r8 .mp-qty button:active { background: rgba(225,6,0,.35); }
+#ghl-products-p3r8 .mp-qv {
+  min-width: 36px; display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 600; font-size: .95rem;
+  border-left: 1px solid var(--mp-line); border-right: 1px solid var(--mp-line);
+}
+#ghl-products-p3r8 .mp-add.is-in { background: transparent; border: 1px solid #1E8E3E; color: #4ADE80; }
+#ghl-products-p3r8 .mp-add.is-in:hover { background: rgba(30,142,62,.15); }
+
+/* footer row: progress + shop link */
+#ghl-products-p3r8 .mp-foot { display: flex; align-items: center; gap: 1rem; margin-top: 1.4rem; }
+#ghl-products-p3r8 .mp-progress { flex: 1; height: 3px; background: var(--mp-line); border-radius: 3px; overflow: hidden; }
+#ghl-products-p3r8 .mp-progress i { display: block; height: 100%; width: 20%; background: var(--mp-red); border-radius: 3px; transition: width .15s linear, margin-left .15s linear; }
+#ghl-products-p3r8 .mp-shop {
+  flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px;
+  min-height: 46px; padding: 0 1.3rem; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.28); color: #fff; text-decoration: none;
+  font-family: 'Barlow', sans-serif; font-weight: 700; font-size: .82rem; letter-spacing: 1px; text-transform: uppercase;
+  transition: background-color .2s ease, border-color .2s ease;
+}
+#ghl-products-p3r8 .mp-shop:hover { background: rgba(255,255,255,.1); border-color: #fff; }
+#ghl-products-p3r8 .mp-count {
+  min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px;
+  background: var(--mp-red); color: #fff; font-size: .72rem; line-height: 22px; text-align: center; letter-spacing: 0;
+}
+#ghl-products-p3r8 .mp-count[hidden] { display: none; }
+
+/* toast */
+#ghl-products-p3r8 .mp-toast {
+  position: fixed; left: 50%; top: 84px; z-index: 8990;
+  transform: translate(-50%, -20px); opacity: 0; visibility: hidden;
+  display: flex; align-items: center; gap: .85rem;
+  background: #fff; color: #111; font-size: .88rem; font-weight: 500;
+  padding: .45rem .5rem .45rem 1.1rem; border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.4); white-space: nowrap;
+  transition: opacity .25s ease, transform .25s ease, visibility .25s;
+}
+@media (min-width: 1100px) { #ghl-products-p3r8 .mp-toast { top: 96px; } }
+#ghl-products-p3r8 .mp-shop.is-empty { opacity: .55; }
+#ghl-products-p3r8 .mp-toast.is-on { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+#ghl-products-p3r8 .mp-toast a {
+  background: var(--mp-red); color: #fff; text-decoration: none;
+  border-radius: 999px; padding: 0 .95rem; min-height: 36px; display: inline-flex; align-items: center;
+}
+
+@media (min-width: 640px) {
+  #ghl-products-p3r8 { padding: 4rem 0; }
+  #ghl-products-p3r8 .mp-inner { padding: 0 1.75rem; }
+  #ghl-products-p3r8 .mp-track { padding: 4px 1.75rem 6px; scroll-padding: 0 1.75rem; gap: 1.1rem; }
+  #ghl-products-p3r8 .mp-card { flex-basis: calc((100% - 2 * 1.1rem) / 3); }
+  #ghl-products-p3r8 .mp-nav { display: flex; }
+}
+@media (min-width: 1024px) {
+  #ghl-products-p3r8 { padding: 5rem 0; }
+  #ghl-products-p3r8 .mp-inner { padding: 0 2.5rem; }
+  #ghl-products-p3r8 .mp-track {
+    --mp-edge: max(2.5rem, calc((100% - 1240px) / 2 + 2.5rem));
+    padding: 4px var(--mp-edge) 6px; scroll-padding: 0 var(--mp-edge); gap: 1.25rem; cursor: grab;
+  }
+  #ghl-products-p3r8 .mp-card { flex-basis: calc((100% - 3 * 1.25rem) / 4); }
+}
+@media (min-width: 1440px) {
+  #ghl-products-p3r8 .mp-card { flex-basis: calc((100% - 4 * 1.25rem) / 5); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #ghl-products-p3r8 *, #ghl-products-p3r8 *::before { transition: none !important; }
+}
+
+/* =====================================================================
+   FOOTER  (#ghl-footer-f4k8)
+   ===================================================================== */
+#ghl-footer-f4k8 {
+  --mf-red: #E10600;
+  --mf-red-dark: #B00500;
+  --mf-bg: #0F0F0F;
+  --mf-bar: #0A0A0A;
+  --mf-chip: #1F1B1B;
+  --mf-line: #241F1F;
+  --mf-text: #FFFFFF;
+  --mf-body: #B8B0AE;
+  --mf-muted: #8A827F;
+
+  background: var(--mf-bg);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  color: var(--mf-body);
+  padding: 3rem 1.15rem 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+#ghl-footer-f4k8 *,
+#ghl-footer-f4k8 *::before,
+#ghl-footer-f4k8 *::after { box-sizing: border-box; }
+
+#ghl-footer-f4k8 .mf-inner { max-width: 1240px; margin: 0 auto; width: 100%; }
+
+#ghl-footer-f4k8 .mf-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+#ghl-footer-f4k8 .mf-logo {
+  display: block;
+  width: 230px;
+  max-width: 78%;
+  height: auto;
+  margin-bottom: 1.5rem;
+}
+#ghl-footer-f4k8 .mf-about {
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: var(--mf-body);
+  margin: 0 0 1.6rem;
+  max-width: 420px;
+}
+
+#ghl-footer-f4k8 .mf-social { display: flex; flex-wrap: wrap; gap: 10px; }
+#ghl-footer-f4k8 .mf-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: var(--mf-chip);
+  color: var(--mf-body);
+  text-decoration: none;
+  transition: background-color .25s ease, color .25s ease, transform .15s ease;
+}
+#ghl-footer-f4k8 .mf-social a:hover { background: var(--mf-red); color: #fff; }
+#ghl-footer-f4k8 .mf-social a:active { transform: scale(0.93); }
+#ghl-footer-f4k8 .mf-social svg { width: 19px; height: 19px; fill: currentColor; display: block; }
+
+#ghl-footer-f4k8 .mf-h {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 1.12rem;
+  color: var(--mf-text);
+  margin: 0 0 1.25rem;
+  letter-spacing: .3px;
+}
+
+#ghl-footer-f4k8 .mf-list { list-style: none; margin: 0; padding: 0; }
+#ghl-footer-f4k8 .mf-list li { margin-bottom: 0.85rem; }
+#ghl-footer-f4k8 .mf-list a {
+  color: var(--mf-body);
+  text-decoration: none;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  display: inline-block;
+  padding: 2px 0;
+  transition: color .2s ease, padding-left .2s ease;
+}
+#ghl-footer-f4k8 .mf-list a:hover { color: var(--mf-red); padding-left: 5px; }
+
+#ghl-footer-f4k8 .mf-item { margin-bottom: 1.5rem; }
+#ghl-footer-f4k8 .mf-item:last-child { margin-bottom: 0; }
+#ghl-footer-f4k8 .mf-label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 0.97rem;
+  color: var(--mf-text);
+  margin-bottom: 0.55rem;
+}
+#ghl-footer-f4k8 .mf-label svg { width: 15px; height: 15px; fill: var(--mf-red); flex: 0 0 auto; }
+#ghl-footer-f4k8 .mf-val { font-size: 0.93rem; line-height: 1.65; color: var(--mf-body); margin: 0; }
+#ghl-footer-f4k8 .mf-val a {
+  color: var(--mf-red);
+  text-decoration: none;
+  transition: color .2s ease;
+  word-break: break-word;
+}
+#ghl-footer-f4k8 .mf-val a:hover { color: #fff; }
+
+#ghl-footer-f4k8 .mf-bottom {
+  border-top: 1px solid var(--mf-line);
+  background: var(--mf-bar);
+  box-shadow: 0 0 0 100vmax var(--mf-bar);
+  clip-path: inset(0 -100vmax);
+  margin: 0 -1.15rem;
+  padding: 1.5rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  text-align: center;
+}
+#ghl-footer-f4k8 .mf-copy { font-size: 0.88rem; color: var(--mf-body); margin: 0; }
+#ghl-footer-f4k8 .mf-legal { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.6rem; }
+#ghl-footer-f4k8 .mf-legal a {
+  color: var(--mf-body);
+  text-decoration: none;
+  font-size: 0.88rem;
+  padding: 6px 0;
+  transition: color .2s ease;
+}
+#ghl-footer-f4k8 .mf-legal a:hover { color: var(--mf-red); }
+
+#ghl-footer-f4k8 .mf-lang-group {
+  display: inline-flex;
+  padding: 3px;
+  background: var(--mf-chip);
+  border: 1px solid var(--mf-line);
+  border-radius: 999px;
+}
+#ghl-footer-f4k8 .mf-lang-btn {
+  appearance: none; border: 0; background: transparent;
+  color: var(--mf-muted);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700; font-size: .74rem; letter-spacing: 1.3px;
+  padding: 0 1.05rem; min-height: 36px;
+  border-radius: 999px; cursor: pointer;
+  transition: background-color .25s ease, color .25s ease;
+}
+#ghl-footer-f4k8 .mf-lang-btn:hover { color: var(--mf-text); }
+#ghl-footer-f4k8 .mf-lang-btn.is-active { background: var(--mf-red); color: #fff; }
+
+#ghl-footer-f4k8 .mf-top {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 60;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--mf-red);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 22px rgba(225,6,0,0.45);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity .3s ease, transform .3s ease, visibility .3s, background-color .25s ease;
+}
+#ghl-footer-f4k8 .mf-top.is-on { opacity: 1; visibility: visible; transform: translateY(0); }
+#ghl-footer-f4k8 .mf-top:hover { background: var(--mf-red-dark); }
+#ghl-footer-f4k8 .mf-top:active { transform: scale(0.92); }
+#ghl-footer-f4k8 .mf-top svg { width: 18px; height: 18px; fill: #fff; }
+
+/* =====================================================================
+   TABLET  (640px+)
+   ===================================================================== */
+@media (min-width: 640px) {
+  #ghl-hero-v7q2 { padding: 7rem 1.75rem 4rem; }
+  #ghl-hero-v7q2 .mh-lang { right: 1.75rem; }
+  #ghl-hero-v7q2 .mh-actions { flex-direction: row; justify-content: center; max-width: none; }
+  #ghl-hero-v7q2 .mh-btn { min-width: 220px; }
+
+  #ghl-services-m9d4 { padding: 4rem 1.75rem; }
+  #ghl-services-m9d4 .mc-grid { grid-template-columns: repeat(2, 1fr); gap: 1.35rem; }
+  #ghl-services-m9d4 .mc-cta-btn { width: auto; }
+  #ghl-services-m9d4 .mc-lang { justify-content: flex-end; }
+  #ghl-services-m9d4 .mc-bar-inner { flex-direction: row; align-items: center; gap: 1rem; }
+  #ghl-services-m9d4 .mc-bar-top { flex: 0 0 auto; }
+  #ghl-services-m9d4 .mc-chips { flex: 1; min-width: 0; }
+  #ghl-services-m9d4 .mc-cta-row { flex-direction: row; justify-content: center; }
+  #ghl-footer-f4k8 .mf-top.is-lifted { bottom: 96px; }
+
+  #ghl-footer-f4k8 { padding: 3.5rem 1.75rem 0; }
+  #ghl-footer-f4k8 .mf-grid { grid-template-columns: repeat(2, 1fr); gap: 2.5rem 2rem; }
+  #ghl-footer-f4k8 .mf-brand { grid-column: 1 / -1; }
+  #ghl-footer-f4k8 .mf-bottom {
+    margin: 0 -1.75rem;
+    padding: 1.5rem 1.75rem;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+/* =====================================================================
+   DESKTOP  (1024px+)
+   ===================================================================== */
+@media (min-width: 1024px) {
+  #ghl-hero-v7q2 { min-height: 100vh; padding: 8rem 2.5rem 5rem; }
+  #ghl-hero-v7q2 .mh-lang { top: 1.5rem; right: 2.5rem; }
+  #ghl-hero-v7q2 .mh-cue { display: flex; }
+  #ghl-hero-v7q2 .mh-sub { margin-bottom: 2.4rem; }
+
+  #ghl-services-m9d4 { padding: 5rem 2.5rem; }
+  #ghl-services-m9d4 .mc-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  #ghl-services-m9d4 .mc-head { margin-bottom: 3rem; }
+  #ghl-services-m9d4 .mc-body { padding: 1.6rem 1.6rem 1.75rem; }
+  #ghl-services-m9d4 .mc-cta { padding: 2.75rem 2rem; }
+
+  #ghl-footer-f4k8 { padding: 4.5rem 2.5rem 0; }
+  #ghl-footer-f4k8 .mf-grid {
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem 2.5rem;
+    padding-bottom: 3rem;
+  }
+  #ghl-footer-f4k8 .mf-brand { grid-column: auto; }
+  #ghl-footer-f4k8 .mf-logo { width: 265px; max-width: 100%; margin-bottom: 1.75rem; }
+  #ghl-footer-f4k8 .mf-about { text-align: justify; }
+  #ghl-footer-f4k8 .mf-bottom { margin: 0 -2.5rem; padding: 1.6rem 2.5rem; }
+  #ghl-footer-f4k8 .mf-top { right: 26px; bottom: 26px; width: 52px; height: 52px; }
+  #ghl-footer-f4k8 .mf-top.is-lifted { bottom: 100px; }
+}
+
+/* =====================================================================
+   LARGE DESKTOP  (1440px+)
+   ===================================================================== */
+@media (min-width: 1440px) {
+  #ghl-hero-v7q2 { padding: 8.5rem 3rem 5.5rem; }
+  #ghl-hero-v7q2 .mh-inner { max-width: 1080px; }
+
+  #ghl-services-m9d4 { padding: 6rem 3rem; }
+
+  #ghl-footer-f4k8 { padding: 5rem 3rem 0; }
+  #ghl-footer-f4k8 .mf-logo { width: 290px; }
+  #ghl-footer-f4k8 .mf-bottom { margin: 0 -3rem; padding: 1.6rem 3rem; }
+}
+
+/* =====================================================================
+   REDUCED MOTION
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  #ghl-hero-v7q2 .mh-video { display: none; }
+  #ghl-hero-v7q2 .mh-dot,
+  #ghl-hero-v7q2 .mh-cue span.mh-mouse::after { animation: none; }
+  #ghl-services-m9d4 .mc-card { opacity: 1 !important; transform: none !important; transition: none; }
+  #ghl-services-m9d4 .mc-bar { transition: none; }
+  #ghl-footer-f4k8 .mf-top { transition: opacity .01s; }
+}
+</style>
+
+
+<!-- =====================================================================
+     NAVIGATION
+     ===================================================================== -->
+<header id="ghl-nav-n2x6">
+  <div class="mn-bar">
+
+    <!-- SECTION: LOGO -->
+    <a class="mn-logo" href="https://madcustomcars.com/" aria-label="MAD Custom home">
+      <img src="https://assets.cdn.filesafe.space/RP0apjqSUDWTWf1qgqZI/media/6aaaa96037639ce00c9f5703.png" alt="MAD Custom" width="760" height="268">
+    </a>
+
+    <!-- SECTION: DESKTOP LINKS -->
+    <nav aria-label="Main">
+      <ul class="mn-links">
+        <li><a class="mn-link" href="https://madcustomcars.com/" data-en="Home" data-es="Inicio">Home</a></li>
+        <li><a class="mn-link" href="https://madcustomcars.com/about-us/" data-en="About Us" data-es="Nosotros">About Us</a></li>
+        <li class="mn-drop">
+          <button type="button" class="mn-link is-current" aria-expanded="false" aria-haspopup="true">
+            <span data-en="Services" data-es="Servicios">Services</span><svg class="mn-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3.2 2 2.2l3 3 3-3 1 1-4 4z"/></svg>
+          </button>
+          <div class="mn-menu">
+            <a class="mn-menu-item" href="#ghl-services-m9d4" data-mc-add="Rims &amp; Tires" data-en="Rims &amp; Tires" data-es="Rines y Neumáticos">Rims &amp; Tires</a>
+            <a class="mn-menu-item" href="#ghl-services-m9d4" data-mc-add="Performance Suspension" data-en="Performance Suspension" data-es="Suspensión de Rendimiento">Performance Suspension</a>
+            <a class="mn-menu-item" href="#ghl-services-m9d4" data-mc-add="Premium Vinyl Wrap" data-en="Premium Vinyl Wrap" data-es="Vinilo Premium">Premium Vinyl Wrap</a>
+            <a class="mn-menu-item" href="#ghl-services-m9d4" data-mc-add="Paint Protection Film" data-en="Paint Protection Film (PPF)" data-es="Película Protectora (PPF)">Paint Protection Film (PPF)</a>
+            <a class="mn-menu-item" href="#ghl-services-m9d4" data-mc-add="Luxury Detailing" data-en="Luxury Detailing" data-es="Detallado de Lujo">Luxury Detailing</a>
+            <a class="mn-menu-item" href="#ghl-services-m9d4" data-mc-add="Bespoke Custom Builds" data-en="Bespoke Custom Builds" data-es="Proyectos a Medida">Bespoke Custom Builds</a>
+            <a class="mn-menu-item" href="#ghl-services-m9d4" data-mc-add="Upholstery" data-en="Upholstery" data-es="Tapicería">Upholstery</a>
+            <a class="mn-menu-item" href="#ghl-services-m9d4" data-mc-add="Window Tint" data-en="Window Tint" data-es="Polarizado de Ventanas">Window Tint</a>
+            <a class="mn-menu-item" href="#ghl-services-m9d4" data-mc-add="Performance Exhaust" data-en="Performance Exhaust" data-es="Escape de Rendimiento">Performance Exhaust</a>
+            <a class="mn-menu-all" href="#ghl-services-m9d4" data-mn-jump="ghl-services-m9d4" data-en="View all services" data-es="Ver todos los servicios">View all services</a>
+          </div>
+        </li>
+        <li><a class="mn-link" href="https://madcustomcars.com/blog/" data-en="Blog" data-es="Blog">Blog</a></li>
+        <li><a class="mn-link" href="#ghl-products-p3r8" data-mn-jump="ghl-products-p3r8" data-en="Shop" data-es="Tienda">Shop</a></li>
+        <li><a class="mn-link" href="https://madcustomcars.com/contact/" data-en="Contact Us" data-es="Contacto">Contact Us</a></li>
+      </ul>
+    </nav>
+
+    <!-- SECTION: RIGHT SIDE -->
+    <div class="mn-right">
+      <div class="mn-lang" role="group" aria-label="Language">
+        <button type="button" class="mn-lang-btn is-active" data-lang="en">EN</button>
+        <button type="button" class="mn-lang-btn" data-lang="es">ES</button>
+      </div>
+      <a class="mn-cta" href="https://bookmadcustom.com/appointment-mad-page" data-en="Make Appointment" data-es="Agendar Cita">Make Appointment</a>
+      <button type="button" class="mn-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mn-panel-n2x6">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SECTION: MOBILE MENU -->
+  <div class="mn-panel" id="mn-panel-n2x6">
+    <a class="mn-m-link" href="https://madcustomcars.com/" data-en="Home" data-es="Inicio">Home</a>
+    <a class="mn-m-link" href="https://madcustomcars.com/about-us/" data-en="About Us" data-es="Nosotros">About Us</a>
+    <button type="button" class="mn-m-link mn-m-toggle" aria-expanded="false">
+      <span data-en="Services" data-es="Servicios">Services</span><svg class="mn-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3.2 2 2.2l3 3 3-3 1 1-4 4z"/></svg>
+    </button>
+    <div class="mn-m-sub">
+            <a class="" href="#ghl-services-m9d4" data-mc-add="Rims &amp; Tires" data-en="Rims &amp; Tires" data-es="Rines y Neumáticos">Rims &amp; Tires</a>
+            <a class="" href="#ghl-services-m9d4" data-mc-add="Performance Suspension" data-en="Performance Suspension" data-es="Suspensión de Rendimiento">Performance Suspension</a>
+            <a class="" href="#ghl-services-m9d4" data-mc-add="Premium Vinyl Wrap" data-en="Premium Vinyl Wrap" data-es="Vinilo Premium">Premium Vinyl Wrap</a>
+            <a class="" href="#ghl-services-m9d4" data-mc-add="Paint Protection Film" data-en="Paint Protection Film (PPF)" data-es="Película Protectora (PPF)">Paint Protection Film (PPF)</a>
+            <a class="" href="#ghl-services-m9d4" data-mc-add="Luxury Detailing" data-en="Luxury Detailing" data-es="Detallado de Lujo">Luxury Detailing</a>
+            <a class="" href="#ghl-services-m9d4" data-mc-add="Bespoke Custom Builds" data-en="Bespoke Custom Builds" data-es="Proyectos a Medida">Bespoke Custom Builds</a>
+            <a class="" href="#ghl-services-m9d4" data-mc-add="Upholstery" data-en="Upholstery" data-es="Tapicería">Upholstery</a>
+            <a class="" href="#ghl-services-m9d4" data-mc-add="Window Tint" data-en="Window Tint" data-es="Polarizado de Ventanas">Window Tint</a>
+            <a class="" href="#ghl-services-m9d4" data-mc-add="Performance Exhaust" data-en="Performance Exhaust" data-es="Escape de Rendimiento">Performance Exhaust</a>
+      <a href="#ghl-services-m9d4" data-mn-jump="ghl-services-m9d4" data-en="View all services" data-es="Ver todos los servicios">View all services</a>
+    </div>
+    <a class="mn-m-link" href="https://madcustomcars.com/blog/" data-en="Blog" data-es="Blog">Blog</a>
+    <a class="mn-m-link" href="#ghl-products-p3r8" data-mn-jump="ghl-products-p3r8" data-en="Shop" data-es="Tienda">Shop</a>
+    <a class="mn-m-link" href="https://madcustomcars.com/contact/" data-en="Contact Us" data-es="Contacto">Contact Us</a>
+
+    <div class="mn-m-foot">
+      <div class="mn-lang" role="group" aria-label="Language">
+        <button type="button" class="mn-lang-btn is-active" data-lang="en">EN</button>
+        <button type="button" class="mn-lang-btn" data-lang="es">ES</button>
+      </div>
+      <a class="mn-cta" href="https://bookmadcustom.com/appointment-mad-page" data-en="Make Appointment" data-es="Agendar Cita">Make Appointment</a>
+      <div class="mn-m-call">
+        <a href="tel:+14072864426">FL +1 (407) 286 4426</a>
+        <a href="tel:+17878465115">PR +1 (787) 846 5115</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<!-- =====================================================================
+     HERO
+     ===================================================================== -->
+<div id="ghl-hero-v7q2">
+
+  <!-- SECTION: POSTER (always behind the video — shows if video is off/blocked) -->
+  <div class="mh-poster" style="background-image:url('https://assets.cdn.filesafe.space/RP0apjqSUDWTWf1qgqZI/media/6aaaa7c1a84eda365a956513.png');"></div>
+
+  <!-- SECTION: VIDEO BACKGROUND -->
+  <video class="mh-video"
+         autoplay muted loop playsinline preload="auto"
+         poster="https://assets.cdn.filesafe.space/RP0apjqSUDWTWf1qgqZI/media/6aaaa7c1a84eda365a956513.png"
+         aria-hidden="true" tabindex="-1">
+    <source src="https://reactheme.com/products/wordpress/autodetail/wp-content/uploads/2025/07/1.mp4" type="video/mp4">
+  </video>
+
+  <div class="mh-scrim"></div>
+  <div class="mh-grain"></div>
+
+  <div class="mh-inner">
+
+    <!-- SECTION: EYEBROW -->
+    <span class="mh-eyebrow">
+      <span class="mh-dot"></span>
+      <span>Orlando, FL &nbsp;·&nbsp; Barceloneta, PR</span>
+    </span>
+
+    <!-- SECTION: HEADLINE -->
+    <h1 class="mh-title">
+      <span data-en="Built Beyond" data-es="Más Allá De">Built Beyond</span><br>
+      <span class="mh-accent" data-en="The Ordinary" data-es="Lo Ordinario">The Ordinary</span>
+    </h1>
+
+    <!-- SECTION: SUBHEAD -->
+    <p class="mh-sub"
+       data-en="High-end automotive customization — precision wheel fitment, suspension, premium wraps, PPF and complete custom builds. Every detail done right."
+       data-es="Personalización automotriz de alta gama: ajuste preciso de rines, suspensión, vinilos premium, PPF y proyectos completamente personalizados. Cada detalle bien hecho.">
+      High-end automotive customization — precision wheel fitment, suspension, premium wraps, PPF and complete custom builds. Every detail done right.
+    </p>
+
+    <!-- SECTION: CTA BUTTONS -->
+    <div class="mh-actions">
+      <a class="mh-btn mh-btn-primary" href="https://bookmadcustom.com/appointment-mad-page"
+         data-en="Book Free Consultation" data-es="Consulta Gratis">Book Free Consultation</a>
+      <a class="mh-btn mh-btn-ghost" href="#ghl-services-m9d4" data-mc-scroll
+         data-en="View Our Services" data-es="Ver Servicios">View Our Services</a>
+    </div>
+
+    <!-- SECTION: TRUST STRIP -->
+    <div class="mh-strip">
+      <span class="mh-chip">
+        <svg viewBox="0 0 24 24"><path d="M12 2 4 5v6.5c0 4.7 3.4 9.1 8 10.5 4.6-1.4 8-5.8 8-10.5V5l-8-3m-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 5-5 1.4 1.4-6.4 6.4"/></svg>
+        <span data-en="Free Consultations" data-es="Consultas Gratis">Free Consultations</span>
+      </span>
+      <span class="mh-chip">
+        <svg viewBox="0 0 24 24"><path d="M12 2 4 5v6.5c0 4.7 3.4 9.1 8 10.5 4.6-1.4 8-5.8 8-10.5V5l-8-3m-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 5-5 1.4 1.4-6.4 6.4"/></svg>
+        <span data-en="Two Locations" data-es="Dos Ubicaciones">Two Locations</span>
+      </span>
+      <span class="mh-chip">
+        <svg viewBox="0 0 24 24"><path d="M12 2 4 5v6.5c0 4.7 3.4 9.1 8 10.5 4.6-1.4 8-5.8 8-10.5V5l-8-3m-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 5-5 1.4 1.4-6.4 6.4"/></svg>
+        <span data-en="Financing Available" data-es="Financiamiento Disponible">Financing Available</span>
+      </span>
+    </div>
+
+  </div>
+
+  <!-- SECTION: SCROLL CUE -->
+  <a class="mh-cue" href="#ghl-services-m9d4" data-mc-scroll>
+    <span class="mh-mouse"></span>
+    <span data-en="Scroll" data-es="Desliza">Scroll</span>
+  </a>
+</div>
+
+
+<!-- =====================================================================
+     SERVICES
+     ===================================================================== -->
+<div id="ghl-services-m9d4">
+  <div class="mc-inner">
+
+    <!-- SECTION: LANGUAGE TOGGLE -->
+    <div class="mc-lang">
+      <div class="mc-lang-group" role="group" aria-label="Language">
+        <button type="button" class="mc-lang-btn is-active" data-lang="en">EN</button>
+        <button type="button" class="mc-lang-btn" data-lang="es">ES</button>
+      </div>
+    </div>
+
+    <!-- SECTION: HEADER -->
+    <div class="mc-head">
+      <span class="mc-eyebrow" data-en="What We Do" data-es="Lo Que Hacemos">What We Do</span>
+      <h2 class="mc-title">
+        <span data-en="Our" data-es="Nuestros">Our</span>
+        <span style="color:#fff" data-en="Services" data-es="Servicios">Services</span>
+      </h2>
+      <p class="mc-sub"
+         data-en="Pick one or more services and request a single custom quote for your vehicle."
+         data-es="Elige uno o más servicios y solicita una sola cotización personalizada para tu vehículo.">
+        Pick one or more services and request a single custom quote for your vehicle.
+      </p>
+      <p class="mc-note"
+         data-en="Prices shown are starting prices. Your final price depends on your vehicle, model, condition and the work required."
+         data-es="Los precios mostrados son precios iniciales. El precio final depende de tu vehículo, modelo, condición y el trabajo requerido.">
+        Prices shown are starting prices. Your final price depends on your vehicle, model, condition and the work required.
+      </p>
+    </div>
+
+    <!-- SECTION: SERVICE GRID -->
+    <div class="mc-grid">
+
+      <!-- 01 RIMS & TIRES -->
+      <article class="mc-card" data-card>
+        <div class="mc-media" data-pick-media style="background-image:url('https://assets.cdn.filesafe.space/RP0apjqSUDWTWf1qgqZI/media/6aaaa757aabc65fd5d06fac1.png');">
+          <span class="mc-num">01</span>
+        </div>
+        <div class="mc-body">
+          <h3 class="mc-name" data-en="Rims &amp; Tires" data-es="Rines y Neumáticos">Rims &amp; Tires</h3>
+          <p class="mc-price" data-en="Installation starting from $229" data-es="Instalación desde $229">Installation starting from $229</p>
+          <p class="mc-desc"
+             data-en="Custom wheel and tire packages with proper fitment — staggered setups, off-road builds and clean street styles. Wheels and tires are quoted separately."
+             data-es="Paquetes personalizados de rines y neumáticos con el ajuste correcto: configuraciones escalonadas, todoterreno y estilos de calle. Los rines y neumáticos se cotizan por separado.">
+            Custom wheel and tire packages with proper fitment — staggered setups, off-road builds and clean street styles. Wheels and tires are quoted separately.
+          </p>
+          <button type="button" class="mc-link mc-pick" data-pick data-kind="service" data-name="Rims &amp; Tires" aria-pressed="false">
+            <span class="mc-pick-label" data-pick-label>Add to Quote</span><span class="mc-pick-icon" data-pick-icon aria-hidden="true">+</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- 02 PERFORMANCE SUSPENSION -->
+      <article class="mc-card" data-card>
+        <div class="mc-media" data-pick-media style="background-image:url('https://assets.cdn.filesafe.space/RP0apjqSUDWTWf1qgqZI/media/6aaaa778987f50502dc668c6.png');">
+          <span class="mc-num">02</span>
+        </div>
+        <div class="mc-body">
+          <h3 class="mc-name" data-en="Performance Suspension" data-es="Suspensión de Rendimiento">Performance Suspension</h3>
+          <p class="mc-price" data-en="Installation starting from $495" data-es="Instalación desde $495">Installation starting from $495</p>
+          <p class="mc-desc"
+             data-en="Coilovers, air ride, lift and leveling kits — dialed in for the stance and ride quality you actually want."
+             data-es="Coilovers, suspensión neumática y kits de elevación y nivelación, ajustados para la altura y el confort que buscas.">
+            Coilovers, air ride, lift and leveling kits — dialed in for the stance and ride quality you actually want.
+          </p>
+          <button type="button" class="mc-link mc-pick" data-pick data-kind="service" data-name="Performance Suspension" aria-pressed="false">
+            <span class="mc-pick-label" data-pick-label>Add to Quote</span><span class="mc-pick-icon" data-pick-icon aria-hidden="true">+</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- 03 PREMIUM VINYL WRAP -->
+      <article class="mc-card" data-card>
+        <div class="mc-media" data-pick-media style="background-image:url('https://assets.cdn.filesafe.space/RP0apjqSUDWTWf1qgqZI/media/6aaaa78a987f50502dc66a5c.png');">
+          <span class="mc-num">03</span>
+        </div>
+        <div class="mc-body">
+          <h3 class="mc-name" data-en="Premium Vinyl Wrap" data-es="Vinilo Premium">Premium Vinyl Wrap</h3>
+          <p class="mc-price" data-en="Starting at $2,495" data-es="Desde $2,495">Starting at $2,495</p>
+          <p class="mc-desc"
+             data-en="Full and partial wraps, color changes, satin finishes, chrome delete and fully custom liveries."
+             data-es="Vinilos completos y parciales, cambios de color, acabados satinados, chrome delete y diseños totalmente personalizados.">
+            Full and partial wraps, color changes, satin finishes, chrome delete and fully custom liveries.
+          </p>
+          <button type="button" class="mc-link mc-pick" data-pick data-kind="service" data-name="Premium Vinyl Wrap" aria-pressed="false">
+            <span class="mc-pick-label" data-pick-label>Add to Quote</span><span class="mc-pick-icon" data-pick-icon aria-hidden="true">+</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- 04 PPF -->
+      <article class="mc-card" data-card>
+        <div class="mc-media" data-pick-media style="background-image:url('https://assets.cdn.filesafe.space/RP0apjqSUDWTWf1qgqZI/media/6aaaa79742c38177da69f977.png');">
+          <span class="mc-num">04</span>
+        </div>
+        <div class="mc-body">
+          <h3 class="mc-name" data-en="Paint Protection Film" data-es="Película Protectora (PPF)">Paint Protection Film</h3>
+          <p class="mc-price" data-en="Starting at $1,795" data-es="Desde $1,795">Starting at $1,795</p>
+          <p class="mc-desc"
+             data-en="Self-healing film that shields your paint from rock chips, road debris and everyday wear."
+             data-es="Película autorreparable que protege tu pintura de piedras, escombros del camino y el desgaste diario.">
+            Self-healing film that shields your paint from rock chips, road debris and everyday wear.
+          </p>
+          <button type="button" class="mc-link mc-pick" data-pick data-kind="service" data-name="Paint Protection Film" aria-pressed="false">
+            <span class="mc-pick-label" data-pick-label>Add to Quote</span><span class="mc-pick-icon" data-pick-icon aria-hidden="true">+</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- 05 LUXURY DETAILING -->
+      <article class="mc-card" data-card>
+        <div class="mc-media" data-pick-media style="background-image:url('https://assets.cdn.filesafe.space/RP0apjqSUDWTWf1qgqZI/media/6aaaa7b8987f50502dc66ec3.png');">
+          <span class="mc-num">05</span>
+        </div>
+        <div class="mc-body">
+          <h3 class="mc-name" data-en="Luxury Detailing" data-es="Detallado de Lujo">Luxury Detailing</h3>
+          <p class="mc-price" data-en="Starting at $595" data-es="Desde $595">Starting at $595</p>
+          <p class="mc-desc"
+             data-en="Multi-stage paint correction, ceramic coating and interior detailing that brings the depth back."
+             data-es="Corrección de pintura en varias etapas, recubrimiento cerámico y detallado interior que devuelve la profundidad.">
+            Multi-stage paint correction, ceramic coating and interior detailing that brings the depth back.
+          </p>
+          <button type="button" class="mc-link mc-pick" data-pick data-kind="service" data-name="Luxury Detailing" aria-pressed="false">
+            <span class="mc-pick-label" data-pick-label>Add to Quote</span><span class="mc-pick-icon" data-pick-icon aria-hidden="true">+</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- 06 BESPOKE CUSTOM BUILDS -->
+      <article class="mc-card" data-card>
+        <div class="mc-media" data-pick-media style="background-image:url('https://assets.cdn.filesafe.space/RP0apjqSUDWTWf1qgqZI/media/6aaaa7c1a84eda365a956513.png');">
+          <span class="mc-num">06</span>
+        </div>
+        <div class="mc-body">
+          <h3 class="mc-name" data-en="Bespoke Custom Builds" data-es="Proyectos a Medida">Bespoke Custom Builds</h3>
+          <p class="mc-price is-quote" data-en="By consultation" data-es="Con consulta">By consultation</p>
+          <p class="mc-desc"
+             data-en="Full builds from concept to completion — multiple upgrades planned and executed as one project."
+             data-es="Proyectos completos desde el concepto hasta la entrega: varias mejoras planificadas y ejecutadas como un solo proyecto.">
+            Full builds from concept to completion — multiple upgrades planned and executed as one project.
+          </p>
+          <button type="button" class="mc-link mc-pick" data-pick data-kind="service" data-name="Bespoke Custom Builds" aria-pressed="false">
+            <span class="mc-pick-label" data-pick-label>Add to Quote</span><span class="mc-pick-icon" data-pick-icon aria-hidden="true">+</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- 07 UPHOLSTERY -->
+      <article class="mc-card" data-card>
+        <div class="mc-media" data-pick-media style="background-image:url('https://assets.cdn.filesafe.space/RP0apjqSUDWTWf1qgqZI/media/6aaaa7d21eb5f46f7699ff50.png');">
+          <span class="mc-num">07</span>
+        </div>
+        <div class="mc-body">
+          <h3 class="mc-name" data-en="Upholstery" data-es="Tapicería">Upholstery</h3>
+          <p class="mc-price" data-en="Starting at $2,299" data-es="Desde $2,299">Starting at $2,299</p>
+          <p class="mc-desc"
+             data-en="Custom leather and Alcantara, diamond stitching, headliners and complete interior trim work."
+             data-es="Cuero y Alcantara personalizados, costura tipo diamante, techos interiores y trabajo completo de interiores.">
+            Custom leather and Alcantara, diamond stitching, headliners and complete interior trim work.
+          </p>
+          <button type="button" class="mc-link mc-pick" data-pick data-kind="service" data-name="Upholstery" aria-pressed="false">
+            <span class="mc-pick-label" data-pick-label>Add to Quote</span><span class="mc-pick-icon" data-pick-icon aria-hidden="true">+</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- 08 WINDOW TINT -->
+      <article class="mc-card" data-card>
+        <div class="mc-media" data-pick-media style="background-image:url('https://assets.cdn.filesafe.space/RP0apjqSUDWTWf1qgqZI/media/6aaaa7eac71fc44c09c97aef.png');">
+          <span class="mc-num">08</span>
+        </div>
+        <div class="mc-body">
+          <h3 class="mc-name" data-en="Window Tint" data-es="Polarizado de Ventanas">Window Tint</h3>
+          <p class="mc-price" data-en="Starting at $350" data-es="Desde $350">Starting at $350</p>
+          <p class="mc-desc"
+             data-en="Heat rejection, UV protection and privacy with a clean, bubble-free finish that lasts."
+             data-es="Rechazo de calor, protección UV y privacidad con un acabado limpio, sin burbujas y duradero.">
+            Heat rejection, UV protection and privacy with a clean, bubble-free finish that lasts.
+          </p>
+          <button type="button" class="mc-link mc-pick" data-pick data-kind="service" data-name="Window Tint" aria-pressed="false">
+            <span class="mc-pick-label" data-pick-label>Add to Quote</span><span class="mc-pick-icon" data-pick-icon aria-hidden="true">+</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- 09 PERFORMANCE EXHAUST -->
+      <article class="mc-card" data-card>
+        <div class="mc-media" data-pick-media style="background-image:url('https://assets.cdn.filesafe.space/RP0apjqSUDWTWf1qgqZI/media/6aaaa7fea84eda365a956e89.png');">
+          <span class="mc-num">09</span>
+        </div>
+        <div class="mc-body">
+          <h3 class="mc-name" data-en="Performance Exhaust" data-es="Escape de Rendimiento">Performance Exhaust</h3>
+          <p class="mc-price" data-en="Installation starting from $349" data-es="Instalación desde $349">Installation starting from $349</p>
+          <p class="mc-desc"
+             data-en="Cat-backs, axle-backs and custom fabrication — tuned for the sound and performance you're after."
+             data-es="Cat-back, axle-back y fabricación personalizada, ajustados al sonido y rendimiento que buscas.">
+            Cat-backs, axle-backs and custom fabrication — tuned for the sound and performance you're after.
+          </p>
+          <button type="button" class="mc-link mc-pick" data-pick data-kind="service" data-name="Performance Exhaust" aria-pressed="false">
+            <span class="mc-pick-label" data-pick-label>Add to Quote</span><span class="mc-pick-icon" data-pick-icon aria-hidden="true">+</span>
+          </button>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- SECTION: BOTTOM CTA -->
+    <div class="mc-cta">
+      <h3 class="mc-cta-title"
+          data-en="Not Sure Which Service You Need?"
+          data-es="¿No Sabes Qué Servicio Necesitas?">
+        Not Sure Which Service You Need?
+      </h3>
+      <p class="mc-cta-sub"
+         data-en="Book a free consultation and our team will walk you through the right options for your vehicle."
+         data-es="Agenda una consulta gratis y nuestro equipo te guiará hacia las mejores opciones para tu vehículo.">
+        Book a free consultation and our team will walk you through the right options for your vehicle.
+      </p>
+      <div class="mc-cta-row">
+        <a class="mc-cta-btn" href="https://bookmadcustom.com/appointment-mad-page"
+           data-en="Book a Free Consultation" data-es="Agenda una Consulta Gratis">
+          Book a Free Consultation
+        </a>
+        <a class="mc-cta-btn mc-cta-ghost" href="#" data-mc-go hidden>
+          <span class="mc-go-label">Request Quote</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SECTION: STICKY QUOTE BAR -->
+  <div class="mc-bar" role="region" aria-label="Your quote request" aria-live="polite">
+    <div class="mc-bar-inner">
+      <div class="mc-bar-top">
+        <span class="mc-bar-count"></span>
+        <button type="button" class="mc-bar-clear"></button>
+      </div>
+      <div class="mc-chips"></div>
+      <a class="mc-bar-go" href="#" data-mc-go>
+        <span class="mc-go-label">Request Quote</span><span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<!-- =====================================================================
+     PRODUCT CAROUSEL
+     ===================================================================== -->
+<div id="ghl-products-p3r8">
+  <div class="mp-inner">
+
+    <!-- SECTION: HEADER + ARROWS -->
+    <div class="mp-head">
+      <div>
+        <span class="mp-eyebrow" data-en="Pro Shop" data-es="Tienda Pro">Pro Shop</span>
+        <h2 class="mp-title">
+          <span style="color:#fff" data-en="Detailing" data-es="Productos de">Detailing</span>
+          <span data-en="Products" data-es="Detallado">Products</span>
+        </h2>
+        <p class="mp-sub"
+           data-en="The same washes, coatings and tools we use in the shop, ready for your garage."
+           data-es="Los mismos shampoos, recubrimientos y herramientas que usamos en el taller, listos para tu garaje.">
+          The same washes, coatings and tools we use in the shop, ready for your garage.
+        </p>
+      </div>
+      <div class="mp-nav">
+        <button type="button" class="mp-arrow" data-dir="-1" aria-label="Previous products">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.4 7.4 14 6l-6 6 6 6 1.4-1.4L10.8 12z"/></svg>
+        </button>
+        <button type="button" class="mp-arrow" data-dir="1" aria-label="Next products">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.6 16.6 10 18l6-6-6-6-1.4 1.4 4.6 4.6z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: CAROUSEL TRACK (cards are built from the PRODUCTS list in the script) -->
+  <div class="mp-track" role="region" aria-roledescription="carousel" aria-label="Detailing products" tabindex="0"></div>
+
+  <div class="mp-inner">
+    <!-- SECTION: PROGRESS + SHOP LINK -->
+    <div class="mp-foot">
+      <div class="mp-progress" aria-hidden="true"><i></i></div>
+      <a class="mp-shop" href="#" data-mc-go>
+        <span class="mc-go-label">Request My Quote</span>
+        <span class="mp-count" hidden>0</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- SECTION: TOAST -->
+  <div class="mp-toast" role="status" aria-live="polite">
+    <span class="mp-toast-msg"></span>
+    <a href="#" class="mp-toast-link" data-mc-go><span class="mc-go-label">Request quote</span></a>
+  </div>
+</div>
+
+<!-- =====================================================================
+     FOOTER
+     ===================================================================== -->
+<div id="ghl-footer-f4k8">
+  <div class="mf-inner">
+    <div class="mf-grid">
+
+      <!-- SECTION: BRAND -->
+      <div class="mf-brand">
+        <img class="mf-logo" src="https://assets.cdn.filesafe.space/RP0apjqSUDWTWf1qgqZI/media/6aaaa96037639ce00c9f5703.png" alt="MAD Custom">
+        <p class="mf-about"
+           data-en="At MAD Custom, we specialize in high-end automotive customization designed to transform vehicles beyond the ordinary. From precision wheel fitment and suspension upgrades to premium wraps, PPF, and complete custom builds, we enhance every detail to elevate performance, style, and individuality while preserving long-term value."
+           data-es="En MAD Custom nos especializamos en personalización automotriz de alta gama diseñada para transformar vehículos más allá de lo ordinario. Desde el ajuste preciso de rines y mejoras de suspensión hasta vinilos premium, PPF y proyectos completamente personalizados, cuidamos cada detalle para elevar el rendimiento, el estilo y la individualidad, preservando el valor a largo plazo.">
+          At MAD Custom, we specialize in high-end automotive customization designed to transform vehicles beyond the ordinary. From precision wheel fitment and suspension upgrades to premium wraps, PPF, and complete custom builds, we enhance every detail to elevate performance, style, and individuality while preserving long-term value.
+        </p>
+
+        <!-- SECTION: SOCIAL -->
+        <div class="mf-social">
+          <a href="https://wa.link/c2aabg" aria-label="Chat with MAD Custom on WhatsApp" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.06c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.75-.71 2-1.4.25-.69.25-1.28.17-1.4-.07-.13-.27-.2-.57-.35M12.04 21.2c-1.62 0-3.2-.44-4.58-1.26l-.33-.2-3.4.89.91-3.32-.21-.34a8.98 8.98 0 01-1.38-4.81c0-4.96 4.04-9 9-9 2.4 0 4.66.94 6.36 2.64a8.94 8.94 0 012.63 6.36c0 4.96-4.04 9-9 9m7.66-16.66A10.7 10.7 0 0012.04 1.4C6.12 1.4 1.3 6.22 1.3 12.15c0 1.9.5 3.75 1.44 5.38L1.2 23.1l5.72-1.5a10.7 10.7 0 005.12 1.3h.01c5.92 0 10.74-4.82 10.74-10.75 0-2.87-1.12-5.57-3.15-7.6"/></svg>
+          </a>
+          <a href="https://www.facebook.com/MADCUSTOMFLORIDA" aria-label="Facebook" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.52 1.49-3.91 3.77-3.91 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.78-1.63 1.57v1.89h2.78l-.45 2.91h-2.33V22c4.78-.76 8.44-4.92 8.44-9.94"/></svg>
+          </a>
+          <a href="https://www.instagram.com/madcustomfl/" aria-label="Instagram" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.8 3.8 0 01-1.38-.9c-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.3-1.46.72-2.13 1.38A5.9 5.9 0 00.63 4.14c-.3.76-.5 1.64-.56 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.72 1.46 1.38 2.13.67.66 1.34 1.08 2.13 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.3 1.46-.72 2.13-1.38a5.9 5.9 0 001.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 00-1.38-2.13A5.9 5.9 0 0019.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0m0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32m0 10.16a4 4 0 110-8 4 4 0 010 8m7.85-10.4a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0"/></svg>
+          </a>
+          <a href="https://www.youtube.com/@MadCustomTV" aria-label="YouTube" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3.02 3.02 0 00-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.51A3.02 3.02 0 00.5 6.2C0 8.08 0 12 0 12s0 3.92.5 5.8a3.02 3.02 0 002.12 2.14c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51a3.02 3.02 0 002.12-2.14C24 15.92 24 12 24 12s0-3.92-.5-5.8M9.55 15.57V8.43L15.82 12l-6.27 3.57"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@madcustomfl" aria-label="TikTok" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M16.6 5.82A4.28 4.28 0 0115.54 3h-3.09v12.4a2.59 2.59 0 01-2.59 2.5 2.59 2.59 0 01-2.59-2.59 2.59 2.59 0 013.2-2.51V9.66a5.68 5.68 0 00-.61-.04A5.68 5.68 0 003.2 15.3a5.68 5.68 0 005.66 5.68 5.68 5.68 0 005.68-5.68V9.01a7.35 7.35 0 004.3 1.38V7.3a4.3 4.3 0 01-2.24-1.48"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- SECTION: SERVICES LIST -->
+      <div>
+        <h3 class="mf-h" data-en="Our Services" data-es="Nuestros Servicios">Our Services</h3>
+        <ul class="mf-list">
+          <li><a href="#ghl-services-m9d4" data-mc-add="Rims &amp; Tires" data-en="Rims &amp; Tires" data-es="Rines y Neumáticos">Rims &amp; Tires</a></li>
+          <li><a href="#ghl-services-m9d4" data-mc-add="Performance Suspension" data-en="Performance Suspension Systems" data-es="Sistemas de Suspensión">Performance Suspension Systems</a></li>
+          <li><a href="#ghl-services-m9d4" data-mc-add="Premium Vinyl Wrap" data-en="Premium Vinyl Wrap Studio" data-es="Estudio de Vinilo Premium">Premium Vinyl Wrap Studio</a></li>
+          <li><a href="#ghl-services-m9d4" data-mc-add="Paint Protection Film" data-en="Paint Protection Film (PPF)" data-es="Película Protectora (PPF)">Paint Protection Film (PPF)</a></li>
+          <li><a href="#ghl-services-m9d4" data-mc-add="Luxury Detailing" data-en="Luxury Detailing &amp; Paint Correction" data-es="Detallado de Lujo y Corrección de Pintura">Luxury Detailing &amp; Paint Correction</a></li>
+          <li><a href="#ghl-services-m9d4" data-mc-add="Bespoke Custom Builds" data-en="Bespoke Custom Builds" data-es="Proyectos a Medida">Bespoke Custom Builds</a></li>
+          <li><a href="#ghl-services-m9d4" data-mc-add="Upholstery" data-en="Upholstery" data-es="Tapicería">Upholstery</a></li>
+          <li><a href="#ghl-services-m9d4" data-mc-add="Window Tint" data-en="Window Tint" data-es="Polarizado de Ventanas">Window Tint</a></li>
+          <li><a href="#ghl-services-m9d4" data-mc-add="Performance Exhaust" data-en="Performance Exhaust Systems" data-es="Sistemas de Escape">Performance Exhaust Systems</a></li>
+        </ul>
+      </div>
+
+      <!-- SECTION: FLORIDA -->
+      <div>
+        <h3 class="mf-h">Florida</h3>
+
+        <div class="mf-item">
+          <div class="mf-label">
+            <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7m0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5"/></svg>
+            <span data-en="Location" data-es="Ubicación">Location</span>
+          </div>
+          <p class="mf-val"
+             data-en="19 N Westmoreland Dr, Orlando, FL 32805, United States"
+             data-es="19 N Westmoreland Dr, Orlando, FL 32805, Estados Unidos">
+            19 N Westmoreland Dr, Orlando, FL 32805, United States
+          </p>
+        </div>
+
+        <div class="mf-item">
+          <div class="mf-label">
+            <svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 013 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+            <span data-en="Call Us" data-es="Llámanos">Call Us</span>
+          </div>
+          <p class="mf-val"><a href="tel:+14072864426">+1 (407) 286 4426</a></p>
+        </div>
+
+        <div class="mf-item">
+          <div class="mf-label">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2m0 4-8 5-8-5V6l8 5 8-5z"/></svg>
+            <span data-en="Email Us" data-es="Escríbenos">Email Us</span>
+          </div>
+          <p class="mf-val"><a href="mailto:madcustomfl@outlook.com">madcustomfl@outlook.com</a></p>
+        </div>
+      </div>
+
+      <!-- SECTION: PUERTO RICO -->
+      <div>
+        <h3 class="mf-h">Puerto Rico</h3>
+
+        <div class="mf-item">
+          <div class="mf-label">
+            <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7m0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5"/></svg>
+            <span data-en="Location" data-es="Ubicación">Location</span>
+          </div>
+          <p class="mf-val">Carr. 140, Km. 61.8, Barceloneta, 00617, Puerto Rico</p>
+        </div>
+
+        <div class="mf-item">
+          <div class="mf-label">
+            <svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 013 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+            <span data-en="Call Us" data-es="Llámanos">Call Us</span>
+          </div>
+          <p class="mf-val"><a href="tel:+17878465115">+1 (787) 846 5115</a></p>
+        </div>
+
+        <div class="mf-item">
+          <div class="mf-label">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2m0 4-8 5-8-5V6l8 5 8-5z"/></svg>
+            <span data-en="Email Us" data-es="Escríbenos">Email Us</span>
+          </div>
+          <p class="mf-val"><a href="mailto:madcustomfl@outlook.com">madcustomfl@outlook.com</a></p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECTION: BOTTOM BAR -->
+    <div class="mf-bottom">
+      <p class="mf-copy"
+         data-en="© 2026 Copyright – MAD Custom. All rights reserved."
+         data-es="© 2026 Copyright – MAD Custom. Todos los derechos reservados.">
+        © 2026 Copyright – MAD Custom. All rights reserved.
+      </p>
+
+      <div class="mf-lang-group" role="group" aria-label="Language">
+        <button type="button" class="mf-lang-btn is-active" data-lang="en">EN</button>
+        <button type="button" class="mf-lang-btn" data-lang="es">ES</button>
+      </div>
+
+      <div class="mf-legal">
+        <a href="https://go.madcustomcars.com/terms-condition-page" data-en="Terms &amp; Conditions" data-es="Términos y Condiciones">Terms &amp; Conditions</a>
+        <a href="https://go.madcustomcars.com/privacy-policy-page" data-en="Privacy Policy" data-es="Política de Privacidad">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: BACK TO TOP -->
+  <button type="button" class="mf-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24"><path d="M12 5.8 4.9 12.9l1.4 1.4L12 8.6l5.7 5.7 1.4-1.4z"/><path d="M12 11.2 4.9 18.3l1.4 1.4L12 14l5.7 5.7 1.4-1.4z"/></svg>
+  </button>
+</div>
+
+
+<script>
+(function () {
+  var hero = document.getElementById('ghl-hero-v7q2');
+  var svc  = document.getElementById('ghl-services-m9d4');
+  var nav  = document.getElementById('ghl-nav-n2x6');
+  var prod = document.getElementById('ghl-products-p3r8');
+  var ftr  = document.getElementById('ghl-footer-f4k8');
+  if (!nav && !hero && !svc && !prod && !ftr) return;
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+
+  /* =====================================================================
+     SETTINGS — the only lines you need to edit
+     ===================================================================== */
+  /* 1) Where "Request My Quote" goes: your funnel STEP 2 page URL
+        (it embeds form cIDV5AHlkGjzKDlOt6Bn and passes the fields in).
+        To skip the funnel page, use the form link instead:
+        https://api.leadconnectorhq.com/widget/form/cIDV5AHlkGjzKDlOt6Bn */
+  var QUOTE_FORM_URL = 'https://sites.leadconnectorhq.com/preview/VbSknayJn8oCi8OlEAMy?notrack=true';
+
+  /* 2) Hidden-field Query Keys — must match the form exactly.
+        GHL custom fields:  {{contact.selected_services}}
+                            {{contact.order_items}}
+                            {{contact.order_total}}                    */
+  var FIELD_SERVICES    = 'selected_services';
+  var FIELD_ORDER_ITEMS = 'order_items';
+  var FIELD_ORDER_TOTAL = 'order_total';
+
+  /* 3) Products (keep prices in sync with the product page) */
+  var CATALOG = [
+    { id: 'turtle-wax',        img: '6aaab31c42c38177da6b51c8', name: 'Turtle Wax Original Hard Shell Shine Car Wax', price: 7.49,  sale: null,  rating: 0 },
+    { id: 'nano-suds',         img: '6aaab2e4c71fc44c09cac288', name: 'Nanoskin NANO SUDS Wash & Shine Shampoo',     price: 32.99, sale: 28.99, rating: 0 },
+    { id: 'kenolon-v1',        img: '6aaab2f7e51ec8fd0ba29906', name: 'Kenolon Ceramic Shield V1 Box – SiO₂ Coating Kit', price: 59.65, sale: null, rating: 0 },
+    { id: 'gold-class',        img: '6aaab32b42c38177da6b53c3', name: 'Meguiar’s Gold Class Car Wash Shampoo',       price: 11.99, sale: null,  rating: 5 },
+    { id: 'formula1-interior', img: '6aaab30be51ec8fd0ba29b95', name: 'Formula 1 Detail Express Multi-Purpose Interior Cleaner', price: 24.99, sale: null, rating: 0 },
+    { id: 'black-magic',       img: '6aaab2cac71fc44c09cabffd', name: 'Black Magic All Wheel Foaming Cleaner',       price: 6.49,  sale: null,  rating: 0 },
+    { id: '3d-pink',           img: '6aaab302a84eda365a96bcff', name: '3D Pink Car Soap – pH Balanced Formula',      price: 29.92, sale: null,  rating: 5 },
+    { id: 'meguiars-da-kit',   img: '6aaab2c09f8b31b6ab452488', name: 'Meguiar’s DA Microfiber Correction & Finishing Kit', price: 129.00, sale: null, rating: 0 },
+    { id: 'microfiber-towel',  img: '6aaab2d61eb5f46f769b4e17', name: 'Premium Microfiber Cleaning Towel',           price: 7.49,  sale: null,  rating: 0 },
+    { id: 'foam-pad',          img: '6aaab2b3aabc65fd5d08562b', name: 'Premium Foam Applicator Pad',                 price: 2.99,  sale: null,  rating: 0 }
+  ];
+  var CAT_BY_ID = {};
+  CATALOG.forEach(function (p) { CAT_BY_ID[p.id] = p; });
+
+  /* shared cart helpers (same "mcCart" storage as the product page) */
+  function money(n) { return '$' + n.toFixed(2); }
+  function readCart() {
+    var out = {};
+    try {
+      var c = JSON.parse(localStorage.getItem('mcCart') || '{}');
+      for (var k in c) if (CAT_BY_ID[k] && (c[k] | 0) > 0) out[k] = Math.min(99, c[k] | 0);
+    } catch (e) {}
+    return out;
+  }
+  function writeCart(c) { try { localStorage.setItem('mcCart', JSON.stringify(c)); } catch (e) {} }
+  var cartListeners = [];   /* repaint hooks (product cards) */
+  function priceOf(p) { return p.sale != null ? p.sale : p.price; }
+  function cartSummary(c) {
+    var lines = [], total = 0, count = 0;
+    CATALOG.forEach(function (p) {
+      var q = c[p.id]; if (!q) return;
+      lines.push(q + '× ' + p.name + ' (' + money(priceOf(p)) + ')');
+      total += priceOf(p) * q; count += q;
+    });
+    return { text: lines.join('; '), total: total, count: count };
+  }
+
+  /* ================= MULTI-SELECT QUOTE (services + cart) ================= */
+
+  var TXT = {
+    en: { add: 'Add to Quote', added: 'Added', count: function (n) { return '<b>' + n + '</b> item' + (n === 1 ? '' : 's') + ' selected'; }, clear: 'Clear all', go: 'Request My Quote', goShort: 'Request quote', goN: function (n) { return 'Request Quote (' + n + ')'; }, remove: 'Remove' },
+    es: { add: 'Agregar', added: 'Agregado', count: function (n) { return '<b>' + n + '</b> artículo' + (n === 1 ? '' : 's') + ' seleccionado' + (n === 1 ? '' : 's'); }, clear: 'Borrar todo', go: 'Solicitar Cotización', goShort: 'Cotizar', goN: function (n) { return 'Solicitar Cotización (' + n + ')'; }, remove: 'Quitar' }
+  };
+  var curLang = 'en';
+
+  var quote = (function () {
+    var bar = svc ? svc.querySelector('.mc-bar') : null;
+    if (!bar) return { refresh: function () {} };
+    var countEl = bar.querySelector('.mc-bar-count');
+    var clearEl = bar.querySelector('.mc-bar-clear');
+    var chips   = bar.querySelector('.mc-chips');
+    var gos = [];
+    [svc, prod].forEach(function (r) {
+      if (!r) return;
+      var l = r.querySelectorAll('[data-mc-go]');
+      for (var i = 0; i < l.length; i++) gos.push(l[i]);
+    });
+    var topBtn  = ftr ? ftr.querySelector('.mf-top') : null;
+
+    var picks = [];
+    [svc, prod].forEach(function (root) {
+      if (!root) return;
+      var list = root.querySelectorAll('[data-pick]');
+      for (var i = 0; i < list.length; i++) picks.push(list[i]);
+    });
+
+    var order = [], ES = {}, kindOf = {};
+    picks.forEach(function (btn) {
+      var nm = btn.getAttribute('data-name'), kd = btn.getAttribute('data-kind');
+      var key = kd + '|' + nm;
+      btn._key = key;
+      order.push(key); kindOf[key] = kd;
+      var card = btn.closest('[data-card]');
+      var t = card && card.querySelector('.mc-name');
+      ES[key] = t ? (t.getAttribute('data-es') || nm) : nm;
+    });
+
+    var picked = [];
+    try {
+      var stored = JSON.parse(localStorage.getItem('mcPicked2') || '[]');
+      if (Object.prototype.toString.call(stored) === '[object Array]') {
+        picked = stored.filter(function (x) { return order.indexOf(x) > -1; });
+      }
+    } catch (e) {}
+
+    function nameOf(key) { return key.slice(key.indexOf('|') + 1); }
+    function label(key) { return curLang === 'es' ? ES[key] : nameOf(key); }
+
+    function buildUrl(cart) {
+      var parts = [];
+      /* English names always, so workflows/tags stay consistent */
+      var names = order.filter(function (k) { return picked.indexOf(k) > -1; }).map(nameOf);
+      if (names.length) parts.push(FIELD_SERVICES + '=' + encodeURIComponent(names.join(', ')));
+      if (cart.count) {
+        parts.push(FIELD_ORDER_ITEMS + '=' + encodeURIComponent(cart.text));
+        parts.push(FIELD_ORDER_TOTAL + '=' + encodeURIComponent(money(cart.total)));
+      }
+      return QUOTE_FORM_URL + (QUOTE_FORM_URL.indexOf('?') > -1 ? '&' : '?') + parts.join('&');
+    }
+
+    function refresh() {
+      var T = TXT[curLang];
+      var cartMap = readCart();
+      var cart = cartSummary(cartMap);
+      var n = picked.length + cart.count;
+      picks.forEach(function (btn) {
+        var on = picked.indexOf(btn._key) > -1;
+        var card = btn.closest('[data-card]');
+        if (card) card.classList.toggle('is-picked', on);
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        btn.querySelector('[data-pick-label]').textContent = on ? T.added : T.add;
+        btn.querySelector('[data-pick-icon]').textContent = on ? '✓' : '+';
+      });
+      countEl.innerHTML = T.count(n);
+      clearEl.textContent = T.clear;
+
+      chips.innerHTML = '';
+      order.forEach(function (key) {
+        if (picked.indexOf(key) < 0) return;
+        var c = document.createElement('button');
+        c.type = 'button';
+        c.className = 'mc-chip-x';
+        c.setAttribute('aria-label', T.remove + ' ' + label(key));
+        c.appendChild(document.createTextNode(label(key)));
+        var x = document.createElement('span'); x.textContent = '×'; c.appendChild(x);
+        c.addEventListener('click', function () { toggle(key); });
+        chips.appendChild(c);
+      });
+      CATALOG.forEach(function (p) {
+        var q = cartMap[p.id]; if (!q) return;
+        var c = document.createElement('button');
+        c.type = 'button';
+        c.className = 'mc-chip-x';
+        c.setAttribute('aria-label', T.remove + ' ' + p.name);
+        c.appendChild(document.createTextNode(q + '× ' + p.name));
+        var x = document.createElement('span'); x.textContent = '×'; c.appendChild(x);
+        c.addEventListener('click', function () {
+          var m = readCart(); delete m[p.id]; writeCart(m); refresh();
+        });
+        chips.appendChild(c);
+      });
+
+      var url = buildUrl(cart);
+      for (var g = 0; g < gos.length; g++) {
+        gos[g].setAttribute('href', n ? url : '#');
+        var isShort = gos[g].classList.contains('mc-bar-go') || gos[g].classList.contains('mp-shop') || gos[g].classList.contains('mp-toast-link');
+        gos[g].querySelector('.mc-go-label').textContent = gos[g].classList.contains('mp-toast-link') ? T.goShort : (isShort ? T.go : T.goN(n));
+        gos[g].classList.toggle('is-empty', !n);
+        if (gos[g].classList.contains('mc-cta-ghost')) gos[g].hidden = !n;
+      }
+
+      bar.classList.toggle('is-on', n > 0);
+      if (topBtn) topBtn.classList.toggle('is-lifted', n > 0);
+      for (var li = 0; li < cartListeners.length; li++) cartListeners[li]();
+      try { localStorage.setItem('mcPicked2', JSON.stringify(picked)); } catch (e) {}
+    }
+
+    function toggle(key, forceOn) {
+      var at = picked.indexOf(key);
+      if (at > -1 && !forceOn) picked.splice(at, 1);
+      else if (at < 0) picked.push(key);
+      refresh();
+    }
+
+    picks.forEach(function (btn) {
+      btn.addEventListener('click', function () { toggle(btn._key); });
+      var card = btn.closest('[data-card]');
+      var media = card && card.querySelector('[data-pick-media]');
+      if (media) media.addEventListener('click', function () { toggle(btn._key); });
+    });
+
+    clearEl.addEventListener('click', function () { picked = []; writeCart({}); refresh(); });
+    for (var g2 = 0; g2 < gos.length; g2++) {
+      gos[g2].addEventListener('click', function (ev) {
+        if (!picked.length && !cartSummary(readCart()).count) {
+          ev.preventDefault();
+          if (this.classList.contains('mp-shop') && prod) {
+            var first = prod.querySelector('.mp-add');
+            if (first) first.focus({ preventScroll: true });
+          }
+        }
+      });
+    }
+    window.addEventListener('storage', function (e) { if (e.key === 'mcCart' || e.key === 'mcPicked2') refresh(); });
+
+    /* footer service links: add that service, then scroll to its card */
+    var addRoots = [nav, ftr];
+    for (var ar = 0; ar < addRoots.length; ar++) {
+      if (!addRoots[ar]) continue;
+      var adds = addRoots[ar].querySelectorAll('[data-mc-add]');
+      for (var a = 0; a < adds.length; a++) {
+        adds[a].addEventListener('click', function (ev) {
+          ev.preventDefault();
+          var key = 'service|' + this.getAttribute('data-mc-add');
+          toggle(key, true);
+          var target = svc;
+          picks.forEach(function (b) { if (b._key === key) target = b.closest('[data-card]') || svc; });
+          target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+        });
+      }
+    }
+
+    return { refresh: refresh };
+  })();
+
+  /* ================= PRODUCT CAROUSEL ================= */
+  /* Same product list + cart as the product page (localStorage "mcCart"),
+     so items added here show up in the shop's cart. Edit prices in BOTH files. */
+  var carousel = (function () {
+    if (!prod) return { refresh: function () {} };
+    var IMG = 'https://assets.cdn.filesafe.space/RP0apjqSUDWTWf1qgqZI/media/';
+    var ITEMS = CATALOG;
+    var track = prod.querySelector('.mp-track');
+    var arrows = prod.querySelectorAll('.mp-arrow');
+    var bar = prod.querySelector('.mp-progress i');
+    var countEl = prod.querySelector('.mp-count');
+    var toastEl = prod.querySelector('.mp-toast');
+    var toastMsg = prod.querySelector('.mp-toast-msg');
+    var toastLink = prod.querySelector('.mp-toast-link');
+    var toastTimer = null;
+
+    function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    var STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>';
+
+    /* build cards (before the language controller collects data-en nodes) */
+    track.innerHTML = ITEMS.map(function (p, i) {
+      var off = p.sale != null ? Math.round((1 - p.sale / p.price) * 100) : 0;
+      var stars = '';
+      for (var r = 0; r < p.rating; r++) stars += STAR;
+      return '<article class="mp-card" aria-roledescription="slide" aria-label="' + (i + 1) + ' / ' + ITEMS.length + '">' +
+        '<div class="mp-media">' +
+          (off ? '<span class="mp-sale">-' + off + '%</span>' : '') +
+          '<img src="' + IMG + p.img + '.png" alt="' + esc(p.name) + '" loading="lazy" width="600" height="600" draggable="false">' +
+        '</div>' +
+        '<h3 class="mp-name">' + esc(p.name) + '</h3>' +
+        '<div class="mp-stars"' + (p.rating ? ' role="img" aria-label="' + p.rating + ' / 5"' : ' aria-hidden="true"') + '>' + stars + '</div>' +
+        '<p class="mp-price">' + (p.sale != null ? '<s>' + money(p.price) + '</s><b>' + money(p.sale) + '</b>' : '<b>' + money(p.price) + '</b>') + '</p>' +
+        '<div class="mp-qtyrow">' +
+          '<span class="mp-qlabel">Qty</span>' +
+          '<div class="mp-qty" role="group" aria-label="Quantity">' +
+            '<button type="button" data-q="-1" data-id="' + p.id + '" aria-label="Decrease quantity">−</button>' +
+            '<span class="mp-qv" data-qv="' + p.id + '">1</span>' +
+            '<button type="button" data-q="1" data-id="' + p.id + '" aria-label="Increase quantity">+</button>' +
+          '</div>' +
+        '</div>' +
+        '<button type="button" class="mp-add" data-id="' + p.id + '">Add to cart</button>' +
+      '</article>';
+    }).join('');
+
+    /* ---- cart (shared with product page) ---- */
+    function paintCount() {
+      var c = readCart(), n = 0;
+      for (var k in c) n += (c[k] | 0);
+      countEl.textContent = n;
+      countEl.hidden = n === 0;
+    }
+    /* quantity picked before adding (per product) */
+    var pend = {};
+    function paintCards() {
+      var c = readCart(), es = curLang === 'es';
+      var qlabel = es ? 'Cant.' : 'Qty';
+      track.querySelectorAll('.mp-card').forEach(function (card) {
+        var btn = card.querySelector('.mp-add');
+        var id = btn.getAttribute('data-id');
+        var inCart = (c[id] | 0) > 0;
+        var q = inCart ? c[id] : (pend[id] || 1);
+        card.querySelector('.mp-qv').textContent = q;
+        card.querySelector('.mp-qlabel').textContent = inCart ? (es ? '✓ Añadido' : '✓ Added') : qlabel;
+        card.classList.toggle('is-in', inCart);
+        card.querySelector('[data-q="-1"]').setAttribute('aria-label', inCart && q === 1 ? (es ? 'Quitar' : 'Remove') : (es ? 'Menos' : 'Decrease quantity'));
+        if (!btn.classList.contains('is-done')) {
+          btn.textContent = inCart ? (es ? 'En tu cotización' : 'In your quote') : (es ? 'Añadir al carrito' : 'Add to cart');
+        }
+        btn.classList.toggle('is-in', inCart);
+      });
+    }
+    cartListeners.push(function () { paintCount(); paintCards(); });
+
+    function showToast(text) {
+      toastMsg.textContent = text;
+      toastEl.classList.add('is-on');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { toastEl.classList.remove('is-on'); }, 2600);
+    }
+
+    track.addEventListener('click', function (e) {
+      var es = curLang === 'es';
+      var step = e.target.closest('[data-q]');
+      if (step) {
+        var sid = step.getAttribute('data-id'), d = +step.getAttribute('data-q');
+        var c1 = readCart();
+        if ((c1[sid] | 0) > 0) {
+          var nq = Math.min(99, (c1[sid] | 0) + d);
+          if (nq <= 0) { delete c1[sid]; pend[sid] = 1; } else c1[sid] = nq;
+          writeCart(c1);
+          quote.refresh();
+          showToast(nq <= 0 ? (es ? 'Quitado de tu cotización' : 'Removed from your quote')
+                            : (es ? 'Cantidad actualizada: ' : 'Quantity updated: ') + nq);
+        } else {
+          pend[sid] = Math.max(1, Math.min(99, (pend[sid] || 1) + d));
+          paintCards();
+        }
+        return;
+      }
+      var btn = e.target.closest('.mp-add');
+      if (!btn) return;
+      var id = btn.getAttribute('data-id');
+      var c = readCart();
+      if ((c[id] | 0) > 0) {                       /* already added: nudge to the quote */
+        showToast(es ? 'Ya está en tu cotización (' + c[id] + ')' : 'Already in your quote (' + c[id] + ')');
+        return;
+      }
+      var qty = pend[id] || 1;
+      c[id] = qty;
+      writeCart(c);
+      pend[id] = 1;
+      btn.classList.add('is-done');
+      quote.refresh();
+      btn.textContent = es ? 'Añadido ✓' : 'Added ✓';
+      setTimeout(function () { btn.classList.remove('is-done'); paintCards(); }, 1200);
+      showToast((qty > 1 ? qty + '× ' : '') + (es ? 'añadido a tu cotización' : 'added to your quote'));
+    });
+    window.addEventListener('storage', function (e) { if (e.key === 'mcCart') { paintCount(); paintCards(); } });
+    paintCount();
+    paintCards();
+
+    /* ---- endless loop ---- */
+    var SPEED = 40;            /* pixels per second — raise for faster */
+    var DIRECTION = 'right';   /* 'right' = cards drift to the right, 'left' = to the left */
+
+    var originals = Array.prototype.slice.call(track.children);
+    for (var cpy = 0; cpy < 2; cpy++) {
+      originals.forEach(function (card) {
+        var k = card.cloneNode(true);
+        k.setAttribute('aria-hidden', 'true');
+        var f = k.querySelectorAll('a, button');
+        for (var q = 0; q < f.length; q++) f[q].tabIndex = -1;
+        track.appendChild(k);
+      });
+    }
+
+    var setW = 0, pos = 0, last = 0;
+    var hover = false, focusIn = false, hold = false, visible = true, down = false;
+    var resumeTimer = null, wrapTimer = null;
+
+    function jump(x) { pos = x; track.scrollLeft = x; }
+    function measure() {
+      var w = track.children[originals.length].offsetLeft - track.children[0].offsetLeft;
+      if (w <= 0) return;
+      var within = setW ? (((track.scrollLeft % setW) + setW) % setW) / setW : 0;
+      setW = w;
+      jump(setW + within * setW);
+      update();
+    }
+    function wrap() {
+      if (!setW) return;
+      var x = track.scrollLeft;
+      if (x < setW * 0.5) jump(x + setW);
+      else if (x > setW * 1.5) jump(x - setW);
+    }
+    function running() {
+      return !reduce && visible && !hover && !focusIn && !hold && !down && setW > 0 && !document.hidden;
+    }
+    function pauseFor(ms) {
+      hold = true;
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(function () { hold = false; }, ms);
+    }
+    function tick(t) {
+      var dt = last ? Math.min(64, t - last) : 0;
+      last = t;
+      if (running()) {
+        pos += (DIRECTION === 'right' ? -1 : 1) * SPEED * dt / 1000;
+        if (pos < setW * 0.5) pos += setW;
+        else if (pos > setW * 1.5) pos -= setW;
+        track.scrollLeft = pos;
+      } else {
+        pos = track.scrollLeft;
+      }
+      window.requestAnimationFrame(tick);
+    }
+
+    /* ---- progress bar (position within one loop) ---- */
+    function update() {
+      if (!setW) return;
+      var within = (((track.scrollLeft % setW) + setW) % setW) / setW;
+      var vis = Math.min(1, track.clientWidth / setW);
+      bar.style.width = (vis * 100) + '%';
+      bar.style.marginLeft = (within * (1 - vis) * 100) + '%';
+    }
+    track.addEventListener('scroll', function () {
+      update();
+      clearTimeout(wrapTimer);
+      wrapTimer = setTimeout(function () { if (!running()) wrap(); }, 160);
+    }, { passive: true });
+
+    /* ---- arrows / keyboard ---- */
+    function step() {
+      var card = track.querySelector('.mp-card');
+      if (!card) return track.clientWidth;
+      var gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 0;
+      var per = Math.max(1, Math.floor((track.clientWidth + gap) / (card.offsetWidth + gap)));
+      return per * (card.offsetWidth + gap);
+    }
+    function nudge(dir) {
+      pauseFor(3500);
+      wrap();
+      track.scrollBy({ left: step() * dir, behavior: reduce ? 'auto' : 'smooth' });
+    }
+    for (var i = 0; i < arrows.length; i++) {
+      arrows[i].addEventListener('click', function () { nudge(+this.getAttribute('data-dir')); });
+    }
+    track.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); nudge(1); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); nudge(-1); }
+    });
+
+    /* ---- pause when the customer is interacting ---- */
+    track.addEventListener('mouseenter', function () { hover = true; });
+    track.addEventListener('mouseleave', function () { hover = false; });
+    prod.addEventListener('focusin', function (e) {
+      var kb = true;
+      try { kb = e.target.matches(':focus-visible'); } catch (err) {}
+      if (kb) focusIn = true;
+    });
+    prod.addEventListener('focusout', function () { focusIn = false; });
+    track.addEventListener('touchstart', function () { hold = true; clearTimeout(resumeTimer); }, { passive: true });
+    track.addEventListener('touchend', function () { pauseFor(2500); }, { passive: true });
+    document.addEventListener('visibilitychange', function () { last = 0; });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) { visible = en[0].isIntersecting; last = 0; }, { threshold: 0 }).observe(track);
+    }
+
+    /* ---- mouse drag on desktop (touch swipes natively) ---- */
+    var startX = 0, startLeft = 0, moved = false;
+    track.addEventListener('mousedown', function (e) {
+      if (e.button !== 0 || e.target.closest('.mp-add, .mp-qty')) return;
+      down = true; moved = false; startX = e.pageX; startLeft = track.scrollLeft;
+    });
+    window.addEventListener('mousemove', function (e) {
+      if (!down) return;
+      var dx = e.pageX - startX;
+      if (!moved && Math.abs(dx) > 5) { moved = true; track.classList.add('is-drag'); }
+      if (moved) { e.preventDefault(); track.scrollLeft = startLeft - dx; }
+    });
+    window.addEventListener('mouseup', function () {
+      if (!down) return;
+      down = false;
+      if (moved) { track.classList.remove('is-drag'); wrap(); pauseFor(1500); }
+    });
+    track.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+
+    window.addEventListener('resize', measure);
+    window.addEventListener('load', measure);
+    measure();
+    window.requestAnimationFrame(tick);
+
+    return { refresh: function () {
+      paintCards();
+    } };
+  })();
+
+  /* ================= NAVIGATION ================= */
+  (function () {
+    if (!nav) return;
+    var burger = nav.querySelector('.mn-burger');
+    var drop = nav.querySelector('.mn-drop');
+    var dropBtn = drop && drop.querySelector('.mn-link');
+    var mToggle = nav.querySelector('.mn-m-toggle');
+    var mSub = nav.querySelector('.mn-m-sub');
+    var bodyOverflow = '';
+
+    /* solid background once the page scrolls */
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return; ticking = true;
+      window.requestAnimationFrame(function () {
+        nav.classList.toggle('is-solid', window.pageYOffset > 30);
+        ticking = false;
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    /* mobile menu */
+    function setMenu(open) {
+      nav.classList.toggle('is-menu', open);
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      if (open) { bodyOverflow = document.body.style.overflow; document.body.style.overflow = 'hidden'; }
+      else { document.body.style.overflow = bodyOverflow; }
+    }
+    burger.addEventListener('click', function () { setMenu(!nav.classList.contains('is-menu')); });
+    mToggle.addEventListener('click', function () {
+      var open = !mSub.classList.contains('is-open');
+      mSub.classList.toggle('is-open', open);
+      mToggle.classList.toggle('mn-m-open', open);
+      mToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    window.addEventListener('resize', function () { if (window.innerWidth >= 1100 && nav.classList.contains('is-menu')) setMenu(false); });
+
+    /* desktop dropdown: hover on mouse, click on touch/keyboard */
+    function setDrop(open) {
+      drop.classList.toggle('is-open', open);
+      dropBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    var closeT = null;
+    drop.addEventListener('mouseenter', function () { clearTimeout(closeT); setDrop(true); });
+    drop.addEventListener('mouseleave', function () { closeT = setTimeout(function () { setDrop(false); }, 150); });
+    dropBtn.addEventListener('click', function () { setDrop(!drop.classList.contains('is-open')); });
+    document.addEventListener('click', function (e) { if (!drop.contains(e.target)) setDrop(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      if (drop.classList.contains('is-open')) { setDrop(false); dropBtn.focus(); }
+      if (nav.classList.contains('is-menu')) { setMenu(false); burger.focus(); }
+    });
+
+    /* in-page links close menus; "view all" scrolls to the services grid */
+    var inPage = nav.querySelectorAll('[data-mc-add], [data-mn-jump]');
+    for (var i = 0; i < inPage.length; i++) {
+      inPage[i].addEventListener('click', function (e) {
+        setDrop(false);
+        if (nav.classList.contains('is-menu')) setMenu(false);
+        var target = this.hasAttribute('data-mn-jump') && document.getElementById(this.getAttribute('data-mn-jump'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        }
+      });
+    }
+  })();
+
+
+  /* ================= LAND ON A SECTION FROM ANOTHER PAGE =================
+     e.g. services-page#ghl-products-p3r8 (Shop link) or #ghl-services-m9d4.
+     GHL can render custom code late, so retry until the section exists. */
+  (function () {
+    var id = (window.location.hash || '').replace('#', '');
+    if (id !== 'ghl-products-p3r8' && id !== 'ghl-services-m9d4') return;
+    var tries = 0;
+    (function go() {
+      var el = document.getElementById(id);
+      if (el) {
+        setTimeout(function () {
+          el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        }, 350);
+        return;
+      }
+      if (++tries < 40) setTimeout(go, 150);
+    })();
+  })();
+
+  /* ================= ONE LANGUAGE CONTROLLER (all 3 toggles) ================= */
+  var nodes = [], buttons = [];
+  function collect(root, btnSel) {
+    if (!root) return;
+    var n = root.querySelectorAll('[data-en]');
+    for (var i = 0; i < n.length; i++) nodes.push(n[i]);
+    var b = root.querySelectorAll(btnSel);
+    for (var j = 0; j < b.length; j++) buttons.push(b[j]);
+  }
+  collect(nav,  '.mn-lang-btn');
+  collect(hero, '.mh-lang-btn');
+  collect(svc,  '.mc-lang-btn');
+  collect(prod, '.mp-no-toggle');
+  collect(prod, '.mp-no-toggle');
+  collect(ftr,  '.mf-lang-btn');
+
+  function setLang(lang) {
+    for (var i = 0; i < nodes.length; i++) {
+      var val = nodes[i].getAttribute('data-' + lang);
+      if (val) nodes[i].textContent = val;
+    }
+    for (var b = 0; b < buttons.length; b++) {
+      var on = buttons[b].getAttribute('data-lang') === lang;
+      buttons[b].classList.toggle('is-active', on);
+      buttons[b].setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+    try { localStorage.setItem('mcLang', lang); } catch (e) {}
+    curLang = lang;
+    quote.refresh();
+    carousel.refresh();
+  }
+  for (var k = 0; k < buttons.length; k++) {
+    buttons[k].addEventListener('click', function () {
+      setLang(this.getAttribute('data-lang'));
+    });
+  }
+
+  var start = 'en';
+  try {
+    var saved = localStorage.getItem('mcLang');
+    if (saved === 'en' || saved === 'es') start = saved;
+    else if ((navigator.language || '').toLowerCase().indexOf('es') === 0) start = 'es';
+  } catch (e) {}
+  setLang(start);
+
+  /* ================= SMOOTH SCROLL (hero → services) ================= */
+  if (hero && svc) {
+    var jumps = hero.querySelectorAll('[data-mc-scroll]');
+    for (var s = 0; s < jumps.length; s++) {
+      jumps[s].addEventListener('click', function (ev) {
+        ev.preventDefault();
+        svc.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      });
+    }
+  }
+
+  /* ================= HERO VIDEO ================= */
+  (function () {
+    if (!hero) return;
+    var vid = hero.querySelector('.mh-video');
+    if (!vid) return;
+
+    var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    var saveData = conn && (conn.saveData || /2g/.test(conn.effectiveType || ''));
+
+    if (saveData || reduce) {
+      vid.removeAttribute('autoplay');
+      vid.pause();
+      vid.style.display = 'none';   /* poster layer stays visible */
+      return;
+    }
+
+    /* if the video really fails, hide it so the poster shows cleanly */
+    vid.addEventListener('error', function () { vid.style.display = 'none'; }, true);
+
+    /* iOS needs these set as properties too, not just attributes */
+    vid.muted = true;
+    vid.defaultMuted = true;
+    vid.setAttribute('muted', '');
+    vid.setAttribute('webkit-playsinline', '');
+    vid.playsInline = true;
+
+    var tries = 0;
+    var tryPlay = function () {
+      var p = vid.play();
+      if (p && typeof p.catch === 'function') {
+        p.catch(function () {
+          /* iOS Low Power Mode / slow first byte: retry a few times, then wait for a tap */
+          if (++tries < 5) setTimeout(tryPlay, 700);
+        });
+      }
+    };
+    tryPlay();
+    ['loadeddata', 'canplay'].forEach(function (ev) { vid.addEventListener(ev, tryPlay); });
+    ['touchstart', 'click', 'scroll'].forEach(function (ev) {
+      document.addEventListener(ev, tryPlay, { once: true, passive: true });
+    });
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) tryPlay(); });
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) tryPlay(); else vid.pause();
+        });
+      }, { threshold: 0.05 }).observe(hero);
+    }
+  })();
+
+  /* ================= SERVICE CARD SCROLL REVEAL ================= */
+  (function () {
+    if (!svc) return;
+    var cards = svc.querySelectorAll('.mc-card');
+    if (reduce || !('IntersectionObserver' in window)) {
+      for (var c = 0; c < cards.length; c++) cards[c].classList.add('is-in');
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry, idx) {
+        if (entry.isIntersecting) {
+          var el = entry.target;
+          setTimeout(function () { el.classList.add('is-in'); }, idx * 90);
+          io.unobserve(el);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    for (var n = 0; n < cards.length; n++) io.observe(cards[n]);
+  })();
+
+  /* ================= BACK TO TOP ================= */
+  (function () {
+    if (!ftr) return;
+    var topBtn = ftr.querySelector('.mf-top');
+    if (!topBtn) return;
+    var ticking = false;
+    var onScroll = function () {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        topBtn.classList.toggle('is-on', window.pageYOffset > 420);
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    topBtn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  })();
+})();
+</script>

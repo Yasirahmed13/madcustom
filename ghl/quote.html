@@ -1,0 +1,927 @@
+<!-- ===================================================================
+     MAD CUSTOM — FUNNEL STEP 2: QUOTE FORM (EN / ES)
+     Scopes: #ghl-step2-q7w3 · #ghl-footer-f4k8 (same footer as the full page)
+     Paste into ONE GHL Custom HTML / Code element on your Step 2 page.
+     Fully scoped — cannot affect any other section.
+
+     HOW IT WORKS
+       Step 1 (full page / product page) sends the customer here with:
+         ?selected_services=...&order_items=...&order_total=...
+       This page:
+         • shows those picks in a "Your Request" summary
+         • passes them into your GHL form (cIDV5AHlkGjzKDlOt6Bn), so the
+           hidden fields fill in automatically.
+
+     IN GHL
+       • Form → Settings → On Submit: redirect to your Step 3 / thank-you page.
+       • Turn off the page's default header if the funnel adds one.
+
+     REPLACE (optional)
+       Step 1 page (Edit selection + footer service links): https://go.madcustomcars.com/services-page
+       https://go.madcustomcars.com/terms-condition-page / https://go.madcustomcars.com/privacy-policy-page → footer legal links
+     =================================================================== -->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
+
+#ghl-step2-q7w3 {
+  --sq-red: #E10600;
+  --sq-red-dark: #B00500;
+  --sq-bg: #0A0A0A;
+  --sq-card: #141010;
+  --sq-card-2: #1B1616;
+  --sq-line: #2A2222;
+  --sq-text: #FFFFFF;
+  --sq-body: #BDB6B4;
+  --sq-muted: #8A827F;
+
+  position: relative;
+  min-height: 100vh;
+  background: var(--sq-bg);
+  background-image: radial-gradient(90% 55% at 50% -5%, rgba(225,6,0,.16) 0%, rgba(10,10,10,0) 60%);
+  color: var(--sq-body);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+#ghl-step2-q7w3 *, #ghl-step2-q7w3 *::before, #ghl-step2-q7w3 *::after { box-sizing: border-box; }
+#ghl-step2-q7w3 button { font: inherit; }
+#ghl-step2-q7w3 :focus-visible { outline: 2px solid var(--sq-red); outline-offset: 3px; }
+#ghl-step2-q7w3 .sq-wrap { max-width: 1180px; margin: 0 auto; padding: 0 1.1rem; }
+
+/* ---------- TOP BAR ---------- */
+#ghl-step2-q7w3 .sq-top { border-bottom: 1px solid rgba(255,255,255,.07); }
+#ghl-step2-q7w3 .sq-top .sq-wrap { height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+#ghl-step2-q7w3 .sq-logo img { height: 60px; width: auto; display: block; margin-left: -14px; }
+#ghl-step2-q7w3 .sq-top-right { display: flex; align-items: center; gap: .6rem; }
+#ghl-step2-q7w3 .sq-call {
+  display: none; color: var(--sq-body); text-decoration: none; font-size: .9rem;
+  min-height: 44px; align-items: center; gap: 7px;
+}
+#ghl-step2-q7w3 .sq-call:hover { color: #fff; }
+#ghl-step2-q7w3 .sq-call svg { width: 16px; height: 16px; fill: var(--sq-red); }
+#ghl-step2-q7w3 .sq-lang { display: inline-flex; padding: 3px; background: var(--sq-card); border: 1px solid var(--sq-line); border-radius: 999px; }
+#ghl-step2-q7w3 .sq-lang button {
+  appearance: none; border: 0; background: none; cursor: pointer;
+  color: var(--sq-muted); font-family: 'Barlow', sans-serif; font-weight: 700; font-size: .74rem; letter-spacing: 1.2px;
+  min-height: 36px; padding: 0 .85rem; border-radius: 999px;
+}
+#ghl-step2-q7w3 .sq-lang button.is-active { background: var(--sq-red); color: #fff; }
+
+/* ---------- PROGRESS ---------- */
+#ghl-step2-q7w3 .sq-steps { display: flex; align-items: center; justify-content: center; gap: .6rem; padding: 1.75rem 0 1.25rem; }
+#ghl-step2-q7w3 .sq-step { display: flex; align-items: center; gap: .5rem; font-size: .8rem; color: var(--sq-muted); white-space: nowrap; }
+#ghl-step2-q7w3 .sq-dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: 'Barlow', sans-serif; font-weight: 800; font-size: .82rem;
+  border: 1px solid var(--sq-line); color: var(--sq-muted); background: var(--sq-card);
+}
+#ghl-step2-q7w3 .sq-step.is-done .sq-dot { background: #fff; color: #111; border-color: #fff; }
+#ghl-step2-q7w3 .sq-step.is-now { color: #fff; }
+#ghl-step2-q7w3 .sq-step.is-now .sq-dot { background: var(--sq-red); color: #fff; border-color: var(--sq-red); box-shadow: 0 0 0 4px rgba(225,6,0,.2); }
+#ghl-step2-q7w3 .sq-line { width: 28px; height: 1px; background: var(--sq-line); }
+#ghl-step2-q7w3 .sq-step-txt { display: none; }
+
+/* ---------- HEADER ---------- */
+#ghl-step2-q7w3 .sq-head { text-align: center; margin: 0 auto 2rem; max-width: 680px; }
+#ghl-step2-q7w3 .sq-title {
+  font-family: 'Barlow', sans-serif; font-weight: 900; text-transform: uppercase; letter-spacing: -.5px;
+  font-size: clamp(2rem, 8vw, 3.4rem); line-height: 1.02; color: #fff; margin: 0 0 .75rem;
+}
+#ghl-step2-q7w3 .sq-title .sq-accent { color: var(--sq-red); }
+#ghl-step2-q7w3 .sq-sub { font-size: clamp(.97rem, 3.8vw, 1.1rem); line-height: 1.65; margin: 0; }
+
+/* ---------- LAYOUT ---------- */
+#ghl-step2-q7w3 .sq-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; padding-bottom: 3rem; }
+
+/* summary */
+#ghl-step2-q7w3 .sq-card {
+  background: var(--sq-card); border: 1px solid var(--sq-line); border-radius: 16px;
+  padding: 1.25rem;
+}
+#ghl-step2-q7w3 .sq-card-head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: 1rem; }
+#ghl-step2-q7w3 .sq-h {
+  font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 1.15rem; text-transform: uppercase;
+  letter-spacing: .5px; color: #fff; margin: 0;
+}
+#ghl-step2-q7w3 .sq-edit { color: var(--sq-body); font-size: .85rem; text-decoration: underline; text-underline-offset: 3px; min-height: 40px; display: inline-flex; align-items: center; }
+#ghl-step2-q7w3 .sq-edit:hover { color: #fff; }
+#ghl-step2-q7w3 .sq-label {
+  font-family: 'Barlow', sans-serif; font-weight: 700; font-size: .72rem; letter-spacing: 1.6px;
+  text-transform: uppercase; color: var(--sq-muted); margin: 0 0 .6rem;
+}
+#ghl-step2-q7w3 .sq-block + .sq-block { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--sq-line); }
+#ghl-step2-q7w3 .sq-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+#ghl-step2-q7w3 .sq-chip {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(225,6,0,.12); border: 1px solid rgba(225,6,0,.45); color: #fff;
+  font-size: .86rem; padding: 7px 12px; border-radius: 999px;
+}
+#ghl-step2-q7w3 .sq-chip svg { width: 13px; height: 13px; fill: var(--sq-red); }
+#ghl-step2-q7w3 .sq-items { list-style: none; margin: 0; padding: 0; }
+#ghl-step2-q7w3 .sq-items li {
+  display: flex; justify-content: space-between; gap: 1rem;
+  padding: .55rem 0; font-size: .9rem; line-height: 1.4; color: #fff;
+  border-bottom: 1px dashed var(--sq-line);
+}
+#ghl-step2-q7w3 .sq-items li span:last-child { color: var(--sq-body); white-space: nowrap; }
+#ghl-step2-q7w3 .sq-total { display: flex; justify-content: space-between; margin-top: .75rem; color: #fff; font-weight: 600; font-size: 1rem; }
+#ghl-step2-q7w3 .sq-total.sq-grand {
+  margin-top: 0; padding: .35rem 0 0;
+  font-size: 1.1rem; font-weight: 700;
+}
+#ghl-step2-q7w3 .sq-total.sq-grand span:last-child { color: var(--sq-red); }
+#ghl-step2-q7w3 .sq-items .sq-muted { color: var(--sq-muted); font-size: .85rem; }
+#ghl-step2-q7w3 .sq-note { font-size: .8rem; line-height: 1.5; color: var(--sq-muted); margin: .6rem 0 0; }
+#ghl-step2-q7w3 .sq-empty { font-size: .92rem; line-height: 1.6; margin: 0; }
+#ghl-step2-q7w3 .sq-empty a { color: #fff; }
+
+/* next steps */
+#ghl-step2-q7w3 .sq-next { list-style: none; margin: 0; padding: 0; counter-reset: sq; }
+#ghl-step2-q7w3 .sq-next li { position: relative; padding: 0 0 1rem 2.6rem; counter-increment: sq; }
+#ghl-step2-q7w3 .sq-next li:last-child { padding-bottom: 0; }
+#ghl-step2-q7w3 .sq-next li::before {
+  content: counter(sq); position: absolute; left: 0; top: 0;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--sq-card-2); border: 1px solid var(--sq-line); color: #fff;
+  font-family: 'Barlow', sans-serif; font-weight: 800; font-size: .82rem;
+  display: flex; align-items: center; justify-content: center;
+}
+#ghl-step2-q7w3 .sq-next b { display: block; color: #fff; font-weight: 600; font-size: .95rem; margin-bottom: 2px; }
+#ghl-step2-q7w3 .sq-next span { font-size: .87rem; line-height: 1.5; }
+
+/* trust */
+#ghl-step2-q7w3 .sq-trust { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+#ghl-step2-q7w3 .sq-trust div {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Barlow', sans-serif; font-weight: 600; font-size: .78rem; letter-spacing: .8px; text-transform: uppercase; color: #D6CFCD;
+}
+#ghl-step2-q7w3 .sq-trust svg { width: 16px; height: 16px; fill: var(--sq-red); flex: 0 0 auto; }
+
+/* form */
+#ghl-step2-q7w3 .sq-form { padding: 1.25rem 1rem .5rem; }
+#ghl-step2-q7w3 .sq-form .sq-h { margin-bottom: .35rem; }
+#ghl-step2-q7w3 .sq-form-sub { font-size: .9rem; margin: 0 0 1rem; }
+#ghl-step2-q7w3 .sq-frame { position: relative; min-height: 900px; border-radius: 10px; overflow: hidden; }
+#ghl-step2-q7w3 .sq-frame iframe { display: block; width: 100%; height: 100%; min-height: 900px; border: none; border-radius: 10px; background: transparent; }
+#ghl-step2-q7w3 .sq-loading {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 10px;
+  color: var(--sq-muted); font-size: .9rem; pointer-events: none; transition: opacity .3s ease;
+}
+#ghl-step2-q7w3 .sq-loading i {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid var(--sq-line); border-top-color: var(--sq-red);
+  animation: sqSpin .8s linear infinite;
+}
+#ghl-step2-q7w3 .sq-frame.is-loaded .sq-loading { opacity: 0; }
+@keyframes sqSpin { to { transform: rotate(360deg); } }
+#ghl-step2-q7w3 .sq-secure { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: .78rem; color: var(--sq-muted); padding: .75rem 0 .5rem; }
+#ghl-step2-q7w3 .sq-secure svg { width: 13px; height: 13px; fill: currentColor; }
+
+
+/* ---------- TABLET ---------- */
+@media (min-width: 640px) {
+  #ghl-step2-q7w3 .sq-wrap { padding: 0 1.75rem; }
+  #ghl-step2-q7w3 .sq-call { display: inline-flex; }
+  #ghl-step2-q7w3 .sq-step-txt { display: inline; }
+  #ghl-step2-q7w3 .sq-line { width: 48px; }
+  #ghl-step2-q7w3 .sq-card { padding: 1.5rem; }
+  #ghl-step2-q7w3 .sq-form { padding: 1.75rem 1.5rem .75rem; }
+  #ghl-step2-q7w3 .sq-trust { grid-template-columns: repeat(4, auto); justify-content: space-between; }
+}
+
+/* ---------- DESKTOP ---------- */
+@media (min-width: 1000px) {
+  #ghl-step2-q7w3 .sq-top .sq-wrap { height: 80px; }
+  #ghl-step2-q7w3 .sq-logo img { height: 76px; margin-left: -18px; }
+  #ghl-step2-q7w3 .sq-steps { padding: 2.5rem 0 1.5rem; }
+  #ghl-step2-q7w3 .sq-head { margin-bottom: 2.75rem; }
+  #ghl-step2-q7w3 .sq-grid { grid-template-columns: 380px 1fr; gap: 1.75rem; align-items: start; padding-bottom: 4.5rem; }
+  #ghl-step2-q7w3 .sq-side { position: sticky; top: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; }
+  #ghl-step2-q7w3 .sq-form { grid-column: 2; grid-row: 1; }
+  #ghl-step2-q7w3 .sq-trust { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 999px) {
+  #ghl-step2-q7w3 .sq-side { display: contents; }
+  #ghl-step2-q7w3 .sq-summary { order: 1; }
+  #ghl-step2-q7w3 .sq-form { order: 2; }
+  #ghl-step2-q7w3 .sq-whatnext { order: 3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #ghl-step2-q7w3 *, #ghl-step2-q7w3 *::before { animation: none !important; transition: none !important; }
+}
+/* =====================================================================
+   FOOTER  (#ghl-footer-f4k8)
+   ===================================================================== */
+#ghl-footer-f4k8 {
+  --mf-red: #E10600;
+  --mf-red-dark: #B00500;
+  --mf-bg: #0F0F0F;
+  --mf-bar: #0A0A0A;
+  --mf-chip: #1F1B1B;
+  --mf-line: #241F1F;
+  --mf-text: #FFFFFF;
+  --mf-body: #B8B0AE;
+  --mf-muted: #8A827F;
+
+  background: var(--mf-bg);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  color: var(--mf-body);
+  padding: 3rem 1.15rem 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+#ghl-footer-f4k8 *,
+#ghl-footer-f4k8 *::before,
+#ghl-footer-f4k8 *::after { box-sizing: border-box; }
+
+#ghl-footer-f4k8 .mf-inner { max-width: 1240px; margin: 0 auto; width: 100%; }
+
+#ghl-footer-f4k8 .mf-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+#ghl-footer-f4k8 .mf-logo {
+  display: block;
+  width: 230px;
+  max-width: 78%;
+  height: auto;
+  margin-bottom: 1.5rem;
+}
+#ghl-footer-f4k8 .mf-about {
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: var(--mf-body);
+  margin: 0 0 1.6rem;
+  max-width: 420px;
+}
+
+#ghl-footer-f4k8 .mf-social { display: flex; flex-wrap: wrap; gap: 10px; }
+#ghl-footer-f4k8 .mf-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: var(--mf-chip);
+  color: var(--mf-body);
+  text-decoration: none;
+  transition: background-color .25s ease, color .25s ease, transform .15s ease;
+}
+#ghl-footer-f4k8 .mf-social a:hover { background: var(--mf-red); color: #fff; }
+#ghl-footer-f4k8 .mf-social a:active { transform: scale(0.93); }
+#ghl-footer-f4k8 .mf-social svg { width: 19px; height: 19px; fill: currentColor; display: block; }
+
+#ghl-footer-f4k8 .mf-h {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 1.12rem;
+  color: var(--mf-text);
+  margin: 0 0 1.25rem;
+  letter-spacing: .3px;
+}
+
+#ghl-footer-f4k8 .mf-list { list-style: none; margin: 0; padding: 0; }
+#ghl-footer-f4k8 .mf-list li { margin-bottom: 0.85rem; }
+#ghl-footer-f4k8 .mf-list a {
+  color: var(--mf-body);
+  text-decoration: none;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  display: inline-block;
+  padding: 2px 0;
+  transition: color .2s ease, padding-left .2s ease;
+}
+#ghl-footer-f4k8 .mf-list a:hover { color: var(--mf-red); padding-left: 5px; }
+
+#ghl-footer-f4k8 .mf-item { margin-bottom: 1.5rem; }
+#ghl-footer-f4k8 .mf-item:last-child { margin-bottom: 0; }
+#ghl-footer-f4k8 .mf-label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 0.97rem;
+  color: var(--mf-text);
+  margin-bottom: 0.55rem;
+}
+#ghl-footer-f4k8 .mf-label svg { width: 15px; height: 15px; fill: var(--mf-red); flex: 0 0 auto; }
+#ghl-footer-f4k8 .mf-val { font-size: 0.93rem; line-height: 1.65; color: var(--mf-body); margin: 0; }
+#ghl-footer-f4k8 .mf-val a {
+  color: var(--mf-red);
+  text-decoration: none;
+  transition: color .2s ease;
+  word-break: break-word;
+}
+#ghl-footer-f4k8 .mf-val a:hover { color: #fff; }
+
+#ghl-footer-f4k8 .mf-bottom {
+  border-top: 1px solid var(--mf-line);
+  background: var(--mf-bar);
+  box-shadow: 0 0 0 100vmax var(--mf-bar);
+  clip-path: inset(0 -100vmax);
+  margin: 0 -1.15rem;
+  padding: 1.5rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  text-align: center;
+}
+#ghl-footer-f4k8 .mf-copy { font-size: 0.88rem; color: var(--mf-body); margin: 0; }
+#ghl-footer-f4k8 .mf-legal { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.6rem; }
+#ghl-footer-f4k8 .mf-legal a {
+  color: var(--mf-body);
+  text-decoration: none;
+  font-size: 0.88rem;
+  padding: 6px 0;
+  transition: color .2s ease;
+}
+#ghl-footer-f4k8 .mf-legal a:hover { color: var(--mf-red); }
+
+#ghl-footer-f4k8 .mf-lang-group {
+  display: inline-flex;
+  padding: 3px;
+  background: var(--mf-chip);
+  border: 1px solid var(--mf-line);
+  border-radius: 999px;
+}
+#ghl-footer-f4k8 .mf-lang-btn {
+  appearance: none; border: 0; background: transparent;
+  color: var(--mf-muted);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700; font-size: .74rem; letter-spacing: 1.3px;
+  padding: 0 1.05rem; min-height: 36px;
+  border-radius: 999px; cursor: pointer;
+  transition: background-color .25s ease, color .25s ease;
+}
+#ghl-footer-f4k8 .mf-lang-btn:hover { color: var(--mf-text); }
+#ghl-footer-f4k8 .mf-lang-btn.is-active { background: var(--mf-red); color: #fff; }
+
+#ghl-footer-f4k8 .mf-top {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 60;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--mf-red);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 22px rgba(225,6,0,0.45);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity .3s ease, transform .3s ease, visibility .3s, background-color .25s ease;
+}
+#ghl-footer-f4k8 .mf-top.is-on { opacity: 1; visibility: visible; transform: translateY(0); }
+#ghl-footer-f4k8 .mf-top:hover { background: var(--mf-red-dark); }
+#ghl-footer-f4k8 .mf-top:active { transform: scale(0.92); }
+#ghl-footer-f4k8 .mf-top svg { width: 18px; height: 18px; fill: #fff; }
+
+@media (min-width: 640px) {
+
+  #ghl-footer-f4k8 { padding: 3.5rem 1.75rem 0; }
+  #ghl-footer-f4k8 .mf-grid { grid-template-columns: repeat(2, 1fr); gap: 2.5rem 2rem; }
+  #ghl-footer-f4k8 .mf-brand { grid-column: 1 / -1; }
+  #ghl-footer-f4k8 .mf-bottom {
+    margin: 0 -1.75rem;
+    padding: 1.5rem 1.75rem;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+@media (min-width: 1024px) {
+  #ghl-footer-f4k8 { padding: 4.5rem 2.5rem 0; }
+  #ghl-footer-f4k8 .mf-grid {
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem 2.5rem;
+    padding-bottom: 3rem;
+  }
+  #ghl-footer-f4k8 .mf-brand { grid-column: auto; }
+  #ghl-footer-f4k8 .mf-logo { width: 265px; max-width: 100%; margin-bottom: 1.75rem; }
+  #ghl-footer-f4k8 .mf-about { text-align: justify; }
+  #ghl-footer-f4k8 .mf-bottom { margin: 0 -2.5rem; padding: 1.6rem 2.5rem; }
+  #ghl-footer-f4k8 .mf-top { right: 26px; bottom: 26px; width: 52px; height: 52px; }
+}
+@media (min-width: 1440px) {
+  #ghl-footer-f4k8 { padding: 5rem 3rem 0; }
+  #ghl-footer-f4k8 .mf-logo { width: 290px; }
+  #ghl-footer-f4k8 .mf-bottom { margin: 0 -3rem; padding: 1.6rem 3rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #ghl-footer-f4k8 .mf-top { transition: opacity .01s; }
+}
+</style>
+
+<div id="ghl-step2-q7w3">
+
+  <!-- SECTION: TOP BAR -->
+  <header class="sq-top">
+    <div class="sq-wrap">
+      <a class="sq-logo" href="https://madcustomcars.com/" aria-label="MAD Custom home">
+        <img src="https://assets.cdn.filesafe.space/RP0apjqSUDWTWf1qgqZI/media/6aaaa96037639ce00c9f5703.png" alt="MAD Custom" width="760" height="268">
+      </a>
+      <div class="sq-top-right">
+        <a class="sq-call" href="tel:+14072864426">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 013 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+          (407) 286 4426
+        </a>
+        <div class="sq-lang" role="group" aria-label="Language">
+          <button type="button" data-lang="en" class="is-active">EN</button>
+          <button type="button" data-lang="es">ES</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="sq-wrap">
+
+    <!-- SECTION: PROGRESS -->
+    <div class="sq-steps" aria-label="Progress">
+      <div class="sq-step is-done"><span class="sq-dot">✓</span><span class="sq-step-txt" data-t="step1">Choose</span></div>
+      <span class="sq-line"></span>
+      <div class="sq-step is-now" aria-current="step"><span class="sq-dot">2</span><span class="sq-step-txt" data-t="step2">Your Details</span></div>
+      <span class="sq-line"></span>
+      <div class="sq-step"><span class="sq-dot">3</span><span class="sq-step-txt" data-t="step3">Get Your Quote</span></div>
+    </div>
+
+    <!-- SECTION: HEADER -->
+    <div class="sq-head">
+      <h1 class="sq-title"><span data-t="titleA">Almost</span> <span class="sq-accent" data-t="titleB">Done</span></h1>
+      <p class="sq-sub" data-t="sub">Tell us about you and your vehicle. Our team will review your request and send a custom quote.</p>
+    </div>
+
+    <div class="sq-grid">
+
+      <div class="sq-side">
+
+        <!-- SECTION: SUMMARY -->
+        <section class="sq-card sq-summary" aria-labelledby="sq-sum-h">
+          <div class="sq-card-head">
+            <h2 class="sq-h" id="sq-sum-h" data-t="summary">Your Request</h2>
+            <a class="sq-edit" href="https://go.madcustomcars.com/services-page" data-t="edit">Edit selection</a>
+          </div>
+          <div class="sq-summary-body"></div>
+        </section>
+
+        <!-- SECTION: WHAT HAPPENS NEXT -->
+        <section class="sq-card sq-whatnext" aria-labelledby="sq-next-h">
+          <h2 class="sq-h" id="sq-next-h" style="margin-bottom:1rem" data-t="nextH">What Happens Next</h2>
+          <ol class="sq-next">
+            <li><b data-t="n1b">We review your request</b><span data-t="n1">Our team checks your vehicle and the services you picked.</span></li>
+            <li><b data-t="n2b">You get a custom quote</b><span data-t="n2">We send a clear estimate by text or email, usually within 1 business day.</span></li>
+            <li><b data-t="n3b">Approve and book</b><span data-t="n3">Accept the estimate, pay securely online and choose your install date.</span></li>
+          </ol>
+          <div class="sq-block" style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--sq-line)">
+            <div class="sq-trust">
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6.5c0 4.7 3.4 9.1 8 10.5 4.6-1.4 8-5.8 8-10.5V5l-8-3m-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 5-5 1.4 1.4-6.4 6.4"/></svg><span data-t="t1">Free Quotes</span></div>
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6.5c0 4.7 3.4 9.1 8 10.5 4.6-1.4 8-5.8 8-10.5V5l-8-3m-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 5-5 1.4 1.4-6.4 6.4"/></svg><span data-t="t2">No Obligation</span></div>
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6.5c0 4.7 3.4 9.1 8 10.5 4.6-1.4 8-5.8 8-10.5V5l-8-3m-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 5-5 1.4 1.4-6.4 6.4"/></svg><span data-t="t3">Two Locations</span></div>
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6.5c0 4.7 3.4 9.1 8 10.5 4.6-1.4 8-5.8 8-10.5V5l-8-3m-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 5-5 1.4 1.4-6.4 6.4"/></svg><span data-t="t4">Financing Available</span></div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- SECTION: FORM -->
+      <section class="sq-card sq-form" aria-labelledby="sq-form-h">
+        <h2 class="sq-h" id="sq-form-h" data-t="formH">Your Details</h2>
+        <p class="sq-form-sub" data-t="formSub">Takes about a minute. Your selections are already attached.</p>
+        <div class="sq-frame">
+          <div class="sq-loading"><i></i><span data-t="loading">Loading form…</span></div>
+          <iframe
+            id="inline-cIDV5AHlkGjzKDlOt6Bn"
+            title="Quote"
+            data-layout="{'id':'INLINE'}"
+            data-trigger-type="alwaysShow"
+            data-trigger-value=""
+            data-activation-type="alwaysActivated"
+            data-activation-value=""
+            data-deactivation-type="neverDeactivate"
+            data-deactivation-value=""
+            data-form-name="Quote"
+            data-height="900"
+            data-layout-iframe-id="inline-cIDV5AHlkGjzKDlOt6Bn"
+            data-form-id="cIDV5AHlkGjzKDlOt6Bn"></iframe>
+        </div>
+        <div class="sq-secure">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1a5 5 0 00-5 5v3H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V11a2 2 0 00-2-2h-1V6a5 5 0 00-5-5m0 2a3 3 0 013 3v3H9V6a3 3 0 013-3"/></svg>
+          <span data-t="secure">Your information is private and never shared.</span>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- =====================================================================
+     FOOTER (same as the full page)
+     ===================================================================== -->
+<div id="ghl-footer-f4k8">
+  <div class="mf-inner">
+    <div class="mf-grid">
+
+      <!-- SECTION: BRAND -->
+      <div class="mf-brand">
+        <img class="mf-logo" src="https://assets.cdn.filesafe.space/RP0apjqSUDWTWf1qgqZI/media/6aaaa96037639ce00c9f5703.png" alt="MAD Custom">
+        <p class="mf-about"
+           data-en="At MAD Custom, we specialize in high-end automotive customization designed to transform vehicles beyond the ordinary. From precision wheel fitment and suspension upgrades to premium wraps, PPF, and complete custom builds, we enhance every detail to elevate performance, style, and individuality while preserving long-term value."
+           data-es="En MAD Custom nos especializamos en personalización automotriz de alta gama diseñada para transformar vehículos más allá de lo ordinario. Desde el ajuste preciso de rines y mejoras de suspensión hasta vinilos premium, PPF y proyectos completamente personalizados, cuidamos cada detalle para elevar el rendimiento, el estilo y la individualidad, preservando el valor a largo plazo.">
+          At MAD Custom, we specialize in high-end automotive customization designed to transform vehicles beyond the ordinary. From precision wheel fitment and suspension upgrades to premium wraps, PPF, and complete custom builds, we enhance every detail to elevate performance, style, and individuality while preserving long-term value.
+        </p>
+
+        <!-- SECTION: SOCIAL -->
+        <div class="mf-social">
+          <a href="https://wa.link/c2aabg" aria-label="Chat with MAD Custom on WhatsApp" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.06c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.75-.71 2-1.4.25-.69.25-1.28.17-1.4-.07-.13-.27-.2-.57-.35M12.04 21.2c-1.62 0-3.2-.44-4.58-1.26l-.33-.2-3.4.89.91-3.32-.21-.34a8.98 8.98 0 01-1.38-4.81c0-4.96 4.04-9 9-9 2.4 0 4.66.94 6.36 2.64a8.94 8.94 0 012.63 6.36c0 4.96-4.04 9-9 9m7.66-16.66A10.7 10.7 0 0012.04 1.4C6.12 1.4 1.3 6.22 1.3 12.15c0 1.9.5 3.75 1.44 5.38L1.2 23.1l5.72-1.5a10.7 10.7 0 005.12 1.3h.01c5.92 0 10.74-4.82 10.74-10.75 0-2.87-1.12-5.57-3.15-7.6"/></svg>
+          </a>
+          <a href="https://www.facebook.com/MADCUSTOMFLORIDA" aria-label="Facebook" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.52 1.49-3.91 3.77-3.91 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.78-1.63 1.57v1.89h2.78l-.45 2.91h-2.33V22c4.78-.76 8.44-4.92 8.44-9.94"/></svg>
+          </a>
+          <a href="https://www.instagram.com/madcustomfl/" aria-label="Instagram" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.8 3.8 0 01-1.38-.9c-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.3-1.46.72-2.13 1.38A5.9 5.9 0 00.63 4.14c-.3.76-.5 1.64-.56 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.72 1.46 1.38 2.13.67.66 1.34 1.08 2.13 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.3 1.46-.72 2.13-1.38a5.9 5.9 0 001.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 00-1.38-2.13A5.9 5.9 0 0019.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0m0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32m0 10.16a4 4 0 110-8 4 4 0 010 8m7.85-10.4a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0"/></svg>
+          </a>
+          <a href="https://www.youtube.com/@MadCustomTV" aria-label="YouTube" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3.02 3.02 0 00-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.51A3.02 3.02 0 00.5 6.2C0 8.08 0 12 0 12s0 3.92.5 5.8a3.02 3.02 0 002.12 2.14c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51a3.02 3.02 0 002.12-2.14C24 15.92 24 12 24 12s0-3.92-.5-5.8M9.55 15.57V8.43L15.82 12l-6.27 3.57"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@madcustomfl" aria-label="TikTok" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M16.6 5.82A4.28 4.28 0 0115.54 3h-3.09v12.4a2.59 2.59 0 01-2.59 2.5 2.59 2.59 0 01-2.59-2.59 2.59 2.59 0 013.2-2.51V9.66a5.68 5.68 0 00-.61-.04A5.68 5.68 0 003.2 15.3a5.68 5.68 0 005.66 5.68 5.68 5.68 0 005.68-5.68V9.01a7.35 7.35 0 004.3 1.38V7.3a4.3 4.3 0 01-2.24-1.48"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- SECTION: SERVICES LIST -->
+      <div>
+        <h3 class="mf-h" data-en="Our Services" data-es="Nuestros Servicios">Our Services</h3>
+        <ul class="mf-list">
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4" data-mf-svc="Rims &amp; Tires" data-en="Rims &amp; Tires" data-es="Rines y Neumáticos">Rims &amp; Tires</a></li>
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4" data-mf-svc="Performance Suspension" data-en="Performance Suspension Systems" data-es="Sistemas de Suspensión">Performance Suspension Systems</a></li>
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4" data-mf-svc="Premium Vinyl Wrap" data-en="Premium Vinyl Wrap Studio" data-es="Estudio de Vinilo Premium">Premium Vinyl Wrap Studio</a></li>
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4" data-mf-svc="Paint Protection Film" data-en="Paint Protection Film (PPF)" data-es="Película Protectora (PPF)">Paint Protection Film (PPF)</a></li>
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4" data-mf-svc="Luxury Detailing" data-en="Luxury Detailing &amp; Paint Correction" data-es="Detallado de Lujo y Corrección de Pintura">Luxury Detailing &amp; Paint Correction</a></li>
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4" data-mf-svc="Bespoke Custom Builds" data-en="Bespoke Custom Builds" data-es="Proyectos a Medida">Bespoke Custom Builds</a></li>
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4" data-mf-svc="Upholstery" data-en="Upholstery" data-es="Tapicería">Upholstery</a></li>
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4" data-mf-svc="Window Tint" data-en="Window Tint" data-es="Polarizado de Ventanas">Window Tint</a></li>
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4" data-mf-svc="Performance Exhaust" data-en="Performance Exhaust Systems" data-es="Sistemas de Escape">Performance Exhaust Systems</a></li>
+        </ul>
+      </div>
+
+      <!-- SECTION: FLORIDA -->
+      <div>
+        <h3 class="mf-h">Florida</h3>
+
+        <div class="mf-item">
+          <div class="mf-label">
+            <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7m0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5"/></svg>
+            <span data-en="Location" data-es="Ubicación">Location</span>
+          </div>
+          <p class="mf-val"
+             data-en="19 N Westmoreland Dr, Orlando, FL 32805, United States"
+             data-es="19 N Westmoreland Dr, Orlando, FL 32805, Estados Unidos">
+            19 N Westmoreland Dr, Orlando, FL 32805, United States
+          </p>
+        </div>
+
+        <div class="mf-item">
+          <div class="mf-label">
+            <svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 013 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+            <span data-en="Call Us" data-es="Llámanos">Call Us</span>
+          </div>
+          <p class="mf-val"><a href="tel:+14072864426">+1 (407) 286 4426</a></p>
+        </div>
+
+        <div class="mf-item">
+          <div class="mf-label">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2m0 4-8 5-8-5V6l8 5 8-5z"/></svg>
+            <span data-en="Email Us" data-es="Escríbenos">Email Us</span>
+          </div>
+          <p class="mf-val"><a href="mailto:madcustomfl@outlook.com">madcustomfl@outlook.com</a></p>
+        </div>
+      </div>
+
+      <!-- SECTION: PUERTO RICO -->
+      <div>
+        <h3 class="mf-h">Puerto Rico</h3>
+
+        <div class="mf-item">
+          <div class="mf-label">
+            <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7m0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5"/></svg>
+            <span data-en="Location" data-es="Ubicación">Location</span>
+          </div>
+          <p class="mf-val">Carr. 140, Km. 61.8, Barceloneta, 00617, Puerto Rico</p>
+        </div>
+
+        <div class="mf-item">
+          <div class="mf-label">
+            <svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 013 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+            <span data-en="Call Us" data-es="Llámanos">Call Us</span>
+          </div>
+          <p class="mf-val"><a href="tel:+17878465115">+1 (787) 846 5115</a></p>
+        </div>
+
+        <div class="mf-item">
+          <div class="mf-label">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2m0 4-8 5-8-5V6l8 5 8-5z"/></svg>
+            <span data-en="Email Us" data-es="Escríbenos">Email Us</span>
+          </div>
+          <p class="mf-val"><a href="mailto:madcustomfl@outlook.com">madcustomfl@outlook.com</a></p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECTION: BOTTOM BAR -->
+    <div class="mf-bottom">
+      <p class="mf-copy"
+         data-en="© 2026 Copyright – MAD Custom. All rights reserved."
+         data-es="© 2026 Copyright – MAD Custom. Todos los derechos reservados.">
+        © 2026 Copyright – MAD Custom. All rights reserved.
+      </p>
+
+      <div class="mf-lang-group" role="group" aria-label="Language">
+        <button type="button" class="mf-lang-btn is-active" data-lang="en">EN</button>
+        <button type="button" class="mf-lang-btn" data-lang="es">ES</button>
+      </div>
+
+      <div class="mf-legal">
+        <a href="https://go.madcustomcars.com/terms-condition-page" data-en="Terms &amp; Conditions" data-es="Términos y Condiciones">Terms &amp; Conditions</a>
+        <a href="https://go.madcustomcars.com/privacy-policy-page" data-en="Privacy Policy" data-es="Política de Privacidad">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: BACK TO TOP -->
+  <button type="button" class="mf-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24"><path d="M12 5.8 4.9 12.9l1.4 1.4L12 8.6l5.7 5.7 1.4-1.4z"/><path d="M12 11.2 4.9 18.3l1.4 1.4L12 14l5.7 5.7 1.4-1.4z"/></svg>
+  </button>
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('ghl-step2-q7w3');
+  var ftr  = document.getElementById('ghl-footer-f4k8');
+  if (!root) return;
+
+  /* ================= SETTINGS ================= */
+  var FORM_ID  = 'cIDV5AHlkGjzKDlOt6Bn';
+  var FORM_URL = 'https://api.leadconnectorhq.com/widget/form/' + FORM_ID;
+  /* query keys the form's hidden fields listen for */
+  var PASS_KEYS = ['selected_services', 'order_items', 'order_total'];
+
+  var T = {
+    en: {
+      step1: 'Choose', step2: 'Your Details', step3: 'Get Your Quote',
+      titleA: 'Almost', titleB: 'Done',
+      sub: 'Tell us about you and your vehicle. Our team will review your request and send a custom quote.',
+      summary: 'Your Request', edit: 'Edit selection',
+      services: 'Services', products: 'Products', total: 'Products subtotal',
+      svcTotal: 'Services from', grandTotal: 'Estimated starting total',
+      priceNote: 'Starting prices only. Your final price depends on your vehicle, model, condition and the work required — we confirm it in your custom quote.',
+      empty: 'No services selected yet. Tell us what you need in the form, or ',
+      emptyLink: 'go back and choose services', 
+      nextH: 'What Happens Next',
+      n1b: 'We review your request', n1: 'Our team checks your vehicle and the services you picked.',
+      n2b: 'You get a custom quote', n2: 'We send a clear estimate by text or email, usually within 1 business day.',
+      n3b: 'Approve and book', n3: 'Accept the estimate, pay securely online and choose your install date.',
+      t1: 'Free Quotes', t2: 'No Obligation', t3: 'Two Locations', t4: 'Financing Available',
+      formH: 'Your Details', formSub: 'Takes about a minute. Your selections are already attached.',
+      loading: 'Loading form…', secure: 'Your information is private and never shared.',
+      copy: '© 2026 MAD Custom. All rights reserved.'
+    },
+    es: {
+      step1: 'Elegir', step2: 'Tus Datos', step3: 'Recibe tu Cotización',
+      titleA: 'Casi', titleB: 'Listo',
+      sub: 'Cuéntanos sobre ti y tu vehículo. Nuestro equipo revisará tu solicitud y te enviará una cotización personalizada.',
+      summary: 'Tu Solicitud', edit: 'Editar selección',
+      services: 'Servicios', products: 'Productos', total: 'Subtotal de productos',
+      svcTotal: 'Servicios desde', grandTotal: 'Total inicial estimado',
+      priceNote: 'Precios iniciales. El precio final depende de tu vehículo, modelo, condición y el trabajo requerido — lo confirmamos en tu cotización.',
+      empty: 'Aún no has elegido servicios. Cuéntanos lo que necesitas en el formulario, o ',
+      emptyLink: 'regresa y elige servicios',
+      nextH: 'Qué Sigue',
+      n1b: 'Revisamos tu solicitud', n1: 'Nuestro equipo revisa tu vehículo y los servicios que elegiste.',
+      n2b: 'Recibes tu cotización', n2: 'Te enviamos un estimado claro por texto o correo, normalmente en 1 día hábil.',
+      n3b: 'Aprueba y agenda', n3: 'Acepta el estimado, paga de forma segura en línea y elige tu fecha de instalación.',
+      t1: 'Cotización Gratis', t2: 'Sin Compromiso', t3: 'Dos Ubicaciones', t4: 'Financiamiento',
+      formH: 'Tus Datos', formSub: 'Toma cerca de un minuto. Tus selecciones ya están incluidas.',
+      loading: 'Cargando formulario…', secure: 'Tu información es privada y nunca se comparte.',
+      copy: '© 2026 MAD Custom. Todos los derechos reservados.'
+    }
+  };
+
+  /* starting prices — keep in sync with the services page cards */
+  var SERVICE_PRICES = {
+    'Rims & Tires':           { amount: 229,  en: 'Installation starting from $229', es: 'Instalación desde $229' },
+    'Performance Suspension': { amount: 495,  en: 'Installation starting from $495', es: 'Instalación desde $495' },
+    'Premium Vinyl Wrap':     { amount: 2495, en: 'Starting at $2,495',      es: 'Desde $2,495' },
+    'Paint Protection Film':  { amount: 1795, en: 'Starting at $1,795',     es: 'Desde $1,795' },
+    'Luxury Detailing':       { amount: 595,  en: 'Starting at $595',       es: 'Desde $595' },
+    'Bespoke Custom Builds':  { amount: 0,    en: 'By consultation',        es: 'Con consulta' },
+    'Upholstery':             { amount: 2299, en: 'Starting at $2,299',     es: 'Desde $2,299' },
+    'Window Tint':            { amount: 350,  en: 'Starting at $350',       es: 'Desde $350' },
+    'Performance Exhaust':    { amount: 349,  en: 'Installation starting from $349', es: 'Instalación desde $349' }
+  };
+
+  var ES_SERVICES = {
+    'Rims & Tires': 'Rines y Neumáticos',
+    'Performance Suspension': 'Suspensión de Rendimiento',
+    'Premium Vinyl Wrap': 'Vinilo Premium',
+    'Paint Protection Film': 'Película Protectora (PPF)',
+    'Luxury Detailing': 'Detallado de Lujo',
+    'Bespoke Custom Builds': 'Proyectos a Medida',
+    'Upholstery': 'Tapicería',
+    'Window Tint': 'Polarizado de Ventanas',
+    'Performance Exhaust': 'Escape de Rendimiento'
+  };
+
+  /* ================= READ SELECTIONS FROM THE URL ================= */
+  function getParam(name) {
+    var m = new RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    if (!m) return '';
+    try { return decodeURIComponent(m[1].replace(/\+/g, ' ')); } catch (e) { return m[1]; }
+  }
+  var data = {};
+  PASS_KEYS.forEach(function (k) { data[k] = getParam(k).trim(); });
+
+  var services = data.selected_services ? data.selected_services.split(/\s*,\s*/).filter(Boolean) : [];
+  var items = data.order_items ? data.order_items.split(/\s*;\s*/).filter(Boolean) : [];
+
+  /* ================= EMBED THE FORM WITH THE SAME VALUES ================= */
+  var frame = root.querySelector('.sq-frame');
+  var iframe = frame.querySelector('iframe');
+  var qs = [];
+  /* pass every original query param through (keeps UTMs too) */
+  var raw = window.location.search.replace(/^\?/, '');
+  if (raw) qs.push(raw);
+  iframe.src = FORM_URL + (qs.length ? '?' + qs.join('&') : '');
+  iframe.addEventListener('load', function () { frame.classList.add('is-loaded'); });
+
+  /* GHL's embed helper — auto-resizes the iframe to the form height */
+  if (!document.querySelector('script[src*="form_embed.js"]')) {
+    var sc = document.createElement('script');
+    sc.src = 'https://link.msgsndr.com/js/form_embed.js';
+    sc.async = true;
+    document.body.appendChild(sc);
+  }
+
+  /* ================= SUMMARY ================= */
+  var body = root.querySelector('.sq-summary-body');
+  var editLink = root.querySelector('.sq-edit');
+  var CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>';
+  function money(n) { return '$' + n.toFixed(2).replace(/\.00$/, '').replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  function paintSummary(lang) {
+    var L = T[lang], h = '';
+    var svcTotal = 0;
+    if (services.length) {
+      h += '<div class="sq-block"><p class="sq-label">' + L.services + '</p><ul class="sq-items">' +
+        services.map(function (s) {
+          var p = SERVICE_PRICES[s];
+          if (p) svcTotal += p.amount;
+          var price = p ? (lang === 'es' ? p.es : p.en) : '';
+          return '<li><span>' + esc(lang === 'es' && ES_SERVICES[s] ? ES_SERVICES[s] : s) + '</span>' +
+                 '<span' + (p && !p.amount ? ' class="sq-muted"' : '') + '>' + esc(price) + '</span></li>';
+        }).join('') + '</ul>' +
+        (svcTotal ? '<div class="sq-total"><span>' + L.svcTotal + '</span><span>' + money(svcTotal) + '</span></div>' : '') +
+        '</div>';
+    }
+    if (items.length) {
+      h += '<div class="sq-block"><p class="sq-label">' + L.products + '</p><ul class="sq-items">' +
+        items.map(function (line) {
+          var m = /^(.*?)\s*\((\$[\d.,]+)\)\s*$/.exec(line);
+          return '<li><span>' + esc(m ? m[1] : line) + '</span><span>' + esc(m ? m[2] : '') + '</span></li>';
+        }).join('') + '</ul>' +
+        (data.order_total ? '<div class="sq-total"><span>' + L.total + '</span><span>' + esc(data.order_total) + '</span></div>' : '') +
+        '</div>';
+    }
+    var prodTotal = parseFloat(String(data.order_total || '').replace(/[^0-9.]/g, '')) || 0;
+    if (svcTotal + prodTotal > 0) {
+      h += '<div class="sq-block"><div class="sq-total sq-grand"><span>' + L.grandTotal + '</span>' +
+           '<span>' + money(svcTotal + prodTotal) + '</span></div>' +
+           '<p class="sq-note">' + L.priceNote + '</p></div>';
+    }
+    if (!h) {
+      var back = editLink.getAttribute('href');
+      h = '<p class="sq-empty">' + L.empty + '<a href="' + esc(back) + '">' + L.emptyLink + '</a>.</p>';
+    }
+    body.innerHTML = h;
+  }
+
+  /* "Edit selection" goes back; if no Step 1 URL was set, use browser history */
+  editLink.addEventListener('click', function (e) {
+    var href = this.getAttribute('href') || '';
+    if (href.indexOf('MC_URL') === 0 || !href) {
+      e.preventDefault();
+      if (window.history.length > 1) window.history.back();
+    }
+  });
+  body.addEventListener('click', function (e) {
+    var a = e.target.closest('.sq-empty a');
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (href.indexOf('MC_URL') === 0 || !href) {
+      e.preventDefault();
+      if (window.history.length > 1) window.history.back();
+    }
+  });
+
+  /* ================= LANGUAGE ================= */
+  var lang = 'en';
+  try {
+    var saved = localStorage.getItem('mcLang');
+    if (saved === 'en' || saved === 'es') lang = saved;
+    else if ((navigator.language || '').toLowerCase().indexOf('es') === 0) lang = 'es';
+  } catch (e) {}
+
+  function setLang(l) {
+    lang = l;
+    try { localStorage.setItem('mcLang', l); } catch (e) {}
+    var L = T[l];
+    root.querySelectorAll('[data-t]').forEach(function (el) {
+      var v = L[el.getAttribute('data-t')];
+      if (typeof v === 'string') el.textContent = v;
+    });
+    root.querySelectorAll('.sq-lang button').forEach(function (b) {
+      var on = b.getAttribute('data-lang') === l;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    root.setAttribute('lang', l);
+    paintSummary(l);
+    if (ftr) {
+      ftr.querySelectorAll('[data-en]').forEach(function (el) {
+        var v = el.getAttribute('data-' + l);
+        if (v) el.textContent = v;
+      });
+      ftr.querySelectorAll('.mf-lang-btn').forEach(function (b) {
+        var on = b.getAttribute('data-lang') === l;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
+  }
+  root.querySelectorAll('.sq-lang button').forEach(function (b) {
+    b.addEventListener('click', function () { setLang(b.getAttribute('data-lang')); });
+  });
+  if (ftr) {
+    ftr.querySelectorAll('.mf-lang-btn').forEach(function (b) {
+      b.addEventListener('click', function () { setLang(b.getAttribute('data-lang')); });
+    });
+
+    /* footer service links: remember the pick, then go back to Step 1 */
+    ftr.querySelectorAll('[data-mf-svc]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var key = 'service|' + a.getAttribute('data-mf-svc');
+        try {
+          var list = JSON.parse(localStorage.getItem('mcPicked2') || '[]');
+          if (Object.prototype.toString.call(list) !== '[object Array]') list = [];
+          if (list.indexOf(key) < 0) list.push(key);
+          localStorage.setItem('mcPicked2', JSON.stringify(list));
+        } catch (err) {}
+        var href = a.getAttribute('href') || '';
+        if (href.indexOf('MC_URL') === 0) {           /* Step 1 URL not set yet */
+          e.preventDefault();
+          if (window.history.length > 1) window.history.back();
+        }
+      });
+    });
+
+    /* back to top */
+    var topBtn = ftr.querySelector('.mf-top');
+    if (topBtn) {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var ticking = false;
+      var onScroll = function () {
+        if (ticking) return; ticking = true;
+        window.requestAnimationFrame(function () {
+          topBtn.classList.toggle('is-on', window.pageYOffset > 420);
+          ticking = false;
+        });
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+      topBtn.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+      });
+    }
+  }
+  setLang(lang);
+})();
+</script>

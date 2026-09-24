@@ -39,8 +39,6 @@ export function CtaBand() {
         <div className="phone:flex-col phone:items-stretch mt-[34px] flex flex-wrap justify-center gap-3">
           <a
             href={APPOINTMENT_URL}
-            target="_blank"
-            rel="noopener"
             className="bg-red text-ink hover:bg-red-bright px-[30px] py-[18px] text-[15.5px] font-bold transition-colors duration-200"
           >
             Make Appointment

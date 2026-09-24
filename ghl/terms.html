@@ -1,0 +1,766 @@
+<!-- ===================================================================
+     MAD CUSTOM — TERMS & CONDITIONS
+     Scopes: #mad-root · #ghl-footer-f4k8
+     Paste into ONE GHL Custom HTML / Code element.
+     Page URL: https://go.madcustomcars.com/terms-condition-page
+     Links to the Privacy Policy in section 9 and in the footer.
+     =================================================================== -->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+#mad-root{
+  --ink:#08090A; --ink-2:#0E1113; --card:#121618;
+  --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.16);
+  --red:#E10600; --red-hi:#FF2D20; --red-dim:rgba(225,6,0,.14);
+  --text:#F4F6F7; --muted:#8B939B;
+  --display:'Oxanium',system-ui,sans-serif;
+  --body:'Manrope',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --r:16px; --maxw:1240px;
+  background:var(--ink); color:var(--text); font-family:var(--body);
+  line-height:1.7; -webkit-font-smoothing:antialiased;
+  overflow-x:hidden; position:relative; display:block;
+}
+#mad-root *,#mad-root *::before,#mad-root *::after{box-sizing:border-box;}
+#mad-root img{max-width:100%;height:auto;display:block;}
+#mad-root a{color:inherit;text-decoration:none;}
+#mad-root h1,#mad-root h2,#mad-root h3,#mad-root h4{
+  font-family:var(--display);font-weight:800;line-height:1.05;letter-spacing:-.02em;margin:0;
+}
+#mad-root p{margin:0;}
+#mad-root :focus-visible{outline:2px solid var(--red-hi);outline-offset:3px;border-radius:4px;}
+#mad-root ::selection{background:var(--red);color:#fff;}
+#mad-root .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 1.2rem;}
+
+/* motion background */
+#mad-root .fx{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;}
+#mad-root .fx i{
+  position:absolute;display:block;border-radius:50%;filter:blur(80px);opacity:.34;
+  background:radial-gradient(circle,var(--red) 0%,transparent 68%);
+}
+#mad-root .fx i:nth-child(1){width:54vw;height:54vw;top:-22vw;left:-14vw;animation:madDrift1 26s ease-in-out infinite;}
+#mad-root .fx i:nth-child(2){width:40vw;height:40vw;top:56vw;right:-16vw;opacity:.2;animation:madDrift2 32s ease-in-out infinite;}
+@keyframes madDrift1{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(6vw,5vw,0) scale(1.12)}}
+@keyframes madDrift2{0%,100%{transform:translate3d(0,0,0) scale(1.05)}50%{transform:translate3d(-7vw,6vw,0) scale(.92)}}
+#mad-root .grain{
+  position:absolute;inset:0;pointer-events:none;z-index:1;opacity:.18;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E");
+}
+#mad-root section{position:relative;z-index:2;}
+
+/* header: logo only */
+#mad-root .hdr{
+  position:sticky;top:0;z-index:60;background:rgba(8,9,10,.72);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid transparent;transition:border-color .3s,background .3s;
+}
+#mad-root .hdr.on{border-bottom-color:var(--line);background:rgba(8,9,10,.94);}
+#mad-root .hdr-in{display:flex;align-items:center;justify-content:center;padding:.9rem 0;}
+#mad-root .logo{display:inline-flex;align-items:center;}
+#mad-root .logo img{height:52px;width:auto;}
+
+/* legal hero */
+#mad-root .lg-hero{padding:3.2rem 0 2.6rem;border-bottom:1px solid var(--line);text-align:center;}
+#mad-root .lg-eyebrow{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--red-hi);margin-bottom:.9rem;
+}
+#mad-root .lg-hero h1{font-size:clamp(2.1rem,8vw,3.6rem);text-transform:uppercase;}
+#mad-root .lg-updated{
+  display:inline-flex;align-items:center;gap:.5rem;margin-top:1.3rem;
+  padding:.4rem .9rem;border-radius:999px;border:1px solid var(--line-2);
+  background:rgba(255,255,255,.03);
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;
+}
+
+/* legal body */
+#mad-root .lg{padding:3rem 0 4.5rem;}
+#mad-root .lg-grid{display:grid;grid-template-columns:1fr;gap:2.4rem;}
+#mad-root .toc{
+  align-self:start;border:1px solid var(--line);border-radius:var(--r);
+  background:linear-gradient(170deg,var(--card),var(--ink-2));padding:1.2rem;
+}
+#mad-root .toc h2{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--red-hi);font-weight:500;margin-bottom:.9rem;
+}
+#mad-root .toc ol{margin:0;padding:0;list-style:none;counter-reset:t;}
+#mad-root .toc li{counter-increment:t;margin-bottom:.1rem;}
+#mad-root .toc a{
+  display:flex;gap:.6rem;align-items:baseline;padding:.42rem .5rem;border-radius:8px;
+  font-size:.9rem;color:#fff;border-left:2px solid transparent;
+  transition:background .2s,border-color .2s,padding-left .2s;
+}
+#mad-root .toc a::before{
+  content:counter(t,decimal-leading-zero);
+  font-family:var(--mono);font-size:.7rem;color:var(--red-hi);flex:none;
+}
+#mad-root .toc a:hover{background:var(--red-dim);border-left-color:var(--red);padding-left:.8rem;}
+
+#mad-root .lg-sec{scroll-margin-top:96px;margin-bottom:2.4rem;}
+#mad-root .lg-sec-head{display:flex;align-items:center;gap:.9rem;margin-bottom:.9rem;}
+#mad-root .lg-num{
+  flex:none;width:40px;height:40px;border-radius:11px;display:grid;place-items:center;
+  border:1px solid rgba(225,6,0,.42);background:var(--red-dim);
+  font-family:var(--display);font-weight:800;font-size:1rem;color:#fff;
+}
+#mad-root .lg-sec h2{font-size:clamp(1.2rem,4.6vw,1.5rem);}
+#mad-root .lg-sec p{color:#fff;margin-bottom:.9rem;font-size:1rem;}
+#mad-root .lg-sec p:last-child{margin-bottom:0;}
+#mad-root .lg-sec ul{margin:0 0 .9rem;padding-left:1.1rem;}
+#mad-root .lg-sec li{color:#fff;margin-bottom:.45rem;font-size:1rem;}
+#mad-root .lg-sec li::marker{color:var(--red-hi);}
+#mad-root .lg-sec strong{color:#fff;font-weight:700;}
+#mad-root .lg-sec a.link,#mad-root .contact-card a{color:var(--red-hi);text-decoration:underline;text-underline-offset:3px;}
+#mad-root .kw{
+  font-family:var(--mono);font-size:.92em;padding:.1rem .4rem;border-radius:5px;
+  background:var(--red-dim);border:1px solid rgba(225,6,0,.34);color:#fff;
+}
+#mad-root .ph{font-family:var(--mono);font-size:.94em;color:#fff;}
+#mad-root .callout{
+  border:1px solid rgba(225,6,0,.38);border-left:3px solid var(--red);
+  background:rgba(225,6,0,.08);border-radius:12px;padding:1.1rem 1.2rem;margin-bottom:1rem;
+}
+#mad-root .contact-card{
+  border:1px solid var(--line);border-radius:var(--r);padding:1.4rem;
+  background:linear-gradient(170deg,var(--card),var(--ink-2));
+}
+#mad-root .contact-card h2{font-size:1.3rem;margin-bottom:.9rem;}
+#mad-root .contact-row{display:flex;flex-wrap:wrap;gap:1rem 1.6rem;margin-top:.9rem;}
+#mad-root .contact-row div{font-size:1rem;color:#fff;}
+#mad-root .contact-row span.lbl{
+  display:block;font-family:var(--mono);font-size:.63rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--red-hi);margin-bottom:.2rem;
+}
+#mad-root .lg-sec p,#mad-root .lg-sec li,#mad-root .lg-sec .callout,#mad-root .contact-card p{max-width:72ch;}
+
+@media (min-width:768px){
+  #mad-root .wrap{padding:0 2rem;}
+  #mad-root .lg-hero{padding:4.4rem 0 3.4rem;}
+  #mad-root .lg{padding:4rem 0 6rem;}
+  #mad-root .logo img{height:62px;}
+}
+@media (min-width:1024px){
+  #mad-root .logo img{height:70px;}
+  #mad-root .lg-grid{grid-template-columns:274px 1fr;gap:3.4rem;}
+  #mad-root .toc{position:sticky;top:112px;}
+}
+@media (prefers-reduced-motion:reduce){
+  #mad-root *,#mad-root *::before,#mad-root *::after{
+    animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+}
+@media print{
+  #mad-root{background:#fff;color:#111;}
+  #mad-root .fx,#mad-root .grain,#mad-root .hdr,#mad-root .toc{display:none;}
+  #mad-root .lg-sec p,#mad-root .lg-sec li,#mad-root h1,#mad-root h2{color:#111;}
+  #mad-root .contact-card,#mad-root .callout{background:#fff;border-color:#ccc;}
+}
+/* =====================================================================
+   FOOTER  (#ghl-footer-f4k8)
+   ===================================================================== */
+#ghl-footer-f4k8 {
+  --mf-red: #E10600;
+  --mf-red-dark: #B00500;
+  --mf-bg: #0F0F0F;
+  --mf-bar: #0A0A0A;
+  --mf-chip: #1F1B1B;
+  --mf-line: #241F1F;
+  --mf-text: #FFFFFF;
+  --mf-body: #B8B0AE;
+  --mf-muted: #8A827F;
+
+  background: var(--mf-bg);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  color: var(--mf-body);
+  padding: 3rem 1.15rem 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+#ghl-footer-f4k8 *,
+#ghl-footer-f4k8 *::before,
+#ghl-footer-f4k8 *::after { box-sizing: border-box; }
+
+#ghl-footer-f4k8 .mf-inner { max-width: 1240px; margin: 0 auto; width: 100%; }
+
+#ghl-footer-f4k8 .mf-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+#ghl-footer-f4k8 .mf-logo {
+  display: block;
+  width: 230px;
+  max-width: 78%;
+  height: auto;
+  margin-bottom: 1.5rem;
+}
+#ghl-footer-f4k8 .mf-about {
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: var(--mf-body);
+  margin: 0 0 1.6rem;
+  max-width: 420px;
+}
+
+#ghl-footer-f4k8 .mf-social { display: flex; flex-wrap: wrap; gap: 10px; }
+#ghl-footer-f4k8 .mf-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: var(--mf-chip);
+  color: var(--mf-body);
+  text-decoration: none;
+  transition: background-color .25s ease, color .25s ease, transform .15s ease;
+}
+#ghl-footer-f4k8 .mf-social a:hover { background: var(--mf-red); color: #fff; }
+#ghl-footer-f4k8 .mf-social a:active { transform: scale(0.93); }
+#ghl-footer-f4k8 .mf-social svg { width: 19px; height: 19px; fill: currentColor; display: block; }
+
+#ghl-footer-f4k8 .mf-h {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 1.12rem;
+  color: var(--mf-text);
+  margin: 0 0 1.25rem;
+  letter-spacing: .3px;
+}
+
+#ghl-footer-f4k8 .mf-list { list-style: none; margin: 0; padding: 0; }
+#ghl-footer-f4k8 .mf-list li { margin-bottom: 0.85rem; }
+#ghl-footer-f4k8 .mf-list a {
+  color: var(--mf-body);
+  text-decoration: none;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  display: inline-block;
+  padding: 2px 0;
+  transition: color .2s ease, padding-left .2s ease;
+}
+#ghl-footer-f4k8 .mf-list a:hover { color: var(--mf-red); padding-left: 5px; }
+
+#ghl-footer-f4k8 .mf-item { margin-bottom: 1.5rem; }
+#ghl-footer-f4k8 .mf-item:last-child { margin-bottom: 0; }
+#ghl-footer-f4k8 .mf-label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 0.97rem;
+  color: var(--mf-text);
+  margin-bottom: 0.55rem;
+}
+#ghl-footer-f4k8 .mf-label svg { width: 15px; height: 15px; fill: var(--mf-red); flex: 0 0 auto; }
+#ghl-footer-f4k8 .mf-val { font-size: 0.93rem; line-height: 1.65; color: var(--mf-body); margin: 0; }
+#ghl-footer-f4k8 .mf-val a {
+  color: var(--mf-red);
+  text-decoration: none;
+  transition: color .2s ease;
+  word-break: break-word;
+}
+#ghl-footer-f4k8 .mf-val a:hover { color: #fff; }
+
+#ghl-footer-f4k8 .mf-bottom {
+  border-top: 1px solid var(--mf-line);
+  background: var(--mf-bar);
+  box-shadow: 0 0 0 100vmax var(--mf-bar);
+  clip-path: inset(0 -100vmax);
+  margin: 0 -1.15rem;
+  padding: 1.5rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  text-align: center;
+}
+#ghl-footer-f4k8 .mf-copy { font-size: 0.88rem; color: var(--mf-body); margin: 0; }
+#ghl-footer-f4k8 .mf-legal { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.6rem; }
+#ghl-footer-f4k8 .mf-legal a {
+  color: var(--mf-body);
+  text-decoration: none;
+  font-size: 0.88rem;
+  padding: 6px 0;
+  transition: color .2s ease;
+}
+#ghl-footer-f4k8 .mf-legal a:hover { color: var(--mf-red); }
+
+#ghl-footer-f4k8 .mf-lang-group {
+  display: inline-flex;
+  padding: 3px;
+  background: var(--mf-chip);
+  border: 1px solid var(--mf-line);
+  border-radius: 999px;
+}
+#ghl-footer-f4k8 .mf-lang-btn {
+  appearance: none; border: 0; background: transparent;
+  color: var(--mf-muted);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700; font-size: .74rem; letter-spacing: 1.3px;
+  padding: 0 1.05rem; min-height: 36px;
+  border-radius: 999px; cursor: pointer;
+  transition: background-color .25s ease, color .25s ease;
+}
+#ghl-footer-f4k8 .mf-lang-btn:hover { color: var(--mf-text); }
+#ghl-footer-f4k8 .mf-lang-btn.is-active { background: var(--mf-red); color: #fff; }
+
+#ghl-footer-f4k8 .mf-top {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 60;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--mf-red);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 22px rgba(225,6,0,0.45);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity .3s ease, transform .3s ease, visibility .3s, background-color .25s ease;
+}
+#ghl-footer-f4k8 .mf-top.is-on { opacity: 1; visibility: visible; transform: translateY(0); }
+#ghl-footer-f4k8 .mf-top:hover { background: var(--mf-red-dark); }
+#ghl-footer-f4k8 .mf-top:active { transform: scale(0.92); }
+#ghl-footer-f4k8 .mf-top svg { width: 18px; height: 18px; fill: #fff; }
+
+@media (min-width: 640px) {
+
+  #ghl-footer-f4k8 { padding: 3.5rem 1.75rem 0; }
+  #ghl-footer-f4k8 .mf-grid { grid-template-columns: repeat(2, 1fr); gap: 2.5rem 2rem; }
+  #ghl-footer-f4k8 .mf-brand { grid-column: 1 / -1; }
+  #ghl-footer-f4k8 .mf-bottom {
+    margin: 0 -1.75rem;
+    padding: 1.5rem 1.75rem;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+@media (min-width: 1024px) {
+  #ghl-footer-f4k8 { padding: 4.5rem 2.5rem 0; }
+  #ghl-footer-f4k8 .mf-grid {
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem 2.5rem;
+    padding-bottom: 3rem;
+  }
+  #ghl-footer-f4k8 .mf-brand { grid-column: auto; }
+  #ghl-footer-f4k8 .mf-logo { width: 265px; max-width: 100%; margin-bottom: 1.75rem; }
+  #ghl-footer-f4k8 .mf-about { text-align: justify; }
+  #ghl-footer-f4k8 .mf-bottom { margin: 0 -2.5rem; padding: 1.6rem 2.5rem; }
+  #ghl-footer-f4k8 .mf-top { right: 26px; bottom: 26px; width: 52px; height: 52px; }
+}
+@media (min-width: 1440px) {
+  #ghl-footer-f4k8 { padding: 5rem 3rem 0; }
+  #ghl-footer-f4k8 .mf-logo { width: 290px; }
+  #ghl-footer-f4k8 .mf-bottom { margin: 0 -3rem; padding: 1.6rem 3rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #ghl-footer-f4k8 .mf-top { transition: opacity .01s; }
+}
+@media print { #ghl-footer-f4k8 { display: none; } }
+</style>
+
+<div id="mad-root">
+
+  <div class="fx" aria-hidden="true"><i></i><i></i></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- SECTION: HEADER -->
+  <header class="hdr" id="madHdr">
+    <div class="wrap hdr-in">
+      <a class="logo" href="https://madcustomcars.com/" aria-label="MAD Custom home">
+        <img src="https://assets.cdn.filesafe.space/RP0apjqSUDWTWf1qgqZI/media/6aaaa96037639ce00c9f5703.png"
+             alt="MAD Custom" width="760" height="268">
+      </a>
+    </div>
+  </header>
+
+  <!-- SECTION: LEGAL HERO -->
+  <section class="lg-hero">
+    <div class="wrap">
+      <p class="lg-eyebrow">Legal</p>
+      <h1>Terms &amp; Conditions</h1>
+      <span class="lg-updated">Last updated 18 September 2026</span>
+    </div>
+  </section>
+
+  <!-- SECTION: LEGAL BODY -->
+  <section class="lg">
+    <div class="wrap lg-grid">
+
+      <nav class="toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#s1">Program Description</a></li>
+          <li><a href="#s2">Age Restriction</a></li>
+          <li><a href="#s3">Consent to Receive Messages</a></li>
+          <li><a href="#s4">Opt Out</a></li>
+          <li><a href="#s5">Opt In Again</a></li>
+          <li><a href="#s6">Help and Support</a></li>
+          <li><a href="#s7">Message Frequency and Rates</a></li>
+          <li><a href="#s8">Carrier Disclaimer</a></li>
+          <li><a href="#s9">Privacy</a></li>
+          <li><a href="#s10">Changes to These Terms</a></li>
+        </ol>
+      </nav>
+
+      <div>
+        <p style="color:#fff;margin-bottom:2rem;">
+          These terms apply to the text message programme operated by
+          <strong>MAD CUSTOMS FLORIDA CORPORATION</strong>, trading as MAD Custom
+          (&ldquo;MAD Custom&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;), and to the
+          enquiry and booking forms on this site. By submitting a form or replying to
+          one of our messages you agree to what is set out below.
+        </p>
+
+        <div class="lg-sec" id="s1">
+          <div class="lg-sec-head"><span class="lg-num">1</span><h2>Program Description</h2></div>
+          <p>
+            MAD Custom uses text messages to respond to enquiries about automotive
+            customization work, including wheels and tires, suspension, vinyl wrap,
+            paint protection film, detailing, upholstery, window tint, exhaust and
+            bespoke builds. Messages relate to quotes, appointment times, progress
+            updates on a vehicle in our care, and occasional service reminders.
+          </p>
+          <p>
+            We operate from Florida and Puerto Rico. Messages are sent by us or by a
+            messaging provider acting on our behalf.
+          </p>
+        </div>
+
+        <div class="lg-sec" id="s2">
+          <div class="lg-sec-head"><span class="lg-num">2</span><h2>Age Restriction</h2></div>
+          <p>
+            You must be 18 or older to give consent to receive text messages from us.
+            By providing a mobile number you confirm that you are at least 18 and that
+            the number belongs to you or that you are authorised to use it.
+          </p>
+        </div>
+
+        <div class="lg-sec" id="s3">
+          <div class="lg-sec-head"><span class="lg-num">3</span><h2>Consent to Receive Messages</h2></div>
+          <p>
+            When you enter your mobile number on one of our forms and submit it, you
+            are agreeing to receive text messages from MAD Custom about your enquiry
+            or booking.
+          </p>
+          <div class="callout">
+            <p style="margin-bottom:0;">
+              <strong>Consent is not a condition of purchase.</strong> You do not have
+              to agree to text messages in order to book work with us or buy anything
+              from us. You can call us instead on <span class="ph">+1 689-367-4674</span>.
+            </p>
+          </div>
+          <p>
+            We do not sell or rent your mobile number, and we do not share it with
+            anyone for their own marketing.
+          </p>
+        </div>
+
+        <div class="lg-sec" id="s4">
+          <div class="lg-sec-head"><span class="lg-num">4</span><h2>Opt Out</h2></div>
+          <p>
+            You can stop the messages at any time. Reply <span class="kw">STOP</span>
+            to any text you receive from us. We will send one confirmation message and
+            then stop sending you texts.
+          </p>
+          <p>
+            You can also ask us to remove your number by emailing
+            <span class="ph">madcustomfl@outlook.com</span> or calling
+            <span class="ph">+1 689-367-4674</span>.
+          </p>
+        </div>
+
+        <div class="lg-sec" id="s5">
+          <div class="lg-sec-head"><span class="lg-num">5</span><h2>Opt In Again</h2></div>
+          <p>
+            If you change your mind after opting out, reply
+            <span class="kw">START</span> to resume messages, or submit a form on this
+            site again, or simply ask us next time you speak to us.
+          </p>
+        </div>
+
+        <div class="lg-sec" id="s6">
+          <div class="lg-sec-head"><span class="lg-num">6</span><h2>Help and Support</h2></div>
+          <p>
+            Reply <span class="kw">HELP</span> to any of our messages and you will
+            receive our contact details. You can also reach a person directly:
+          </p>
+          <ul>
+            <li>Phone: <span class="ph">+1 689-367-4674</span></li>
+            <li>Email: <span class="ph">madcustomfl@outlook.com</span></li>
+          </ul>
+        </div>
+
+        <div class="lg-sec" id="s7">
+          <div class="lg-sec-head"><span class="lg-num">7</span><h2>Message Frequency and Rates</h2></div>
+          <p>
+            Message frequency varies and depends on your enquiry. A quote conversation
+            may involve several messages in a day, while a service reminder may arrive
+            only occasionally.
+          </p>
+          <p>
+            <strong>Message and data rates may apply.</strong> Any charges come from
+            your mobile carrier under your own plan, not from us. Check with your
+            carrier if you are unsure what your plan includes.
+          </p>
+        </div>
+
+        <div class="lg-sec" id="s8">
+          <div class="lg-sec-head"><span class="lg-num">8</span><h2>Carrier Disclaimer</h2></div>
+          <p>
+            Mobile carriers are not liable for delayed or undelivered messages.
+            Delivery depends on your carrier, your device and your signal, none of
+            which we control. If you are expecting a message from us and it has not
+            arrived, please call us.
+          </p>
+        </div>
+
+        <div class="lg-sec" id="s9">
+          <div class="lg-sec-head"><span class="lg-num">9</span><h2>Privacy</h2></div>
+          <p>
+            Information you give us through a form or a text message is handled as
+            described in our <a class="link" href="https://go.madcustomcars.com/privacy-policy-page">Privacy Policy</a>.
+            In short, we use it to answer your enquiry and carry out the work you ask
+            for, and we do not sell it.
+          </p>
+        </div>
+
+        <div class="lg-sec" id="s10">
+          <div class="lg-sec-head"><span class="lg-num">10</span><h2>Changes to These Terms</h2></div>
+          <p>
+            We may update these terms as our services or the messaging rules change.
+            The date at the top of this page shows when it was last revised. Continuing
+            to use our forms or messaging after a change means you accept the updated
+            terms.
+          </p>
+        </div>
+
+        <div class="contact-card">
+          <h2>Contact</h2>
+          <p style="color:#fff;">
+            Questions about these terms, or about a message you received from us, can
+            go to MAD Custom directly.
+          </p>
+          <div class="contact-row">
+            <div><span class="lbl">Phone</span><a href="tel:+16893674674" class="ph">+1 689-367-4674</a></div>
+            <div><span class="lbl">Email</span><a href="mailto:madcustomfl@outlook.com" class="ph">madcustomfl@outlook.com</a></div>
+            <div><span class="lbl">Legal business name</span>MAD CUSTOMS FLORIDA CORPORATION</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- =====================================================================
+     FOOTER (same as the main pages)
+     ===================================================================== -->
+<div id="ghl-footer-f4k8">
+  <div class="mf-inner">
+    <div class="mf-grid">
+
+      <!-- SECTION: BRAND -->
+      <div class="mf-brand">
+        <img class="mf-logo" src="https://assets.cdn.filesafe.space/RP0apjqSUDWTWf1qgqZI/media/6aaaa96037639ce00c9f5703.png" alt="MAD Custom">
+        <p class="mf-about"
+           data-en="At MAD Custom, we specialize in high-end automotive customization designed to transform vehicles beyond the ordinary. From precision wheel fitment and suspension upgrades to premium wraps, PPF, and complete custom builds, we enhance every detail to elevate performance, style, and individuality while preserving long-term value."
+           data-es="En MAD Custom nos especializamos en personalización automotriz de alta gama diseñada para transformar vehículos más allá de lo ordinario. Desde el ajuste preciso de rines y mejoras de suspensión hasta vinilos premium, PPF y proyectos completamente personalizados, cuidamos cada detalle para elevar el rendimiento, el estilo y la individualidad, preservando el valor a largo plazo.">
+          At MAD Custom, we specialize in high-end automotive customization designed to transform vehicles beyond the ordinary. From precision wheel fitment and suspension upgrades to premium wraps, PPF, and complete custom builds, we enhance every detail to elevate performance, style, and individuality while preserving long-term value.
+        </p>
+
+        <!-- SECTION: SOCIAL -->
+        <div class="mf-social">
+          <a href="https://wa.link/c2aabg" aria-label="Chat with MAD Custom on WhatsApp" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.06c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.75-.71 2-1.4.25-.69.25-1.28.17-1.4-.07-.13-.27-.2-.57-.35M12.04 21.2c-1.62 0-3.2-.44-4.58-1.26l-.33-.2-3.4.89.91-3.32-.21-.34a8.98 8.98 0 01-1.38-4.81c0-4.96 4.04-9 9-9 2.4 0 4.66.94 6.36 2.64a8.94 8.94 0 012.63 6.36c0 4.96-4.04 9-9 9m7.66-16.66A10.7 10.7 0 0012.04 1.4C6.12 1.4 1.3 6.22 1.3 12.15c0 1.9.5 3.75 1.44 5.38L1.2 23.1l5.72-1.5a10.7 10.7 0 005.12 1.3h.01c5.92 0 10.74-4.82 10.74-10.75 0-2.87-1.12-5.57-3.15-7.6"/></svg>
+          </a>
+          <a href="https://www.facebook.com/MADCUSTOMFLORIDA" aria-label="Facebook" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.52 1.49-3.91 3.77-3.91 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.78-1.63 1.57v1.89h2.78l-.45 2.91h-2.33V22c4.78-.76 8.44-4.92 8.44-9.94"/></svg>
+          </a>
+          <a href="https://www.instagram.com/madcustomfl/" aria-label="Instagram" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.8 3.8 0 01-1.38-.9c-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.3-1.46.72-2.13 1.38A5.9 5.9 0 00.63 4.14c-.3.76-.5 1.64-.56 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.72 1.46 1.38 2.13.67.66 1.34 1.08 2.13 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.3 1.46-.72 2.13-1.38a5.9 5.9 0 001.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 00-1.38-2.13A5.9 5.9 0 0019.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0m0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32m0 10.16a4 4 0 110-8 4 4 0 010 8m7.85-10.4a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0"/></svg>
+          </a>
+          <a href="https://www.youtube.com/@MadCustomTV" aria-label="YouTube" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3.02 3.02 0 00-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.51A3.02 3.02 0 00.5 6.2C0 8.08 0 12 0 12s0 3.92.5 5.8a3.02 3.02 0 002.12 2.14c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51a3.02 3.02 0 002.12-2.14C24 15.92 24 12 24 12s0-3.92-.5-5.8M9.55 15.57V8.43L15.82 12l-6.27 3.57"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@madcustomfl" aria-label="TikTok" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M16.6 5.82A4.28 4.28 0 0115.54 3h-3.09v12.4a2.59 2.59 0 01-2.59 2.5 2.59 2.59 0 01-2.59-2.59 2.59 2.59 0 013.2-2.51V9.66a5.68 5.68 0 00-.61-.04A5.68 5.68 0 003.2 15.3a5.68 5.68 0 005.66 5.68 5.68 5.68 0 005.68-5.68V9.01a7.35 7.35 0 004.3 1.38V7.3a4.3 4.3 0 01-2.24-1.48"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- SECTION: SERVICES LIST -->
+      <div>
+        <h3 class="mf-h" data-en="Our Services" data-es="Nuestros Servicios">Our Services</h3>
+        <ul class="mf-list">
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4" data-en="Rims &amp; Tires" data-es="Rines y Neumáticos">Rims &amp; Tires</a></li>
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4" data-en="Performance Suspension Systems" data-es="Sistemas de Suspensión">Performance Suspension Systems</a></li>
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4" data-en="Premium Vinyl Wrap Studio" data-es="Estudio de Vinilo Premium">Premium Vinyl Wrap Studio</a></li>
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4" data-en="Paint Protection Film (PPF)" data-es="Película Protectora (PPF)">Paint Protection Film (PPF)</a></li>
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4" data-en="Luxury Detailing &amp; Paint Correction" data-es="Detallado de Lujo y Corrección de Pintura">Luxury Detailing &amp; Paint Correction</a></li>
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4" data-en="Bespoke Custom Builds" data-es="Proyectos a Medida">Bespoke Custom Builds</a></li>
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4" data-en="Upholstery" data-es="Tapicería">Upholstery</a></li>
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4" data-en="Window Tint" data-es="Polarizado de Ventanas">Window Tint</a></li>
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4" data-en="Performance Exhaust Systems" data-es="Sistemas de Escape">Performance Exhaust Systems</a></li>
+        </ul>
+      </div>
+
+      <!-- SECTION: FLORIDA -->
+      <div>
+        <h3 class="mf-h">Florida</h3>
+
+        <div class="mf-item">
+          <div class="mf-label">
+            <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7m0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5"/></svg>
+            <span data-en="Location" data-es="Ubicación">Location</span>
+          </div>
+          <p class="mf-val"
+             data-en="19 N Westmoreland Dr, Orlando, FL 32805, United States"
+             data-es="19 N Westmoreland Dr, Orlando, FL 32805, Estados Unidos">
+            19 N Westmoreland Dr, Orlando, FL 32805, United States
+          </p>
+        </div>
+
+        <div class="mf-item">
+          <div class="mf-label">
+            <svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 013 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+            <span data-en="Call Us" data-es="Llámanos">Call Us</span>
+          </div>
+          <p class="mf-val"><a href="tel:+14072864426">+1 (407) 286 4426</a></p>
+        </div>
+
+        <div class="mf-item">
+          <div class="mf-label">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2m0 4-8 5-8-5V6l8 5 8-5z"/></svg>
+            <span data-en="Email Us" data-es="Escríbenos">Email Us</span>
+          </div>
+          <p class="mf-val"><a href="mailto:madcustomfl@outlook.com">madcustomfl@outlook.com</a></p>
+        </div>
+      </div>
+
+      <!-- SECTION: PUERTO RICO -->
+      <div>
+        <h3 class="mf-h">Puerto Rico</h3>
+
+        <div class="mf-item">
+          <div class="mf-label">
+            <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7m0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5"/></svg>
+            <span data-en="Location" data-es="Ubicación">Location</span>
+          </div>
+          <p class="mf-val">Carr. 140, Km. 61.8, Barceloneta, 00617, Puerto Rico</p>
+        </div>
+
+        <div class="mf-item">
+          <div class="mf-label">
+            <svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 013 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+            <span data-en="Call Us" data-es="Llámanos">Call Us</span>
+          </div>
+          <p class="mf-val"><a href="tel:+17878465115">+1 (787) 846 5115</a></p>
+        </div>
+
+        <div class="mf-item">
+          <div class="mf-label">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2m0 4-8 5-8-5V6l8 5 8-5z"/></svg>
+            <span data-en="Email Us" data-es="Escríbenos">Email Us</span>
+          </div>
+          <p class="mf-val"><a href="mailto:madcustomfl@outlook.com">madcustomfl@outlook.com</a></p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECTION: BOTTOM BAR -->
+    <div class="mf-bottom">
+      <p class="mf-copy"
+         data-en="© 2026 Copyright – MAD Custom. All rights reserved."
+         data-es="© 2026 Copyright – MAD Custom. Todos los derechos reservados.">
+        © 2026 Copyright – MAD Custom. All rights reserved.
+      </p>
+
+      <div class="mf-lang-group" role="group" aria-label="Language">
+        <button type="button" class="mf-lang-btn is-active" data-lang="en">EN</button>
+        <button type="button" class="mf-lang-btn" data-lang="es">ES</button>
+      </div>
+
+      <div class="mf-legal">
+        <a href="https://go.madcustomcars.com/terms-condition-page" data-en="Terms &amp; Conditions" data-es="Términos y Condiciones">Terms &amp; Conditions</a>
+        <a href="https://go.madcustomcars.com/privacy-policy-page" data-en="Privacy Policy" data-es="Política de Privacidad">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: BACK TO TOP -->
+  <button type="button" class="mf-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24"><path d="M12 5.8 4.9 12.9l1.4 1.4L12 8.6l5.7 5.7 1.4-1.4z"/><path d="M12 11.2 4.9 18.3l1.4 1.4L12 14l5.7 5.7 1.4-1.4z"/></svg>
+  </button>
+</div>
+
+<script>
+(function () {
+  /* sticky header shade */
+  var hdr = document.getElementById('madHdr');
+  function onHdr() { if (hdr) hdr.classList.toggle('on', (window.pageYOffset || 0) > 40); }
+  window.addEventListener('scroll', onHdr, { passive: true });
+  onHdr();
+
+  /* footer: language + back to top */
+  var ftr = document.getElementById('ghl-footer-f4k8');
+  if (!ftr) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setLang(lang) {
+    ftr.querySelectorAll('[data-en]').forEach(function (n) {
+      var v = n.getAttribute('data-' + lang);
+      if (v) n.textContent = v;
+    });
+    ftr.querySelectorAll('.mf-lang-btn').forEach(function (b) {
+      var on = b.getAttribute('data-lang') === lang;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    try { localStorage.setItem('mcLang', lang); } catch (e) {}
+  }
+  ftr.querySelectorAll('.mf-lang-btn').forEach(function (b) {
+    b.addEventListener('click', function () { setLang(b.getAttribute('data-lang')); });
+  });
+  var start = 'en';
+  try {
+    var saved = localStorage.getItem('mcLang');
+    if (saved === 'en' || saved === 'es') start = saved;
+    else if ((navigator.language || '').toLowerCase().indexOf('es') === 0) start = 'es';
+  } catch (e) {}
+  setLang(start);
+
+  var topBtn = ftr.querySelector('.mf-top');
+  if (!topBtn) return;
+  var ticking = false;
+  var onScroll = function () {
+    if (ticking) return; ticking = true;
+    window.requestAnimationFrame(function () {
+      topBtn.classList.toggle('is-on', window.pageYOffset > 420);
+      ticking = false;
+    });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+  });
+})();
+</script>

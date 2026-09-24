@@ -1,0 +1,312 @@
+<!-- ============================================================
+     MAD CUSTOM · FOOTER (standalone section)
+     Scoped to #mad-foot-b7q4 — nothing leaks into other GHL sections.
+     Container queries (not viewport) so it sizes off the block's real
+     width, which is what GHL's builder columns and mobile preview need.
+
+     LINKS USED
+       Privacy Policy : https://go.madcustomcars.com/privacy-policy-page
+       Terms          : https://go.madcustomcars.com/terms-condition-page
+       Services page  : https://go.madcustomcars.com/services-page
+       Shop section   : https://go.madcustomcars.com/services-page#ghl-products-p3r8
+       Booking        : https://bookmadcustom.com/appointment-mad-page
+     ============================================================ -->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ---------- SCOPE + TOKENS ---------- */
+#mad-foot-b7q4{
+  /* palette lifted from madcustomcars.com */
+  --ink:#08090A;
+  --ink-2:#0E1113;
+  --red:#E10600;
+  --red-hi:#FF2D20;
+  --red-dim:rgba(225,6,0,.14);
+  --line:rgba(255,255,255,.09);
+  --line-2:rgba(255,255,255,.16);
+  --text:#F4F6F7;
+  --display:'Oxanium',system-ui,sans-serif;
+  --body:'Manrope',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+
+  container-type:inline-size;
+  container-name:madfoot;
+
+  display:block;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background:var(--ink);
+  color:var(--text);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  padding:3rem 0 2rem;
+}
+#mad-foot-b7q4 *,
+#mad-foot-b7q4 *::before,
+#mad-foot-b7q4 *::after{box-sizing:border-box;}
+#mad-foot-b7q4 img{max-width:100%;height:auto;display:block;}
+#mad-foot-b7q4 a{color:inherit;text-decoration:none;}
+#mad-foot-b7q4 p{margin:0;}
+#mad-foot-b7q4 ul{margin:0;padding:0;list-style:none;}
+#mad-foot-b7q4 li{margin:0;}
+#mad-foot-b7q4 :focus-visible{outline:2px solid var(--red-hi);outline-offset:3px;border-radius:4px;}
+#mad-foot-b7q4 ::selection{background:var(--red);color:#fff;}
+
+#mad-foot-b7q4 .mdf-wrap{
+  width:100%;max-width:1200px;margin:0 auto;padding:0 1.2rem;
+  position:relative;z-index:2;
+}
+
+/* soft red glow bleeding up from the bottom edge */
+#mad-foot-b7q4::before{
+  content:"";position:absolute;left:0;right:0;bottom:-40%;height:80%;
+  background:radial-gradient(60% 100% at 50% 100%, rgba(225,6,0,.16), transparent 70%);
+  pointer-events:none;z-index:0;
+}
+
+/* ---------- COLUMNS ---------- */
+#mad-foot-b7q4 .mdf-grid{display:grid;grid-template-columns:1fr;gap:2rem;}
+#mad-foot-b7q4 .mdf-h4{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;font-weight:500;
+  text-transform:uppercase;color:var(--red-hi);margin:0 0 .85rem;
+}
+#mad-foot-b7q4 .mdf-grid p,
+#mad-foot-b7q4 .mdf-grid a{color:#FFF;font-size:.92rem;}
+#mad-foot-b7q4 .mdf-grid a:hover{color:var(--red-hi);}
+/* 44px minimum tap target on every footer link */
+#mad-foot-b7q4 .mdf-grid li a{display:inline-flex;align-items:center;min-height:44px;}
+
+/* ---------- BRAND COLUMN ---------- */
+#mad-foot-b7q4 .mdf-logo{display:inline-flex;align-items:center;min-height:44px;}
+#mad-foot-b7q4 .mdf-logo img{height:30px;width:auto;}
+#mad-foot-b7q4 .mdf-blurb{margin-top:.9rem;max-width:40ch;}
+
+/* ---------- SOCIALS ---------- */
+#mad-foot-b7q4 .mdf-socials{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.1rem;}
+#mad-foot-b7q4 .mdf-socials a{
+  width:44px;height:44px;border-radius:10px;
+  border:1px solid var(--line-2);color:#FFF;
+  display:grid;place-items:center;
+  transition:border-color .25s,background .25s,transform .25s;
+}
+#mad-foot-b7q4 .mdf-socials a:hover{
+  border-color:var(--red);background:var(--red-dim);
+  color:#FFF;transform:translateY(-2px);
+}
+#mad-foot-b7q4 .mdf-socials a:active{transform:translateY(0);}
+#mad-foot-b7q4 .mdf-socials svg{width:19px;height:19px;display:block;}
+
+/* ---------- CTA BUTTON ---------- */
+#mad-foot-b7q4 .mdf-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  min-height:50px;padding:0 1.4rem;border-radius:999px;border:0;cursor:pointer;
+  font-family:var(--body);font-size:.95rem;font-weight:700;
+  background:var(--red);color:#fff;margin-top:1.2rem;
+  box-shadow:0 8px 26px rgba(225,6,0,.32);
+  transition:transform .22s cubic-bezier(.2,.7,.3,1),box-shadow .22s;
+}
+#mad-foot-b7q4 .mdf-btn:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(225,6,0,.48);color:#fff;}
+#mad-foot-b7q4 .mdf-btn:active{transform:translateY(0) scale(.985);}
+
+/* ---------- HOURS PILL ---------- */
+#mad-foot-b7q4 .mdf-hours{
+  display:inline-flex;align-items:center;gap:.5rem;margin-top:.2rem;
+  padding:.4rem .8rem;border-radius:999px;
+  border:1px solid var(--line-2);background:rgba(255,255,255,.03);
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;
+  text-transform:uppercase;color:#C9CFD6;
+}
+#mad-foot-b7q4 .mdf-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--red);flex:none;
+  box-shadow:0 0 0 0 rgba(225,6,0,.7);animation:mdfPulse 2.2s infinite;
+}
+@keyframes mdfPulse{70%{box-shadow:0 0 0 9px rgba(225,6,0,0)}100%{box-shadow:0 0 0 0 rgba(225,6,0,0)}}
+
+/* ---------- BOTTOM BAR ---------- */
+#mad-foot-b7q4 .mdf-bar{
+  margin-top:2.4rem;padding-top:1.4rem;border-top:1px solid var(--line);
+  display:flex;flex-direction:column;gap:.8rem;align-items:center;text-align:center;
+}
+#mad-foot-b7q4 .mdf-copy{font-size:.8rem;color:#FFF;}
+#mad-foot-b7q4 .mdf-legal{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;justify-content:center;}
+#mad-foot-b7q4 .mdf-legal a{font-size:.8rem;color:#FFF;display:inline-flex;align-items:center;min-height:44px;}
+#mad-foot-b7q4 .mdf-legal a:hover{color:var(--red-hi);}
+#mad-foot-b7q4 .mdf-note{
+  font-family:var(--mono);font-size:.74rem;color:#C9CFD6;
+}
+
+/* ============================================================
+   CONTAINER QUERIES — sized off the BLOCK's real width, not the
+   viewport, so GHL builder columns and mobile preview behave.
+   ============================================================ */
+
+/* --- large phone / small tablet --- */
+@container madfoot (min-width:600px){
+  #mad-foot-b7q4{padding:4rem 0 2.2rem;}
+  #mad-foot-b7q4 .mdf-wrap{padding:0 2rem;}
+  #mad-foot-b7q4 .mdf-grid{grid-template-columns:repeat(2,1fr);gap:2.2rem;}
+  #mad-foot-b7q4 .mdf-logo img{height:32px;}
+}
+
+/* --- tablet / small laptop --- */
+@container madfoot (min-width:900px){
+  #mad-foot-b7q4{padding:4.6rem 0 2.4rem;}
+  #mad-foot-b7q4 .mdf-grid{grid-template-columns:1.5fr 1fr 1fr 1fr 1fr;gap:2.2rem;}
+  #mad-foot-b7q4 .mdf-bar{
+    flex-direction:row;justify-content:space-between;text-align:left;
+  }
+  #mad-foot-b7q4 .mdf-legal{justify-content:flex-end;}
+}
+
+/* Fallback for any GHL build that strips container-query support */
+@supports not (container-type:inline-size){
+  @media (min-width:600px){
+    #mad-foot-b7q4 .mdf-wrap{padding:0 2rem;}
+    #mad-foot-b7q4 .mdf-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (min-width:900px){
+    #mad-foot-b7q4 .mdf-grid{grid-template-columns:1.5fr 1fr 1fr 1fr 1fr;}
+    #mad-foot-b7q4 .mdf-bar{flex-direction:row;justify-content:space-between;text-align:left;}
+  }
+}
+
+/* ---------- REDUCED MOTION ---------- */
+@media (prefers-reduced-motion:reduce){
+  #mad-foot-b7q4 *,#mad-foot-b7q4 *::before,#mad-foot-b7q4 *::after{
+    animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+}
+</style>
+
+<div id="mad-foot-b7q4">
+  <div class="mdf-wrap">
+
+    <div class="mdf-grid">
+
+      <!-- SECTION: BRAND -->
+      <div>
+        <!-- LOGO — swap src for your uploaded wordmark PNG -->
+        <a class="mdf-logo" href="https://madcustomcars.com/" aria-label="MAD Custom home">
+          <img src="https://i0.wp.com/madcustomcars.com/wp-content/uploads/2025/07/Mesa-de-trabajo-2.png"
+               alt="MAD Custom" width="180" height="30" loading="lazy" decoding="async">
+        </a>
+        <p class="mdf-blurb">
+          High end automotive customization designed to transform vehicles beyond the ordinary,
+          while preserving long term value.
+        </p>
+
+        <!-- SECTION: SOCIALS -->
+        <div class="mdf-socials">
+          <a href="https://www.instagram.com/madcustomfl/" aria-label="MAD Custom on Instagram" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.2" cy="6.8" r="1.15" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a href="https://www.facebook.com/MADCUSTOMFLORIDA" aria-label="MAD Custom on Facebook" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M13.6 21v-7.1H16l.4-2.9h-2.8V9.2c0-.8.2-1.4 1.4-1.4h1.5V5.2c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8V11H8.2v2.9h2.4V21h3z"/>
+            </svg>
+          </a>
+          <a href="https://www.tiktok.com/@madcustomfl" aria-label="MAD Custom on TikTok" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M16.4 3h-2.7v11.5a2.2 2.2 0 1 1-2.2-2.2c.2 0 .4 0 .5.1V9.6a5 5 0 1 0 4.4 5V8.3a4.8 4.8 0 0 0 2.9 1V6.7a3.5 3.5 0 0 1-2.9-3.7z"/>
+            </svg>
+          </a>
+          <a href="https://www.youtube.com/@MadCustomTV" aria-label="MAD Custom on YouTube" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <rect x="2.6" y="6" width="18.8" height="12" rx="3.6"/>
+              <path d="M10.6 9.7v4.6l4.1-2.3z" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a href="https://wa.link/c2aabg" aria-label="Chat with MAD Custom on WhatsApp" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.06c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.75-.71 2-1.4.25-.69.25-1.28.17-1.4-.07-.13-.27-.2-.57-.35M12.04 21.2c-1.62 0-3.2-.44-4.58-1.26l-.33-.2-3.4.89.91-3.32-.21-.34a8.98 8.98 0 01-1.38-4.81c0-4.96 4.04-9 9-9 2.4 0 4.66.94 6.36 2.64a8.94 8.94 0 012.63 6.36c0 4.96-4.04 9-9 9m7.66-16.66A10.7 10.7 0 0012.04 1.4C6.12 1.4 1.3 6.22 1.3 12.15c0 1.9.5 3.75 1.44 5.38L1.2 23.1l5.72-1.5a10.7 10.7 0 005.12 1.3h.01c5.92 0 10.74-4.82 10.74-10.75 0-2.87-1.12-5.57-3.15-7.6"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- SECTION: QUICK LINKS -->
+      <div>
+        <h4 class="mdf-h4">Quick links</h4>
+        <ul>
+          <li><a href="https://go.madcustomcars.com/services-page">Get a Quote</a></li>
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-services-m9d4">Our Services</a></li>
+          <li><a href="https://go.madcustomcars.com/services-page#ghl-products-p3r8">Shop</a></li>
+          <li><a href="https://madcustomcars.com/about-us/">About Us</a></li>
+          <li><a href="https://madcustomcars.com/contact/">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- SECTION: FLORIDA -->
+      <div>
+        <h4 class="mdf-h4">Florida</h4>
+        <ul>
+          <li><a href="tel:+16893674674">+1 689-367-4674</a></li>
+          <li><p>19 N Westmoreland Dr<br>Orlando, FL 32805</p></li>
+        </ul>
+      </div>
+
+      <!-- SECTION: PUERTO RICO -->
+      <div>
+        <h4 class="mdf-h4">Puerto Rico</h4>
+        <ul>
+          <li><a href="tel:+17878465115">(787) 846-5115</a></li>
+          <li><a href="mailto:madcustomfl@outlook.com">madcustomfl@outlook.com</a></li>
+        </ul>
+      </div>
+
+      <!-- SECTION: BOOKING HOURS + CTA -->
+      <div>
+        <h4 class="mdf-h4">Booking hours</h4>
+        <p>Monday to Friday<br>8:00am &ndash; 6:00pm ET</p>
+        <span class="mdf-hours"><span class="mdf-dot"></span> Consultations are free</span>
+        <a class="mdf-btn" href="https://bookmadcustom.com/appointment-mad-page">Book Your Visit</a>
+      </div>
+
+    </div>
+
+    <!-- SECTION: BOTTOM BAR -->
+    <div class="mdf-bar">
+      <p class="mdf-copy">&copy; 2026 MAD Custom. All rights reserved.</p>
+      <div class="mdf-legal">
+        <a href="https://go.madcustomcars.com/privacy-policy-page">Privacy Policy</a>
+        <a href="https://go.madcustomcars.com/terms-condition-page">Terms &amp; Conditions</a>
+      </div>
+      <p class="mdf-note">Built by hand in FL &amp; PR.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById('mad-foot-b7q4');
+  if(!root) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Smooth scroll for same-page anchors (e.g. a calendar element on this page).
+     GHL element IDs can start with a digit or contain characters that make
+     querySelector('#id') throw, so getElementById is used — it takes the raw
+     id and never parses it as a selector. */
+  root.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(ev){
+      var id = a.getAttribute('href').slice(1);
+      if(!id) return;
+      var t = document.getElementById(id);
+      if(t){
+        ev.preventDefault();
+        t.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'});
+      }
+      /* no match: let the browser handle it */
+    });
+  });
+})();
+</script>

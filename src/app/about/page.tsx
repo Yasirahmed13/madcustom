@@ -176,8 +176,6 @@ export default function AboutPage() {
             <div className="phone:flex-col phone:items-stretch mt-[30px] flex flex-wrap gap-3">
               <a
                 href={APPOINTMENT_URL}
-                target="_blank"
-                rel="noopener"
                 className="bg-red text-ink hover:bg-red-bright phone:justify-center flex items-center gap-2.5 px-7 py-[17px] text-[15px] font-bold tracking-[.02em] transition-colors duration-200"
               >
                 Make Appointment <span className="font-mono">&rarr;</span>

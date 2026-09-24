@@ -1,0 +1,520 @@
+<!-- ============================================================
+     MAD CUSTOM · THANK YOU / BOOKING CONFIRMED (standalone section)
+     Scoped to #mad-ty-b7q4 — nothing leaks into other GHL sections.
+     Container queries (not viewport) so it sizes off the block's real
+     width, which is what GHL's builder columns and mobile preview need.
+     ============================================================ -->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ---------- SCOPE + TOKENS ---------- */
+#mad-ty-b7q4{
+  /* palette lifted from madcustomcars.com */
+  --ink:#08090A;
+  --ink-2:#0E1113;
+  --card:#121618;
+  --line:rgba(255,255,255,.09);
+  --line-2:rgba(255,255,255,.16);
+  --red:#E10600;
+  --red-hi:#FF2D20;
+  --red-dim:rgba(225,6,0,.14);
+  --text:#F4F6F7;
+  --chrome:#C9CFD6;
+  --display:'Oxanium',system-ui,sans-serif;
+  --body:'Manrope',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --r:16px;
+
+  container-type:inline-size;
+  container-name:madty;
+
+  display:block;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background:var(--ink);
+  color:var(--text);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+#mad-ty-b7q4 *,
+#mad-ty-b7q4 *::before,
+#mad-ty-b7q4 *::after{box-sizing:border-box;}
+#mad-ty-b7q4 img{max-width:100%;height:auto;display:block;}
+#mad-ty-b7q4 a{color:inherit;text-decoration:none;}
+#mad-ty-b7q4 h1,#mad-ty-b7q4 h2,#mad-ty-b7q4 h3{
+  font-family:var(--display);font-weight:800;line-height:1.04;
+  letter-spacing:-.025em;margin:0;
+}
+#mad-ty-b7q4 p{margin:0;}
+#mad-ty-b7q4 ul{margin:0;padding:0;list-style:none;}
+#mad-ty-b7q4 :focus-visible{outline:2px solid var(--red-hi);outline-offset:3px;border-radius:4px;}
+#mad-ty-b7q4 ::selection{background:var(--red);color:#fff;}
+
+#mad-ty-b7q4 .mdt-wrap{
+  width:100%;max-width:1100px;margin:0 auto;padding:0 1.2rem;
+  position:relative;z-index:2;
+}
+
+/* ---------- VIDEO BACKGROUND (confirmation block only) ---------- */
+#mad-ty-b7q4 .mdt-hero{
+  position:relative;overflow:hidden;isolation:isolate;
+  padding:3.2rem 0 3.4rem;text-align:center;
+}
+#mad-ty-b7q4 .mdt-video{position:absolute;inset:0;z-index:0;overflow:hidden;background:var(--ink);}
+#mad-ty-b7q4 .mdt-video video{
+  width:100%;height:100%;object-fit:cover;
+  /* source clip is bright — pull it down hard here, this block is type-heavy */
+  filter:brightness(.42) contrast(1.06) saturate(1.05);
+}
+#mad-ty-b7q4 .mdt-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;}
+#mad-ty-b7q4 .mdt-scrim::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(to bottom,
+    rgba(8,9,10,.88) 0%,
+    rgba(8,9,10,.76) 40%,
+    rgba(8,9,10,.92) 80%,
+    var(--ink) 100%);
+}
+#mad-ty-b7q4 .mdt-scrim::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(70% 60% at 50% 40%, rgba(225,6,0,.20), transparent 66%);
+}
+
+/* ---------- CHECK MARK ---------- */
+#mad-ty-b7q4 .mdt-check{
+  width:78px;height:78px;border-radius:50%;margin:0 auto 1.4rem;
+  display:grid;place-items:center;
+  border:2px solid var(--red);
+  background:linear-gradient(180deg,rgba(225,6,0,.20),rgba(225,6,0,.06)),#0B0F11;
+  color:var(--red-hi);position:relative;
+}
+#mad-ty-b7q4 .mdt-check svg{width:34px;height:34px;display:block;}
+/* stroke draws itself in on load */
+#mad-ty-b7q4 .mdt-check path{
+  stroke-dasharray:36;stroke-dashoffset:36;
+  animation:mdtDraw .7s cubic-bezier(.2,.7,.3,1) .25s forwards;
+}
+@keyframes mdtDraw{to{stroke-dashoffset:0;}}
+/* expanding ring */
+#mad-ty-b7q4 .mdt-check::after{
+  content:"";position:absolute;inset:-2px;border-radius:50%;
+  border:2px solid var(--red);opacity:0;pointer-events:none;
+  animation:mdtPing 3.4s cubic-bezier(.2,.6,.3,1) infinite;
+}
+@keyframes mdtPing{
+  0%  {transform:scale(1);   opacity:.6;}
+  65% {transform:scale(1.5); opacity:0;}
+  100%{transform:scale(1.5); opacity:0;}
+}
+
+/* ---------- CONFIRMATION COPY ---------- */
+#mad-ty-b7q4 .mdt-badge{
+  display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1rem;
+  padding:.42rem .85rem;border-radius:999px;
+  border:1px solid var(--line-2);background:rgba(8,9,10,.55);
+  backdrop-filter:blur(8px);
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--chrome);
+}
+#mad-ty-b7q4 .mdt-h1{
+  font-size:clamp(1.95rem,8.4cqi,4rem);text-transform:uppercase;
+  letter-spacing:-.035em;
+  text-shadow:0 4px 30px rgba(0,0,0,.8),0 1px 3px rgba(0,0,0,.6);
+}
+#mad-ty-b7q4 .mdt-h1 em{font-style:normal;color:var(--red-hi);}
+#mad-ty-b7q4 .mdt-sub{
+  color:#DCE1E5;font-size:clamp(.98rem,2.7cqi,1.16rem);font-weight:500;
+  max-width:52ch;margin:1.1rem auto 0;
+  text-shadow:0 2px 16px rgba(0,0,0,.9);
+}
+
+/* booked-slot pill — only shown when GHL passes the time in the URL */
+#mad-ty-b7q4 .mdt-slot{
+  display:none;align-items:center;justify-content:center;gap:.55rem;
+  margin:1.4rem auto 0;padding:.7rem 1.15rem;border-radius:999px;
+  border:1px solid rgba(225,6,0,.42);background:rgba(225,6,0,.12);
+  font-family:var(--mono);font-size:.76rem;letter-spacing:.06em;color:#fff;
+  max-width:max-content;
+}
+#mad-ty-b7q4 .mdt-slot.mdt-on{display:inline-flex;}
+#mad-ty-b7q4 .mdt-slot svg{width:15px;height:15px;flex:none;}
+
+/* ---------- SECTION FURNITURE ---------- */
+#mad-ty-b7q4 .mdt-sec{padding:3.2rem 0;position:relative;z-index:2;}
+#mad-ty-b7q4 .mdt-kicker{
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--red-hi);
+  display:flex;align-items:center;gap:.6rem;margin-bottom:.85rem;
+}
+#mad-ty-b7q4 .mdt-kicker::before{content:"";width:26px;height:1px;background:var(--red);flex:none;}
+#mad-ty-b7q4 .mdt-h2{font-size:clamp(1.6rem,5.2cqi,2.6rem);}
+#mad-ty-b7q4 .mdt-lede{color:#FFF;font-size:clamp(.94rem,2.5cqi,1.04rem);max-width:62ch;margin-top:.9rem;}
+
+/* ---------- CARDS ---------- */
+#mad-ty-b7q4 .mdt-grid{display:grid;grid-template-columns:1fr;gap:.9rem;margin-top:1.9rem;}
+#mad-ty-b7q4 .mdt-card{
+  border-radius:var(--r);padding:1.35rem 1.3rem 1.5rem;
+  background:linear-gradient(170deg,var(--card),var(--ink-2));
+  border:1px solid var(--line);
+  transition:transform .35s cubic-bezier(.2,.7,.3,1),border-color .35s;
+}
+#mad-ty-b7q4 .mdt-card:hover,
+#mad-ty-b7q4 .mdt-card:active{transform:translateY(-4px);border-color:rgba(225,6,0,.42);}
+#mad-ty-b7q4 .mdt-num{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--red-hi);margin-bottom:.55rem;
+}
+#mad-ty-b7q4 .mdt-card h3{font-size:1.04rem;margin-bottom:.45rem;letter-spacing:-.01em;}
+#mad-ty-b7q4 .mdt-card p{color:#FFF;font-size:.92rem;}
+
+/* ---------- PREP LIST ---------- */
+#mad-ty-b7q4 .mdt-panel{
+  margin-top:1.9rem;border:1px solid var(--line);border-radius:var(--r);
+  background:linear-gradient(170deg,var(--card),var(--ink-2));
+  padding:1.5rem 1.35rem;
+}
+#mad-ty-b7q4 .mdt-panel h3{font-size:1.06rem;margin-bottom:1rem;}
+#mad-ty-b7q4 .mdt-list li{
+  display:flex;gap:.75rem;align-items:flex-start;
+  padding:.6rem 0;border-bottom:1px solid var(--line);
+  color:#FFF;font-size:.93rem;
+}
+#mad-ty-b7q4 .mdt-list li:last-child{border-bottom:0;}
+#mad-ty-b7q4 .mdt-tick{
+  flex:none;width:20px;height:20px;margin-top:.18rem;
+  border-radius:50%;display:grid;place-items:center;
+  border:1.5px solid var(--red);color:var(--red-hi);
+}
+#mad-ty-b7q4 .mdt-tick svg{width:11px;height:11px;display:block;}
+
+/* ---------- CONTACT STRIP ---------- */
+#mad-ty-b7q4 .mdt-strip{
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:rgba(255,255,255,.02);padding:2.2rem 0;position:relative;z-index:2;
+}
+#mad-ty-b7q4 .mdt-info{display:grid;grid-template-columns:1fr;gap:1.6rem;}
+#mad-ty-b7q4 .mdt-info h4{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;font-weight:500;
+  text-transform:uppercase;color:var(--red-hi);margin:0 0 .7rem;
+}
+#mad-ty-b7q4 .mdt-info p,
+#mad-ty-b7q4 .mdt-info a{color:#FFF;font-size:.93rem;}
+#mad-ty-b7q4 .mdt-info a:hover{color:var(--red-hi);}
+#mad-ty-b7q4 .mdt-info li a{display:inline-flex;align-items:center;min-height:44px;}
+
+/* ---------- BUTTONS ---------- */
+#mad-ty-b7q4 .mdt-btns{
+  display:flex;flex-direction:column;align-items:center;
+  gap:.7rem;margin-top:1.8rem;
+}
+#mad-ty-b7q4 .mdt-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  min-height:52px;padding:0 1.5rem;border-radius:999px;border:0;cursor:pointer;
+  font-family:var(--body);font-size:.98rem;font-weight:700;
+  background:var(--red);color:#fff;position:relative;overflow:hidden;
+  box-shadow:0 8px 28px rgba(225,6,0,.34);
+  transition:transform .22s cubic-bezier(.2,.7,.3,1),box-shadow .22s;
+}
+#mad-ty-b7q4 .mdt-btn:hover{transform:translateY(-2px);box-shadow:0 14px 38px rgba(225,6,0,.5);color:#fff;}
+#mad-ty-b7q4 .mdt-btn:active{transform:translateY(0) scale(.985);}
+#mad-ty-b7q4 .mdt-btn-ghost{
+  background:rgba(8,9,10,.5);color:var(--text);
+  border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(10px);box-shadow:none;
+}
+#mad-ty-b7q4 .mdt-btn-ghost:hover{background:var(--red-dim);border-color:var(--red);box-shadow:none;color:#fff;}
+
+/* ---------- ENTRANCE ---------- */
+#mad-ty-b7q4 .mdt-rise{
+  opacity:0;transform:translateY(18px);
+  animation:mdtRise .8s cubic-bezier(.2,.7,.3,1) forwards;
+}
+#mad-ty-b7q4 .mdt-d1{animation-delay:.05s}
+#mad-ty-b7q4 .mdt-d2{animation-delay:.15s}
+#mad-ty-b7q4 .mdt-d3{animation-delay:.25s}
+#mad-ty-b7q4 .mdt-d4{animation-delay:.35s}
+@keyframes mdtRise{to{opacity:1;transform:none;}}
+
+#mad-ty-b7q4 .mdt-rv{
+  opacity:0;transform:translateY(20px);
+  transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.3,1);
+}
+#mad-ty-b7q4 .mdt-rv.mdt-in{opacity:1;transform:none;}
+
+/* ============================================================
+   CONTAINER QUERIES — sized off the BLOCK's real width, not the
+   viewport, so GHL builder columns and mobile preview behave.
+   ============================================================ */
+
+/* --- large phone / small tablet --- */
+@container madty (min-width:600px){
+  #mad-ty-b7q4 .mdt-wrap{padding:0 2rem;}
+  #mad-ty-b7q4 .mdt-hero{padding:4.2rem 0 4.4rem;}
+  #mad-ty-b7q4 .mdt-sec{padding:4.2rem 0;}
+  #mad-ty-b7q4 .mdt-btns{flex-direction:row;justify-content:center;}
+  #mad-ty-b7q4 .mdt-grid{grid-template-columns:repeat(2,1fr);gap:1.1rem;}
+  #mad-ty-b7q4 .mdt-info{grid-template-columns:repeat(2,1fr);gap:2rem;}
+  #mad-ty-b7q4 .mdt-panel{padding:2rem 1.9rem;}
+  #mad-ty-b7q4 .mdt-check{width:88px;height:88px;}
+  #mad-ty-b7q4 .mdt-check svg{width:38px;height:38px;}
+}
+
+/* --- tablet / small laptop --- */
+@container madty (min-width:900px){
+  #mad-ty-b7q4 .mdt-hero{padding:5rem 0 5.2rem;}
+  #mad-ty-b7q4 .mdt-sec{padding:5.2rem 0;}
+  #mad-ty-b7q4 .mdt-grid{grid-template-columns:repeat(3,1fr);}
+  #mad-ty-b7q4 .mdt-info{grid-template-columns:repeat(4,1fr);}
+}
+
+/* Fallback for any GHL build that strips container-query support */
+@supports not (container-type:inline-size){
+  @media (min-width:600px){
+    #mad-ty-b7q4 .mdt-wrap{padding:0 2rem;}
+    #mad-ty-b7q4 .mdt-btns{flex-direction:row;justify-content:center;}
+    #mad-ty-b7q4 .mdt-grid{grid-template-columns:repeat(2,1fr);}
+    #mad-ty-b7q4 .mdt-info{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (min-width:900px){
+    #mad-ty-b7q4 .mdt-grid{grid-template-columns:repeat(3,1fr);}
+    #mad-ty-b7q4 .mdt-info{grid-template-columns:repeat(4,1fr);}
+  }
+}
+
+/* ---------- REDUCED MOTION ---------- */
+@media (prefers-reduced-motion:reduce){
+  #mad-ty-b7q4 *,#mad-ty-b7q4 *::before,#mad-ty-b7q4 *::after{
+    animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+  #mad-ty-b7q4 .mdt-rise,#mad-ty-b7q4 .mdt-rv{opacity:1;transform:none;}
+  #mad-ty-b7q4 .mdt-check path{stroke-dashoffset:0;}
+}
+</style>
+
+<div id="mad-ty-b7q4">
+
+  <!-- SECTION: CONFIRMATION HERO -->
+  <section class="mdt-hero">
+    <div class="mdt-video" aria-hidden="true">
+      <video id="mdtVideo" autoplay muted loop playsinline preload="auto"
+             poster="https://i0.wp.com/madcustomcars.com/wp-content/uploads/2026/03/DSC4277-scaled.jpeg">
+        <source src="https://reactheme.com/products/wordpress/autodetail/wp-content/uploads/2025/07/1.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="mdt-scrim" aria-hidden="true"></div>
+
+    <div class="mdt-wrap">
+
+      <!-- SECTION: CHECK MARK -->
+      <div class="mdt-check mdt-rise mdt-d1" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4.5 12.5l5 5 10-11"/>
+        </svg>
+      </div>
+
+      <!-- SECTION: HEADLINE -->
+      <div class="mdt-rise mdt-d2">
+        <span class="mdt-badge">Booking confirmed</span>
+      </div>
+      <h1 class="mdt-h1 mdt-rise mdt-d2">You're <em>Locked In</em></h1>
+      <p class="mdt-sub mdt-rise mdt-d3">
+        Your consultation is booked. A confirmation is on its way to your inbox,
+        and our team will reach out before your visit to make sure we have everything we need.
+      </p>
+
+      <!-- SECTION: BOOKED SLOT (auto-filled from the URL when GHL passes it) -->
+      <div class="mdt-slot mdt-rise mdt-d3" id="mdtSlot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="4.5" width="18" height="16" rx="3"/>
+          <path d="M3 9.5h18M8 2.5v4M16 2.5v4"/>
+        </svg>
+        <span id="mdtSlotText"></span>
+      </div>
+
+      <!-- SECTION: CTA BUTTON -->
+      <div class="mdt-btns mdt-rise mdt-d4">
+        <a class="mdt-btn" href="http://book.madcustomcars.com/">Explore Our Services</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION: WHAT HAPPENS NEXT -->
+  <section class="mdt-sec">
+    <div class="mdt-wrap">
+      <div class="mdt-rv">
+        <p class="mdt-kicker">01 / What happens next</p>
+        <h2 class="mdt-h2">From here to the build</h2>
+        <p class="mdt-lede">
+          No guesswork between now and your visit. Here's exactly how it runs.
+        </p>
+      </div>
+      <div class="mdt-grid">
+        <article class="mdt-card mdt-rv">
+          <p class="mdt-num">Step 1</p>
+          <h3>Check your inbox</h3>
+          <p>Your confirmation and calendar invite are on the way. If it's not there in a few minutes, check spam and add us to your contacts.</p>
+        </article>
+        <article class="mdt-card mdt-rv">
+          <p class="mdt-num">Step 2</p>
+          <h3>We reach out</h3>
+          <p>Someone from the team will follow up before your slot to confirm your vehicle and what you're going for, so nothing gets missed.</p>
+        </article>
+        <article class="mdt-card mdt-rv">
+          <p class="mdt-num">Step 3</p>
+          <h3>The walkthrough</h3>
+          <p>We walk the car together, map what's worth doing first, and put a clear scope and a real number in front of you. No cost, no pressure.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: HOW TO PREP -->
+  <section class="mdt-sec" style="padding-top:0;">
+    <div class="mdt-wrap">
+      <div class="mdt-rv">
+        <p class="mdt-kicker">02 / Before you come in</p>
+        <h2 class="mdt-h2">Make it a good one</h2>
+      </div>
+
+      <div class="mdt-panel mdt-rv">
+        <h3>A short list, nothing heavy</h3>
+        <ul class="mdt-list">
+          <li>
+            <span class="mdt-tick" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4"
+                   stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l5 5 10-11"/></svg>
+            </span>
+            <span>Bring the vehicle if you can. Seeing it in person changes what we can tell you.</span>
+          </li>
+          <li>
+            <span class="mdt-tick" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4"
+                   stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l5 5 10-11"/></svg>
+            </span>
+            <span>Save a few reference photos of the look you're after. Even rough ones help.</span>
+          </li>
+          <li>
+            <span class="mdt-tick" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4"
+                   stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l5 5 10-11"/></svg>
+            </span>
+            <span>Know your year, make and model. If you've already had work done, mention it.</span>
+          </li>
+          <li>
+            <span class="mdt-tick" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4"
+                   stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l5 5 10-11"/></svg>
+            </span>
+            <span>Need to move your slot? Just reply to your confirmation email or give us a call.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: CONTACT STRIP -->
+  <section class="mdt-strip">
+    <div class="mdt-wrap">
+      <div class="mdt-info">
+        <div class="mdt-rv">
+          <h4>Florida</h4>
+          <ul>
+            <li><a href="tel:+16893674674">+1 689-367-4674</a></li>
+            <li><p>19 N Westmoreland Dr<br>Orlando, FL 32805</p></li>
+          </ul>
+        </div>
+        <div class="mdt-rv">
+          <h4>Puerto Rico</h4>
+          <ul>
+            <li><a href="tel:+17878465115">(787) 846-5115</a></li>
+            <li><a href="mailto:madcustomfl@outlook.com">madcustomfl@outlook.com</a></li>
+          </ul>
+        </div>
+        <div class="mdt-rv">
+          <h4>Booking hours</h4>
+          <p>Monday to Friday<br>8:00am &ndash; 5:00pm ET</p>
+        </div>
+        <div class="mdt-rv">
+          <h4>Questions before then?</h4>
+          <p>Reply to your confirmation email or call the shop. We'd rather sort it now than on the day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById('mad-ty-b7q4');
+  if(!root) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* background video: honour reduced motion, pause while off screen */
+  var vid = document.getElementById('mdtVideo');
+  if(vid){
+    if(reduce){
+      vid.removeAttribute('autoplay');
+      vid.pause();                 /* poster frame stays visible */
+    } else {
+      var p = vid.play();
+      if(p && p.catch) p.catch(function(){ /* poster covers it */ });
+      if('IntersectionObserver' in window){
+        new IntersectionObserver(function(es){
+          es.forEach(function(e){
+            if(e.isIntersecting){ var q = vid.play(); if(q && q.catch) q.catch(function(){}); }
+            else { vid.pause(); }
+          });
+        },{threshold:.05}).observe(vid);
+      }
+    }
+  }
+
+  /* Booked-slot pill.
+     GHL's calendar redirect appends the booked time to the thank-you URL.
+     The parameter name has changed across widget versions, so several are
+     checked. If none is present the pill simply stays hidden — the page
+     never shows a broken or empty date. */
+  try{
+    var qs = new URLSearchParams(window.location.search);
+    var raw = qs.get('event_start_time') || qs.get('start_time') ||
+              qs.get('startTime') || qs.get('selected_slot') || '';
+    if(raw){
+      var d = new Date(decodeURIComponent(raw));
+      if(!isNaN(d.getTime())){
+        var opts = {weekday:'long', month:'long', day:'numeric',
+                    hour:'numeric', minute:'2-digit'};
+        var tz = qs.get('timezone') || qs.get('event_timezone');
+        if(tz){ opts.timeZone = tz; opts.timeZoneName = 'short'; }
+        var txt = new Intl.DateTimeFormat(undefined, opts).format(d);
+        document.getElementById('mdtSlotText').textContent = txt;
+        document.getElementById('mdtSlot').classList.add('mdt-on');
+      }
+    }
+  }catch(e){ /* pill stays hidden */ }
+
+  /* scroll reveal with stagger */
+  var items = root.querySelectorAll('.mdt-rv');
+  if('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e,i){
+        if(e.isIntersecting){
+          var el = e.target;
+          setTimeout(function(){ el.classList.add('mdt-in'); }, (i % 5) * 80);
+          io.unobserve(el);
+        }
+      });
+    },{rootMargin:'0px 0px -8% 0px',threshold:.08});
+    items.forEach(function(el){ io.observe(el); });
+  } else {
+    items.forEach(function(el){ el.classList.add('mdt-in'); });
+  }
+})();
+</script>

@@ -4,7 +4,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { SITE, TEL_HREF } from "@/data/site";
 import { SERVICES } from "@/data/services";
-import { APPOINTMENT_URL, PRODUCTS_URL, SERVICES_URL, linkTarget } from "@/data/links";
+import {
+  APPOINTMENT_URL,
+  PRODUCTS_URL,
+  linkTarget,
+  serviceQuoteHref,
+} from "@/data/links";
 import { whatsappHref } from "@/lib/whatsapp";
 
 /**
@@ -165,9 +170,7 @@ export function MobileMenu() {
                           {SERVICES.map((service) => (
                             <a
                               key={service.slug}
-                              href={SERVICES_URL}
-                              target="_blank"
-                              rel="noopener"
+                              href={serviceQuoteHref(service)}
                               onClick={close}
                               className="text-bone-68 hover:text-red-bright block py-2 text-[15px] transition-colors duration-200"
                             >
@@ -176,12 +179,10 @@ export function MobileMenu() {
                           ))}
                           <a
                             href={PRODUCTS_URL}
-                            target="_blank"
-                            rel="noopener"
                             onClick={close}
                             className="text-red hover:text-red-soft mt-2 block py-2 text-[12px] tracking-[.1em] uppercase transition-colors duration-200"
                           >
-                            Shop products ↗
+                            Shop products →
                           </a>
                         </div>
                       ) : null}
@@ -220,8 +221,6 @@ export function MobileMenu() {
               </a>
               <a
                 href={APPOINTMENT_URL}
-                target="_blank"
-                rel="noopener"
                 onClick={close}
                 className="bg-red text-ink hover:bg-red-bright px-5 py-[15px] text-center text-[14px] font-bold tracking-[.03em] transition-colors duration-200"
               >
