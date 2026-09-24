@@ -97,17 +97,13 @@
   --font-display: var(--font-anton), sans-serif;
   --font-sans: var(--font-archivo), system-ui, sans-serif;
 
-  /* Deliberately NOT var(--font-jetbrains-mono), which expands to
-     "JetBrains Mono", "JetBrains Mono Fallback". That metric-matched fallback
-     face also claims every character the Latin subset omits — including the
-     arrows this design uses (→ ← ↗ ▶ ✕) — and renders them far wider than the
-     design does: 20.19px against 8.25px for → at 15px. Naming the face directly
-     and falling through to the generic family reproduces the design exactly.
-     The @font-face next/font emits is keyed on this same family name, so the
-     font is still self-hosted and preloaded.
-     (next/font's `adjustFontFallback` option no longer has any effect in
-     Next 16, which is why this is handled here.) */
-  --font-mono: "JetBrains Mono", monospace;
+  /* The mono face is loaded with no metric-matched fallback face (see
+     src/app/fonts.ts). A fallback would also claim every character the Latin
+     subset omits — including the arrows this design uses (→ ← ↗ ▶ ✕) — and
+     render them far wider than the design does: 20.19px against 8.25px for →
+     at 15px. Without one, those glyphs fall through to the generic family, as
+     the original design has them. */
+  --font-mono: var(--font-jetbrains-mono), monospace;
 
   /* --- Motion ------------------------------------------------------------ */
   /* The design's signature easing. Every transition over 300ms uses it. */

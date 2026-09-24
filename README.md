@@ -276,10 +276,13 @@ A few decisions that will look odd without the reason:
   legibility at the hero's 124px. Turning synthesis off shows Anton's real letterforms.
   Synthetic bold does not change glyph metrics, so this affects stroke weight only and
   the layout is byte-for-byte identical either way. Delete the rule to go back.
-- **`--font-mono` names `"JetBrains Mono"` directly** instead of using next/font's
-  variable. That variable includes a metric-matched fallback face which also captures
-  characters outside the Latin subset — including the arrows the design uses (→ ← ↗ ▶ ✕),
-  which it renders more than twice as wide.
+- **The fonts are files in `src/fonts/`, loaded with `next/font/local`**, not
+  `next/font/google`. The Google loader downloads the fonts during the build, and that
+  failed on the deploy host under Turbopack, so the build no longer touches the network
+  for fonts.
+- **JetBrains Mono has no metric-matched fallback face** (`adjustFontFallback: false`).
+  A fallback would also capture characters outside the Latin subset — including the
+  arrows the design uses (→ ← ↗ ▶ ✕) — and render them more than twice as wide.
 - **`line-height: normal` on `html`.** The design sets no line-height, so anything
   without an explicit one inherits the browser default. Tailwind's preflight would impose
   1.5 and grow the footer and every small label.
