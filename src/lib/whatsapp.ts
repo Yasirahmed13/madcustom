@@ -7,15 +7,10 @@
 import { SITE } from "@/data/site";
 
 /**
- * Digits only, no "+". Falls back to the number behind the design's
- * wa.link/c2aabg short link.
- *
- * TODO(confirm): 17874211779 is what that short link resolves to. It matches
- * neither shop number in the footer (+1 407 286 4426 Florida, +1 787 846 5115
- * Puerto Rico). Set NEXT_PUBLIC_WHATSAPP_NUMBER once it is confirmed.
+ * Digits only, no "+". Defaults to the shop's WhatsApp line, +1 689 367 4674.
  */
 const WHATSAPP_NUMBER = (
-  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "17874211779"
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "16893674674"
 ).replace(/\D/g, "");
 
 /** The message the design's own short link was configured with. */
@@ -25,8 +20,8 @@ export const DEFAULT_WHATSAPP_MESSAGE =
 /**
  * A wa.me link with a prefilled message.
  *
- * If the number is ever blanked out this falls back to the original wa.link
- * short link, which carries its own prefilled text, so the button always works.
+ * If the number is ever blanked out this falls back to SITE.whatsappShortLink,
+ * which carries its own prefilled text, so the button always works.
  */
 export function whatsappHref(message: string = DEFAULT_WHATSAPP_MESSAGE): string {
   if (!WHATSAPP_NUMBER) return SITE.whatsappShortLink;

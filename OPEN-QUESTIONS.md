@@ -9,7 +9,6 @@ TypeScript errors. This file replaces the pre-build questions with what actually
 
 | Item | Why | Blocking? |
 | --- | --- | --- |
-| **Confirm the WhatsApp number** — see §2 | Every WhatsApp link on the site | No — a working number is in place |
 | `RESEND_API_KEY` + a verified sending domain | Booking emails to madcustomfl@outlook.com | No — form works, logs server-side, shows the fallback |
 | `NEXT_PUBLIC_SITE_URL` | Canonical URLs, sitemap, social cards | Before launch |
 | Latitude/longitude for both shops | Optional `geo` in the LocalBusiness schema | No — omitted rather than guessed |
@@ -19,22 +18,12 @@ TypeScript errors. This file replaces the pre-build questions with what actually
 
 ---
 
-## 2. The WhatsApp number — please confirm
+## 2. The WhatsApp number
 
-The design contains no phone number for WhatsApp, only the short link
-`https://wa.link/c2aabg`. I resolved it. It redirects to:
-
-- **number `+1 787 421 1779`**
-- prefilled message: *"Hi MAD Custom, I'm interested in upgrading my vehicle. Could I get
-  more information about your services and pricing?"*
-
-**This is a third number.** It matches neither the Florida shop (+1 407 286 4426) nor the
-Puerto Rico shop (+1 787 846 5115) in your footer. I did not invent it, but I also cannot
-confirm it is the one you want customers messaging.
-
-It is set as the default of `NEXT_PUBLIC_WHATSAPP_NUMBER`. Change that one env var and
-every WhatsApp link on the site follows. `wa.link/c2aabg` is kept in `src/data/site.ts` as
-a documented fallback.
+Confirmed: **`+1 689 367 4674`**. It is the default of `NEXT_PUBLIC_WHATSAPP_NUMBER`, and
+every WhatsApp link on the site (including the static `ghl/` pages) points to it with the
+prefilled message *"Hi MAD Custom, I'm interested in upgrading my vehicle. Could I get more
+information about your services and pricing?"*
 
 ---
 

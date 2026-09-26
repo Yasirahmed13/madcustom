@@ -139,11 +139,11 @@ export const SITE = {
   instagramUrl: "https://www.instagram.com/madcustomfl/",
 
   /**
-   * The short link used throughout the original design. Kept as a documented
-   * fallback: `lib/whatsapp.ts` prefers NEXT_PUBLIC_WHATSAPP_NUMBER and only
-   * falls back to this if the number is ever blanked out.
+   * A ready-made wa.me link to +1 689 367 4674 with the default message. Kept
+   * as a fallback: `lib/whatsapp.ts` prefers NEXT_PUBLIC_WHATSAPP_NUMBER and
+   * only falls back to this if the number is ever blanked out.
    */
-  whatsappShortLink: "https://wa.link/c2aabg",
+  whatsappShortLink: "https://wa.me/16893674674?text=Hi%20MAD%20Custom%2C%20I%E2%80%99m%20interested%20in%20upgrading%20my%20vehicle.%20Could%20I%20get%20more%20information%20about%20your%20services%20and%20pricing%3F",
 
   socials: [
     { label: "WhatsApp" }, // url built from the WhatsApp number
