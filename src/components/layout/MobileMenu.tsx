@@ -4,12 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { SITE, TEL_HREF } from "@/data/site";
 import { SERVICES } from "@/data/services";
-import {
-  APPOINTMENT_URL,
-  PRODUCTS_URL,
-  linkTarget,
-  serviceQuoteHref,
-} from "@/data/links";
+import { APPOINTMENT_URL, linkTarget, serviceQuoteHref } from "@/data/links";
 import { whatsappHref } from "@/lib/whatsapp";
 
 /**
@@ -177,13 +172,6 @@ export function MobileMenu() {
                               {service.title}
                             </a>
                           ))}
-                          <a
-                            href={PRODUCTS_URL}
-                            onClick={close}
-                            className="text-red hover:text-red-soft mt-2 block py-2 text-[12px] tracking-[.1em] uppercase transition-colors duration-200"
-                          >
-                            Shop products →
-                          </a>
                         </div>
                       ) : null}
                     </div>

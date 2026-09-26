@@ -3,13 +3,15 @@
 import { useCallback, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ITEMS, altFor, isVideo, serviceForItem } from "@/data/work";
+import { useViewer } from "@/lib/viewer";
 
 /**
  * The full-screen gallery viewer.
  *
  * Built to the ARIA dialog pattern: role="dialog", aria-modal, a real focus
  * trap over every focusable element, focus returned to whatever opened it, and
- * the background locked while it is up.
+ * the background locked while it is up. That behaviour, the keyboard and the
+ * swipe live in useViewer, shared with the Instagram reel player.
  *
  * Keyboard: ← → to move, Esc to close. Arrow keys are ignored while a video has
  * focus so they still scrub it. Touch: a horizontal swipe over 50px moves; a tap
@@ -34,7 +36,6 @@ export function Lightbox({
 }) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
-  const swipeRef = useRef<{ x: number; y: number } | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const itemId = ids[index];
@@ -47,71 +48,13 @@ export function Lightbox({
     [ids.length, onShow],
   );
 
-  /* Background scroll lock and focus restore. */
-  useEffect(() => {
-    const root = document.documentElement;
-    const previousOverflow = root.style.overflow;
-    const previousPadding = root.style.paddingRight;
-    const gap = window.innerWidth - root.clientWidth;
-
-    root.style.overflow = "hidden";
-    if (gap > 0) root.style.paddingRight = `${gap}px`;
-
-    const returnTo = document.activeElement as HTMLElement | null;
-    closeRef.current?.focus();
-
-    return () => {
-      root.style.overflow = previousOverflow;
-      root.style.paddingRight = previousPadding;
-      returnTo?.focus?.();
-    };
-  }, []);
-
-  /* Keyboard: navigation, close and the focus trap. */
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        onClose();
-        return;
-      }
-
-      const onVideo = (event.target as HTMLElement | null)?.tagName === "VIDEO";
-      if ((event.key === "ArrowRight" || event.key === "ArrowLeft") && !onVideo) {
-        event.preventDefault();
-        show(index + (event.key === "ArrowRight" ? 1 : -1));
-        return;
-      }
-
-      if (event.key !== "Tab") return;
-
-      const dialog = dialogRef.current;
-      if (!dialog) return;
-      const stops = Array.from(
-        dialog.querySelectorAll<HTMLElement>(
-          'a[href], button:not([disabled]), video[controls], [tabindex]:not([tabindex="-1"])',
-        ),
-      ).filter((el) => el.offsetParent !== null || el.tagName === "VIDEO");
-      if (stops.length === 0) return;
-
-      const first = stops[0]!;
-      const last = stops[stops.length - 1]!;
-
-      if (!dialog.contains(document.activeElement)) {
-        event.preventDefault();
-        first.focus();
-      } else if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [index, onClose, show]);
+  const step = useCallback((direction: 1 | -1) => show(index + direction), [index, show]);
+  const stage = useViewer({
+    dialogRef,
+    initialFocusRef: closeRef,
+    onClose,
+    onStep: step,
+  });
 
   /* Preload the neighbouring stills, and keep the filmstrip in view. */
   useEffect(() => {
@@ -170,30 +113,8 @@ export function Lightbox({
 
       <div
         className="phone:px-0 phone:py-2 relative flex min-h-0 flex-1 touch-pan-y items-center justify-center px-[76px] py-[18px]"
-        onPointerDown={(event) => {
-          swipeRef.current =
-            (event.target as HTMLElement).tagName === "VIDEO"
-              ? null
-              : { x: event.clientX, y: event.clientY };
-        }}
-        onPointerUp={(event) => {
-          const start = swipeRef.current;
-          swipeRef.current = null;
-          if (!start) return;
-
-          const dx = event.clientX - start.x;
-          const dy = event.clientY - start.y;
-
-          if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-            show(index + (dx < 0 ? 1 : -1));
-          } else if (
-            Math.abs(dx) < 8 &&
-            Math.abs(dy) < 8 &&
-            event.target === event.currentTarget
-          ) {
-            onClose();
-          }
-        }}
+        onPointerDown={stage.onPointerDown}
+        onPointerUp={stage.onPointerUp}
       >
         {isVideo(item) ? (
           <video

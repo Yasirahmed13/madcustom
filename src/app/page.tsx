@@ -16,9 +16,10 @@ import { faqSchema } from "@/lib/jsonld";
 /**
  * The homepage, in the design's section order.
  *
- * The Instagram grid revalidates hourly; everything else is fully static.
+ * The Instagram reels and grid revalidate every 15 minutes; everything else is
+ * fully static.
  */
-export const revalidate = 3600;
+export const revalidate = 900;
 
 export default function HomePage() {
   return (

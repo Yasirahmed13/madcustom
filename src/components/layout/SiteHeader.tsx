@@ -16,8 +16,8 @@ import { ServicesMegaMenu } from "./ServicesMegaMenu";
  * hangs below the strip rather than below the bar.
  *
  * Three widths:
- *   above 1180px — wordmark, six nav items, phone chip, CTA
- *   900–1180px   — the phone chip drops and the nav tightens, so six items fit
+ *   above 1180px — wordmark, five nav items, phone chip, CTA
+ *   900–1180px   — the phone chip drops and the nav tightens, so five items fit
  *   below 900px  — the nav moves to `MobileNav`, a scrolling strip of chips in
  *                  a second row, with the drawer still available beside the CTA
  */
@@ -86,7 +86,7 @@ export function SiteHeader({
         </nav>
 
         <div className="tablet:ml-auto phone:gap-2 flex flex-none items-center gap-3">
-          {/* Six nav items and the phone chip stop fitting together at 1180px;
+          {/* Five nav items and the phone chip stop fitting together at 1180px;
               the number stays in the drawer, the footer and the bottom bar. */}
           <a
             href={TEL_HREF}

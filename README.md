@@ -19,7 +19,7 @@ Nothing in `.env.local` is required to run the site. Without it:
 
 - the booking form still works end to end; submissions are logged to the server console
   instead of emailed, and the customer sees the phone number and WhatsApp link,
-- the Instagram grid shows the twelve bundled images,
+- the Instagram section shows the twelve bundled images and no reels,
 - URLs fall back to `https://madcustomcars.com`.
 
 | Command             | What it does               |
@@ -47,7 +47,7 @@ without opening a component.
 | `reviews.ts`   | Customer reviews                                                                          |
 | `faq.ts`       | All eleven questions and which services each relates to                                   |
 | `booking.ts`   | Every piece of copy in the booking wizard, plus the option lists                          |
-| `instagram.ts` | The Instagram fetch and its fallback images                                               |
+| `instagram.ts` | The Instagram fetch (reels and posts) and its fallback images                             |
 
 ### Changing a phone number or an address
 
@@ -201,12 +201,34 @@ not a real rate limiter. Put Vercel's WAF or similar in front if the form is eve
 
 ## Connecting Instagram
 
-Set `INSTAGRAM_ACCESS_TOKEN` to a long-lived Instagram Graph API token for
-`@madcustomfl`. The grid then fetches real posts, cached for an hour, and falls back to
-the bundled images on any error.
+Set `INSTAGRAM_ACCESS_TOKEN` to a long-lived Instagram access token for `@madcustomfl`.
+The Instagram section then shows:
 
-**This needs a Business or Creator account linked to a Facebook Page.** Instagram Basic
-Display — the old, simpler path — was shut down in December 2024 and no longer works.
+- **the eight latest reels**, which play on the site in a full-screen player. Instagram
+  withholds the video file for reels with copyrighted material — licensed music, usually —
+  and those tiles link out to Instagram instead;
+- **a grid of the twelve latest posts** not already in the reel strip.
+
+The feed is fetched on the server and cached for 15 minutes: one API call per refresh,
+well inside Instagram's 200 an hour, and no visitor ever calls the API. Instagram's media
+links are signed and expire, which is why they are re-fetched rather than stored. Any
+error falls back to the bundled images, with no reels.
+
+**The token comes from the Instagram API with Instagram Login**, which needs a Business
+or Creator account (no Facebook Page required). In a Meta developer app, add the
+Instagram product, choose the Instagram Login setup, add the account and generate a
+token. Instagram Basic Display — the old, simpler path — was shut down in December 2024
+and no longer works.
+
+**The token expires after 60 days.** Refresh it before then — it must be at least a day
+old — and put the new one in the environment variable:
+
+```bash
+curl "https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=CURRENT_TOKEN"
+```
+
+An expired token does not break anything, which is exactly why it needs a reminder: the
+section quietly goes back to the bundled images.
 
 To change the fallback images, replace `public/instagram/post-01.jpg` … `post-12.jpg`.
 
@@ -225,8 +247,8 @@ To change the fallback images, replace `public/instagram/post-01.jpg` … `post-
 After the first deploy, submit `https://<your-domain>/sitemap.xml` in Google Search
 Console.
 
-Everything except `/api/booking` is statically generated. The homepage revalidates hourly
-so the Instagram grid stays current.
+Everything except `/api/booking` is statically generated. The homepage revalidates every
+15 minutes so the Instagram reels and grid stay current.
 
 ---
 
@@ -239,6 +261,7 @@ src/
     services/[slug]/      one page per service, generated at build time
   components/
     booking/              the four-step wizard
+    instagram/            the reel strip and reel player
     layout/               header, footer, mobile menu, mobile action bar
     sections/             one component per section of the page
     ui/                   Button, Chip, Container, SectionHeader, Reveal
@@ -252,9 +275,10 @@ public/
 scripts/                  one-off asset generation (icons, OG image)
 ```
 
-Everything is a Server Component unless it needs interactivity. The nine client
-components are: the mobile menu, the hero video, the booking wizard, the gallery filters
-and grid, the lightbox, the FAQ accordion, and the scroll-reveal observer.
+Everything is a Server Component unless it needs interactivity. The client components on
+the homepage are: the mobile menu, the hero video, the booking wizard, the gallery filters
+and grid, the lightbox, the Instagram reel strip and player, the FAQ accordion, and the
+scroll-reveal observer.
 
 ---
 

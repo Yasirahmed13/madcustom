@@ -6,7 +6,7 @@
  * written into a component.
  */
 
-import { ABOUT_URL, BLOG_URL, CONTACT_URL, PRODUCTS_URL, SERVICES_URL } from "./links";
+import { ABOUT_URL, BLOG_URL, CONTACT_URL, SERVICES_URL } from "./links";
 
 export type Location = {
   /** Stable key, also used as the JSON-LD @id fragment. */
@@ -165,7 +165,6 @@ export const SITE = {
     { label: "Home", href: "/" },
     { label: "About Us", href: ABOUT_URL },
     { label: "Services", href: SERVICES_URL, mega: true },
-    { label: "Shop", href: PRODUCTS_URL },
     { label: "Blog", href: BLOG_URL },
     { label: "Contact Us", href: CONTACT_URL },
   ] satisfies readonly NavItem[],

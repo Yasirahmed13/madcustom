@@ -2,23 +2,16 @@
 
 import Image from "next/image";
 import { SERVICES } from "@/data/services";
-import { FEATURED_PRODUCTS, formatMoney, priceOf, productImage } from "@/data/products";
-import {
-  CONSULTATION_URL,
-  PRODUCTS_URL,
-  SERVICES_URL,
-  serviceQuoteHref,
-} from "@/data/links";
+import { CONSULTATION_URL, SERVICES_URL, serviceQuoteHref } from "@/data/links";
 import { SITE, TEL_HREF } from "@/data/site";
 import { Eyebrow } from "@/components/ui/SectionHeader";
 
 /**
  * The contents of the services menu, in both of the shapes it is shown in: the
- * three-column desktop panel and the stacked sheet the mobile nav strip opens.
+ * two-column desktop panel and the stacked sheet the mobile nav strip opens.
  *
  * Each service opens the services page with that service already added to the
- * quote, and every product opens its products section, so the links are applied
- * here rather than carried on the data.
+ * quote, so the links are applied here rather than carried on the data.
  */
 
 /** Follows a link and closes the menu behind it. */
@@ -52,7 +45,7 @@ export function MegaMenuContent({
         className={
           stacked
             ? "relative flex flex-col gap-7 px-[22px] pt-6 pb-8"
-            : "laptop:pt-7 laptop:pb-8 relative mx-auto grid max-w-[1324px] grid-cols-[minmax(0,.92fr)_minmax(0,1fr)_minmax(0,1.12fr)] px-[22px] pt-8 pb-10"
+            : "laptop:pt-7 laptop:pb-8 relative mx-auto grid max-w-[1324px] grid-cols-[minmax(0,.92fr)_minmax(0,1.12fr)] px-[22px] pt-8 pb-10"
         }
       >
         {/*
@@ -63,16 +56,7 @@ export function MegaMenuContent({
           stacked={stacked}
           onNavigate={onNavigate}
           className={
-            stacked ? "order-1" : "border-line-8 laptop:px-6 min-w-0 border-l px-9"
-          }
-        />
-        <ProductsColumn
-          stacked={stacked}
-          onNavigate={onNavigate}
-          className={
-            stacked
-              ? "border-line-9 order-2 border-t pt-7"
-              : "border-line-8 laptop:pl-6 order-3 min-w-0 border-l pl-9"
+            stacked ? "order-1" : "border-line-8 laptop:pl-6 min-w-0 border-l pl-9"
           }
         />
         <ConsultationColumn
@@ -80,7 +64,7 @@ export function MegaMenuContent({
           onNavigate={onNavigate}
           className={
             stacked
-              ? "border-line-9 order-3 border-t pt-7"
+              ? "border-line-9 order-2 border-t pt-7"
               : "laptop:pr-6 order-first min-w-0 pr-9"
           }
         />
@@ -114,7 +98,7 @@ function ConsultationColumn({
             src="/work/thumb/wheels-bmw-x4m-detail.jpg"
             alt=""
             fill
-            sizes="360px"
+            sizes="560px"
             aria-hidden="true"
             className="object-cover opacity-[.82] saturate-[.9]"
             style={{ objectPosition: "center 70%" }}
@@ -205,58 +189,6 @@ function ServicesColumn({
       >
         Get a quote on any combination →
       </a>
-    </div>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-
-function ProductsColumn({
-  stacked,
-  className,
-  onNavigate,
-}: NavigateProps & { stacked: boolean; className: string }) {
-  return (
-    <div className={className}>
-      <Eyebrow>03 / PERFORMANCE ESSENTIALS</Eyebrow>
-      <div className="mt-3 flex items-baseline justify-between gap-3">
-        <h2 className="font-display m-0 text-[26px] leading-none uppercase">Products</h2>
-        <a
-          href={PRODUCTS_URL}
-          onClick={onNavigate}
-          className="text-red hover:text-red-soft text-[11px] tracking-[.1em] whitespace-nowrap uppercase transition-colors duration-200"
-        >
-          Shop all →
-        </a>
-      </div>
-
-      <div className={`mt-4 grid grid-cols-3 ${stacked ? "gap-2" : "gap-2.5"}`}>
-        {FEATURED_PRODUCTS.map((product) => (
-          <a
-            key={product.id}
-            href={PRODUCTS_URL}
-            onClick={onNavigate}
-            className="group border-line-8 hover:border-red-34 hover:bg-white-3 flex flex-col border p-2.5 transition-colors duration-200"
-          >
-            <span className="bg-surface-media relative block aspect-square w-full overflow-hidden">
-              <Image
-                src={productImage(product)}
-                alt=""
-                fill
-                sizes="150px"
-                aria-hidden="true"
-                className="object-contain p-2 transition-transform duration-300 group-hover:scale-105"
-              />
-            </span>
-            <span className="text-bone-72 group-hover:text-bone mt-2.5 line-clamp-2 text-[12px] leading-[1.35] transition-colors duration-200">
-              {product.name}
-            </span>
-            <span className="text-red-bright mt-auto pt-2 font-mono text-[12.5px]">
-              {formatMoney(priceOf(product))}
-            </span>
-          </a>
-        ))}
-      </div>
     </div>
   );
 }
