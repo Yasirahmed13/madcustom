@@ -2,48 +2,23 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { SERVICES } from "@/data/services";
 import { formatMoney } from "@/data/products";
-import { PRICE_NOTE, QUOTE_FIELDS, SERVICE_QUOTES } from "@/data/quote";
+import { PRICE_NOTE } from "@/data/quote";
 import { SERVICES_URL } from "@/data/links";
+import { readQuoteRequest } from "@/lib/quote-store";
 import { Eyebrow } from "@/components/ui/SectionHeader";
-
-const SERVICE_BY_QUOTE_NAME = Object.fromEntries(SERVICES.map((s) => [s.quoteName, s]));
 
 /**
  * "Your request" on /quote.
  *
  * Read from the URL rather than from the saved quote, because the URL is what
  * the GHL form receives — so what the customer reads here is exactly what gets
- * submitted.
+ * submitted. QuoteForm reads the same URL the same way, so the estimated
+ * starting total here is the one GHL gets.
  */
 export function QuoteSummary() {
-  const params = useSearchParams();
-  const services = (params.get(QUOTE_FIELDS.services) ?? "")
-    .split(/\s*,\s*/)
-    .filter(Boolean);
-  const items = (params.get(QUOTE_FIELDS.items) ?? "")
-    .split(/\s*;\s*/)
-    .filter(Boolean)
-    .map((line) => {
-      const m = /^(.*?)\s*\((\$[\d.,]+)\)\s*$/.exec(line);
-      return { label: m?.[1] ?? line, price: m?.[2] ?? "" };
-    });
-  const productTotalLabel = params.get(QUOTE_FIELDS.total) ?? "";
-  const productTotal = Number(productTotalLabel.replace(/[^0-9.]/g, "")) || 0;
-
-  const serviceRows = services.map((name) => {
-    const service = SERVICE_BY_QUOTE_NAME[name];
-    const quote = service ? SERVICE_QUOTES[service.slug] : undefined;
-    return {
-      name,
-      label: service?.title ?? name,
-      price: quote?.priceLabel ?? "",
-      amount: quote?.amount ?? 0,
-    };
-  });
-  const servicesFrom = serviceRows.reduce((sum, row) => sum + row.amount, 0);
-  const grand = servicesFrom + productTotal;
+  const { services, items, productTotalLabel, servicesFrom, total } =
+    readQuoteRequest(useSearchParams());
 
   return (
     <section
@@ -65,16 +40,16 @@ export function QuoteSummary() {
         </Link>
       </div>
 
-      {serviceRows.length === 0 && items.length === 0 ? (
+      {services.length === 0 && items.length === 0 ? (
         <p className="text-bone-60 mt-5 mb-0 text-[14.5px] leading-[1.6]">
           No services selected yet. Tell us what you need in the form, or{" "}
           <Link href={SERVICES_URL}>go back and choose services</Link>.
         </p>
       ) : null}
 
-      {serviceRows.length > 0 ? (
+      {services.length > 0 ? (
         <Block title="Services">
-          {serviceRows.map((row) => (
+          {services.map((row) => (
             <Row key={row.name} label={row.label}>
               <span className={row.amount ? "text-bone-72" : "text-bone-45"}>
                 {row.price}
@@ -100,14 +75,14 @@ export function QuoteSummary() {
         </Block>
       ) : null}
 
-      {grand > 0 ? (
+      {total > 0 ? (
         <div className="border-line-10 mt-6 border-t pt-5">
           <div className="flex items-baseline justify-between gap-4">
             <span className="text-bone text-[15px] font-semibold">
               Estimated starting total
             </span>
             <span className="font-display text-red-bright text-[30px] leading-none">
-              {formatMoney(grand)}
+              {formatMoney(total)}
             </span>
           </div>
           <p className="text-bone-45 mt-3 mb-0 text-[12.5px] leading-[1.55]">

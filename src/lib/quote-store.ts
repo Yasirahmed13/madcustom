@@ -9,12 +9,13 @@
  * so a visitor who started a quote there keeps it.
  *
  * The finished quote leaves as a link to /quote carrying the three query keys
- * the GHL form's hidden fields read (see QUOTE_FIELDS).
+ * the GHL form's hidden fields read (see QUOTE_FIELDS), and /quote reads it
+ * back with `readQuoteRequest`.
  */
 import { useSyncExternalStore } from "react";
 import { SERVICES } from "@/data/services";
 import { PRODUCTS, PRODUCT_BY_ID, priceOf } from "@/data/products";
-import { QUOTE_FIELDS } from "@/data/quote";
+import { QUOTE_FIELDS, SERVICE_QUOTES } from "@/data/quote";
 import { QUOTE_URL } from "@/data/links";
 
 const PICKED_KEY = "mcPicked2";
@@ -195,4 +196,47 @@ export function quoteHref(state: QuoteState): string {
   // URLSearchParams writes spaces as "+", which the GHL form does not decode.
   const query = params.toString().replace(/\+/g, "%20");
   return query ? `${QUOTE_URL}?${query}` : QUOTE_URL;
+}
+
+const SERVICE_BY_QUOTE_NAME = Object.fromEntries(SERVICES.map((s) => [s.quoteName, s]));
+
+/**
+ * The request on /quote, read back from the query `quoteHref` writes.
+ *
+ * QuoteSummary shows it and QuoteForm sends its total to GHL, so the estimated
+ * starting total the customer reads is the one the CRM receives.
+ */
+export function readQuoteRequest(params: URLSearchParams) {
+  const services = (params.get(QUOTE_FIELDS.services) ?? "")
+    .split(/\s*,\s*/)
+    .filter(Boolean)
+    .map((name) => {
+      const service = SERVICE_BY_QUOTE_NAME[name];
+      const quote = service ? SERVICE_QUOTES[service.slug] : undefined;
+      return {
+        name,
+        label: service?.title ?? name,
+        price: quote?.priceLabel ?? "",
+        amount: quote?.amount ?? 0,
+      };
+    });
+  const items = (params.get(QUOTE_FIELDS.items) ?? "")
+    .split(/\s*;\s*/)
+    .filter(Boolean)
+    .map((line) => {
+      const m = /^(.*?)\s*\((\$[\d.,]+)\)\s*$/.exec(line);
+      return { label: m?.[1] ?? line, price: m?.[2] ?? "" };
+    });
+  const productTotalLabel = params.get(QUOTE_FIELDS.total) ?? "";
+  const productTotal = Number(productTotalLabel.replace(/[^0-9.]/g, "")) || 0;
+  const servicesFrom = services.reduce((sum, row) => sum + row.amount, 0);
+
+  return {
+    services,
+    items,
+    productTotalLabel,
+    servicesFrom,
+    /** The estimated starting total: the services' starting prices plus the products. */
+    total: servicesFrom + productTotal,
+  };
 }

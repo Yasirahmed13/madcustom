@@ -142,8 +142,11 @@ page's query string is passed into each widget, which carries UTM tags and prefi
 **How the quote travels.** The picks are kept in the browser (`src/lib/quote-store.ts`),
 so they survive a reload. "Request my quote" opens
 `/quote?selected_services=…&order_items=…&order_total=…`, and the form's hidden fields
-read those three keys into the GHL custom fields of the same names. Every service link on
-the site opens `/services?add=<name>#choose`, which lands with that service already picked.
+read those three keys into the GHL custom fields of the same names. /quote adds a fourth,
+`estimated_total`: the "Estimated starting total" the page shows, in whole dollars
+(`3814`), left out when the page shows none (`src/components/quote/QuoteForm.tsx`). Every
+service link on the site opens `/services?add=<name>#choose`, which lands with that
+service already picked.
 
 **Where to edit.** Starting prices, card copy and funnel wording: `src/data/quote.ts`.
 The ten products and their prices: `src/data/products.ts` (photos in

@@ -8,8 +8,8 @@ import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/SectionHeader";
 import { FunnelSteps } from "@/components/quote/FunnelSteps";
 import { QuoteSummary } from "@/components/quote/QuoteSummary";
-import { GhlForm } from "@/components/ghl/GhlEmbed";
-import { QUOTE_FORM_ID, QUOTE_NEXT, QUOTE_PROMISES } from "@/data/quote";
+import { QuoteForm } from "@/components/quote/QuoteForm";
+import { QUOTE_NEXT, QUOTE_PROMISES } from "@/data/quote";
 import { SERVICES_URL } from "@/data/links";
 import { pageMetadata } from "@/lib/seo";
 
@@ -75,7 +75,7 @@ export default function QuotePage() {
               </p>
 
               <Suspense fallback={<div style={{ minHeight: 900 }} />}>
-                <GhlForm formId={QUOTE_FORM_ID} name="Quote" />
+                <QuoteForm />
               </Suspense>
 
               <p className="text-bone-45 border-line-8 mt-5 mb-0 flex items-center justify-center gap-2 border-t pt-4 font-mono text-[11px] tracking-[.1em] uppercase">

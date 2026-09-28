@@ -13,8 +13,9 @@ import { cn } from "@/lib/cn";
  *
  * The page's own query string is passed through to the widget. On /quote that
  * is what fills the form's hidden fields (selected_services, order_items,
- * order_total); everywhere it also carries UTM tags and any prefill
- * (first_name, email, phone…) into the CRM.
+ * order_total, plus the estimated_total the page adds through `fields`);
+ * everywhere it also carries UTM tags and any prefill (first_name, email,
+ * phone…) into the CRM.
  *
  * The widget's inside — fields, colours, corners — is styled in GHL, not here.
  * Everything around it is the site's.
@@ -69,8 +70,19 @@ function Frame({
   );
 }
 
-function useQuery() {
-  const query = useSearchParams().toString();
+type Fields = Readonly<Record<string, string | undefined>>;
+
+/**
+ * The page's query, with `fields` set over it. An undefined field is removed,
+ * so a value left in the page's URL can never stand in for it.
+ */
+function useQuery(fields: Fields = {}) {
+  const params = new URLSearchParams(useSearchParams().toString());
+  for (const [key, value] of Object.entries(fields)) {
+    if (value === undefined) params.delete(key);
+    else params.set(key, value);
+  }
+  const query = params.toString();
   // URLSearchParams writes spaces as "+"; GHL reads the raw value.
   return query ? `?${query.replace(/\+/g, "%20")}` : "";
 }
@@ -80,13 +92,16 @@ export function GhlForm({
   formId,
   name,
   minHeight = 900,
+  fields,
 }: {
   formId: string;
   /** The form's name in GHL. */
   name: string;
   minHeight?: number;
+  /** Hidden-field values by query key, in place of the page's own. */
+  fields?: Fields;
 }) {
-  const query = useQuery();
+  const query = useQuery(fields);
   const iframeId = `inline-${formId}`;
 
   return (

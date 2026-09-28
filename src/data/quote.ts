@@ -13,13 +13,18 @@ export const QUOTE_FORM_ID = "cIDV5AHlkGjzKDlOt6Bn";
 
 /**
  * Query keys the quote form's hidden fields listen for, mapped in GHL to the
- * custom fields {{contact.selected_services}}, {{contact.order_items}} and
- * {{contact.order_total}}. They must match the form exactly.
+ * custom fields {{contact.selected_services}}, {{contact.order_items}},
+ * {{contact.order_total}} and {{contact.estimated_total}}. They must match the
+ * form exactly.
+ *
+ * The link from /services carries the first three. /quote works the estimate
+ * out from them and adds it to the form (see QuoteForm).
  */
 export const QUOTE_FIELDS = {
   services: "selected_services",
   items: "order_items",
   total: "order_total",
+  estimate: "estimated_total",
 } as const;
 
 export type ServiceQuote = {
