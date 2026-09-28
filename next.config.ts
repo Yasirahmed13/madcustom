@@ -3,6 +3,14 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  experimental: {
+    // Turbopack runs PostCSS (Tailwind) in Node. By default it starts separate
+    // `node` processes for that, and on the Hostinger build host they exit
+    // before Turbopack can connect ("node process exited before we could
+    // connect to it"), failing the build. Worker threads keep that work inside
+    // the build process.
+    turbopackPluginRuntimeStrategy: "workerThreads",
+  },
   images: {
     // AVIF first, WebP second — both are much smaller than the source JPEGs.
     formats: ["image/avif", "image/webp"],

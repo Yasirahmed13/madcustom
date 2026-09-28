@@ -307,6 +307,11 @@ A few decisions that will look odd without the reason:
   `next/font/google`. The Google loader downloads the fonts during the build, and that
   failed on the deploy host under Turbopack, so the build no longer touches the network
   for fonts.
+- **Turbopack runs PostCSS on worker threads** (`turbopackPluginRuntimeStrategy` in
+  `next.config.ts`). By default it starts separate `node` processes for PostCSS, and on
+  the Hostinger build host those exit before Turbopack can connect to them ("node process
+  exited before we could connect to it"), failing the build. Keep it unless the host
+  changes.
 - **JetBrains Mono has no metric-matched fallback face** (`adjustFontFallback: false`).
   A fallback would also capture characters outside the Latin subset — including the
   arrows the design uses (→ ← ↗ ▶ ✕) — and render them more than twice as wide.
